@@ -2,7 +2,7 @@
 
 **Version:** 1.0.0 (Kedro 8-Layer + DVC Orchestration)  
 **Last Updated:** 2026-10-15  
-**Remote Storage:** Google Drive (`gdrive://1Koo0-3d-1BssznDWXzz9PactUfmZbn7g`)  
+**Remote Storage:** Google Drive ([`gdrive://1Koo0-3d-1BssznDWXzz9PactUfmZbn7g`](https://drive.google.com/drive/folders/1Koo0-3d-1BssznDWXzz9PactUfmZbn7g))
 **Declarative Catalogs:** [`conf/base/catalog.yml`](../conf/base/catalog.yml), [`conf/base/parameters.yml`](../conf/base/parameters.yml)  
 **DVC Pipeline:** [`dvc.yaml`](../dvc.yaml), [`dvc.lock`](../dvc.lock)
 
@@ -13,6 +13,10 @@
 This catalog is the definitive reference for all datasets, model inputs, out-of-time probability panels, feature tensors, and verification receipts tracked across **LoL-Breaker**.
 
 To guarantee 100% offline reproducibility without committing heavy data dumps into Git, the repository implements the **Kedro 8-Layer Data Engineering Architecture** paired with **DVC (Data Version Control)**. Raw bytes and parquet/zip archives (~117 MB total) are content-addressed and hosted in a dedicated Google Drive remote, while lightweight cryptographic pointer files (`*.dvc` and `dvc.lock`) are tracked in Git.
+The remote storage folder contains:
+1. **`files/`**: DVC content-addressed storage (`files/md5/...`) matching `dvc.lock` for automated `dvc pull` synchronization.
+2. **`curated_data/`**: Human-readable directory tree for browsing individual CSV and Parquet files directly in Google Drive.
+3. **`lol_breaker_complete_data_bundle.zip` (77.7 MB)**: Single-click full archive download for instant setup.
 
 ```text
 Google Drive Remote Storage (gdrive://1Koo0-3d-1BssznDWXzz9PactUfmZbn7g)

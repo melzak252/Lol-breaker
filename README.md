@@ -70,37 +70,30 @@ lol-breaker/
 
 ---
 
-## 3. Data Setup: DVC & Google Drive
+## 3. Data Setup: DVC & Google Drive Remote Storage
 
-The simulation pipeline tracks a curated ~115 MB historical bundle spanning canonical walk-forward paired matrices, 2h odds trajectories, out-of-time probability panels, and model preservation archives.
+The simulation pipeline tracks a curated ~117 MB historical bundle spanning canonical walk-forward paired matrices, 2h odds trajectories, out-of-time probability panels, and model preservation archives.
 
-### Connecting Remote Storage (Google Drive)
+**Live Google Drive Remote:**  
+👉 **[Google Drive Data Folder (`1Koo0-3d-1BssznDWXzz9PactUfmZbn7g`)](https://drive.google.com/drive/folders/1Koo0-3d-1BssznDWXzz9PactUfmZbn7g)**
 
-```bash
-# 1. Initialize DVC in the repository (if not already initialized)
-dvc init
+The Google Drive folder hosts the dataset bundle in three complementary formats:
+1. **`files/`**: DVC content-addressed cache (`files/md5/...`) matching `.dvc/config` and `dvc.lock` for automated synchronization.
+2. **`curated_data/`**: Human-readable folder structure for browsing, previewing, and downloading individual CSV and Parquet files directly in Google Drive.
+3. **`lol_breaker_complete_data_bundle.zip` (77.7 MB)**: Single-click compressed bundle containing all datasets for instant offline setup.
 
-# 2. Add Google Drive remote storage
-dvc remote add -d storage gdrive://<GDRIVE_FOLDER_ID>
-dvc remote modify storage gdrive_acknowledge_abuse true
-
-# 3. Pull datasets on a fresh clone / new machine
-dvc pull
-```
-
-### Pushing Curated Artifacts to Remote
+### Setting Up DVC on a Fresh Machine
 
 ```bash
-# Track curated large inputs with DVC
-dvc add data/05_model_input/canonical_benchmark
-dvc add data/06_models/model_preservation/prop_distribution_20261007_01.zip
-dvc add data/odds.csv
-dvc add data/model_predictions_2020_2026.parquet
+# 1. Clone repository
+git clone https://github.com/melzak252/Lol-breaker.git
+cd Lol-breaker
 
-# Commit DVC pointers to Git and upload data to Google Drive
-git add data/*.dvc .dvc/config
-git commit -m "chore: track simulation bundle with DVC"
-dvc push
+# 2. Pull datasets from Google Drive remote
+.venv/bin/dvc pull
+
+# Alternatively, download and extract the single-click ZIP bundle into data/:
+# unzip lol_breaker_complete_data_bundle.zip -d data/
 ```
 
 ---
