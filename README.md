@@ -62,11 +62,11 @@ lol-breaker/
 | Domain / Layer | Model Identity & Version | Formulation & Details | Source of Truth |
 |---|---|---|---|
 | **Leading Pure Sports Model** | **`Causal-C0`** (`c0-native-2026-w32-e12-v1`) | 3-seed Width-32 / Epoch-12 history-attention neural net (16 maps/player, Beta terminal score + 0.1 SmoothL1 aux loss) + shared rating (Glicko-2/Elo) + MLP experts | `conf/base/c0_serving.json`, `betting_app/core/models/registry.py` |
-| **Operational Market Hybrid** | **`Hybrid-Operational-Market`** | 50/50 logit-space shrinkage between Native C0 and 2-way closed-form Shin de-vigged market consensus: $\operatorname{logit}(p_{\text{hybrid}}) = 0.50 \operatorname{logit}(p_{\text{C0}}) + 0.50 \operatorname{logit}(q_{\text{shin}})$ | `betting_app/core/models/registry.py`, `betting_app/core/ev.py` |
-| **Guard B (Market Divergence Gate)** | $|\operatorname{logit}(p_{\text{C0}}) - \operatorname{logit}(q_{\text{shin}})| \le 0.85$ | Dynamic logit bound; rejects severe bookmaker divergences where model overconfidence occurs | `src/analysis/betting_guards_a_to_d.py` |
-| **Thesis Model Veto** | $|p_{\text{C0}} - p_{\text{EXP-039}}| \le 0.10$ | Cross-architecture consensus veto; suppresses false edges when modern neural C0 disagrees with legacy logistic baseline | `betting_app/core/ev.py` |
-| **Guard W (Wasserstein DRO)** | $\varepsilon = 0.025$ | Distributionally robust optimization; ensures non-negative EV under distribution shifts: $(p_{\text{hybrid}} - 0.025)(1 - \tau)O - 1 > 0$ | `src/analysis/betting_guards_a_to_d.py` |
-| **Adopted Production Staking** | **Optimal Synergy Strategy** | 1/4 Kelly under 12% Polish tax, bounded by $\text{EV}_{\text{net}} \in [5\%, 25\%]$, $\text{Odds} \le 4.00$, and a strict 150 PLN cap per bet | `data/08_reporting/optimal_strategy_simulation_ledger.csv` |
+| **Operational Market Hybrid** | **`Hybrid-Operational-Market`** | 50/50 logit-space shrinkage: `logit(p_hybrid) = 0.50 · logit(p_C0) + 0.50 · logit(q_shin)` | `betting_app/core/models/registry.py`, `betting_app/core/ev.py` |
+| **Guard B (Market Divergence Gate)** | `\|logit(p_C0) - logit(q_shin)\| ≤ 0.85` | Dynamic logit bound; rejects severe bookmaker divergences where model overconfidence occurs | `src/analysis/betting_guards_a_to_d.py` |
+| **Thesis Model Veto** | `\|p_C0 - p_039\| ≤ 0.10` | Cross-architecture consensus veto; suppresses false edges when modern neural C0 disagrees with legacy logistic baseline | `betting_app/core/ev.py` |
+| **Guard W (Wasserstein DRO)** | `ε = 0.025` | Distributionally robust optimization; ensures non-negative EV under distribution shifts: `(p_hybrid - 0.025) · (1 - τ) · O - 1 > 0` | `src/analysis/betting_guards_a_to_d.py` |
+| **Adopted Production Staking** | **Optimal Synergy Strategy** | 1/4 Kelly under 12% Polish tax, bounded by `EV_net ∈ [5%, 25%]`, `Odds ≤ 4.00`, and a strict 150 PLN cap per bet | `data/08_reporting/optimal_strategy_simulation_ledger.csv` |
 
 ---
 
@@ -211,10 +211,13 @@ Evaluating betting operations across Polish bookmakers (12% turnover tax) and in
 
 #### A. The Exact Three-Part Bet Decomposition
 
-For any placed bet $i$ with tax multiplier $c = 1 - \tau = 0.88$, decimal odds $O_i$, model probability $\hat{p}_i$, fair closing probability $p_{\text{close},i}$, and match outcome $Y_i \in \{0, 1\}$:
+For any placed bet $i$ with tax multiplier $c = 1 - \tau = 0.88$, decimal odds $O_i$, model probability $\hat{p}_i$, fair closing probability $p_{\text{close}, i}$, and match outcome $Y_i \in \{0, 1\}$:
 
-$$\underbrace{c O_i Y_i - 1}_{\substack{\text{Realized Yield} \\ (+24.26\%)}} = \underbrace{c O_i \hat{p}_i - 1}_{\substack{\text{Claimed EV} \\ (+13.41\%)}} - \underbrace{c O_i (\hat{p}_i - p_{\text{close},i})}_{\substack{\text{Optimizer's Curse } B_i \\ (+8.57\%)}} + \underbrace{c O_i (Y_i - p_{\text{close},i})}_{\substack{\text{Match Outcome Noise } \eta_i \\ (+19.42\%)}}$$
+$$
+\text{Realized Yield}_i = \text{Claimed EV}_i - \underbrace{c \cdot O_i (\hat{p}_i - p_{\text{close}, i})}_{\text{Optimizer's Curse } B_i \; (+8.57\%)} + \underbrace{c \cdot O_i (Y_i - p_{\text{close}, i})}_{\text{Match Outcome Noise } \eta_i \; (+19.42\%)}
+$$
 
+where $\text{Realized Yield}_i = c \cdot O_i Y_i - 1 \; (+24.26\%)$ and $\text{Claimed EV}_i = c \cdot O_i \hat{p}_i - 1 \; (+13.41\%)$.
 - **Pure C0 Claimed EV:** `+22.05%`
 - **Shrunk Hybrid Claimed EV:** `+13.41%`
 - **Optimizer's Curse Removed by Shrinkage:** `8.64 pp` (plus 97 toxic bets vetoed by Guard B & Thesis Veto)
@@ -229,13 +232,19 @@ $$\underbrace{c O_i Y_i - 1}_{\substack{\text{Realized Yield} \\ (+24.26\%)}} = 
 | **Raw CLV (Price Edge)** | **+19.13%** | 12.95% | 1.83% | 10.446 | $< 10^{-13}$ | $[+15.55\%, +22.71\%]$ |
 | **Net CLV (True Edge)** | **+4.83%** | 11.39% | 1.61% | **3.000** | **0.0042 (Significant)** | **$[+1.68\%, +7.98\%]$** |
 
-$$\text{Variance Ratio} = \frac{\operatorname{Var}(\text{Realized Yield})}{\operatorname{Var}(\text{Net CLV})} = \frac{1.1650^2}{0.1139^2} = \mathbf{104.5\times}$$
+$$
+\text{Variance Ratio} = \frac{\operatorname{Var}(\text{Realized Yield})}{\operatorname{Var}(\text{Net CLV})} = \frac{1.1650^2}{0.1139^2} = \mathbf{104.5\times}
+$$
 
 *Finding:* Realized wallet PnL has $104.5\times$ higher variance than Net CLV. Proving edge via Net CLV requires only 15–30 bets, whereas proving edge via wallet PnL requires $>1,000$ bets.
 
 #### C. Time-to-Profit ($N_{\min}$) & Noise Decay Schedule
 
-At average odds $\bar{O} = 2.53$ under 12% tax, per-bet binomial noise is $\sigma_{\text{bet}} = 109.79\%$. After $N$ bets, $\text{Realized Yield}(N) = +4.83\% \pm \frac{109.79\%}{\sqrt{N}}$:
+At average odds $\bar{O} = 2.53$ under 12% tax, per-bet binomial noise is $\sigma_{\text{bet}} = 109.79\%$. After $N$ bets:
+
+$$
+\text{Realized Yield}(N) = +4.83\% \pm \frac{109.79\%}{\sqrt{N}}
+$$
 
 | Bets $N$ | Noise SE ($\pm$) | 95% Realized Yield Range | Probability of Profit $P(\text{Yield} > 0)$ | Wallet Behavior |
 |---:|---:|---|---:|---|

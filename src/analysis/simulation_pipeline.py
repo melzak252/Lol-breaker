@@ -991,8 +991,11 @@ Evaluating $\\operatorname{{logit}}(p_{{\\text{{hybrid}}}}) = \\alpha \\operator
 
 ### A. The Exact Three-Part Bet Identity
 
-$$\\underbrace{{\\text{{Realized Yield}}_i}}_{{+24.26\\%}} = \\underbrace{{\\text{{Claimed EV}}_i}}_{{+13.41\\%}} - \\underbrace{{c O_i (\\hat{{p}}_i - p_{{\\text{{close}},i}})}}_{{\\text{{Curse }} B_i = +8.57\\%}} + \\underbrace{{c O_i (Y_i - p_{{\\text{{close}},i}})}}_{{\\text{{Luck }} \\eta_i = +19.42\\%}}$$
+$$
+\\text{{Realized Yield}}_i = \\text{{Claimed EV}}_i - \\underbrace{{c \\cdot O_i (\\hat{{p}}_i - p_{{\\text{{close}}, i}})}}_{{\\text{{Optimizer's Curse }} B_i \\; (+8.57\\%)}} + \\underbrace{{c \\cdot O_i (Y_i - p_{{\\text{{close}}, i}})}}_{{\\text{{Match Outcome Noise }} \\eta_i \\; (+19.42\\%)}}
+$$
 
+where $\\text{{Realized Yield}}_i = c \\cdot O_i Y_i - 1 \\; (+24.26\\%)$ and $\\text{{Claimed EV}}_i = c \\cdot O_i \\hat{{p}}_i - 1 \\; (+13.41\\%)$.
 - **Pure C0 Claimed EV:** `+{s4['decomposition']['pure_c0_claimed_ev_pct']}%`
 - **Shrunk Hybrid Claimed EV:** `+{s4['decomposition']['shrunk_hybrid_claimed_ev_pct']}%`
 - **Optimizer's Curse Stripped by Shrinkage:** `{s4['decomposition']['curse_removed_by_shrinkage_pp']} pp`
@@ -1007,7 +1010,9 @@ $$\\underbrace{{\\text{{Realized Yield}}_i}}_{{+24.26\\%}} = \\underbrace{{\\tex
 | **Raw CLV** | **+{s4['hypothesis_testing']['raw_clv']['point_estimate_pct']}%** | {s4['hypothesis_testing']['raw_clv']['sample_std_pct']}% | {s4['hypothesis_testing']['raw_clv']['standard_error_pct']}% | {s4['hypothesis_testing']['raw_clv']['t_statistic']} | < $10^{{-13}}$ | [{s4['hypothesis_testing']['raw_clv']['ci_95_bootstrap'][0]}%, +{s4['hypothesis_testing']['raw_clv']['ci_95_bootstrap'][1]}%] |
 | **Net CLV (12% Tax)** | **+{s4['hypothesis_testing']['net_clv']['point_estimate_pct']}%** | {s4['hypothesis_testing']['net_clv']['sample_std_pct']}% | {s4['hypothesis_testing']['net_clv']['standard_error_pct']}% | **{s4['hypothesis_testing']['net_clv']['t_statistic']}** | **{s4['hypothesis_testing']['net_clv']['p_value']} (Significant)** | **[+{s4['hypothesis_testing']['net_clv']['ci_95_bootstrap'][0]}%, +{s4['hypothesis_testing']['net_clv']['ci_95_bootstrap'][1]}%]** |
 
-$$\\text{{Variance Ratio}} = \\frac{{\\operatorname{{Var}}(\\text{{Realized Yield}})}}{{\\operatorname{{Var}}(\\text{{Net CLV}})}} = \\mathbf{{{s4['hypothesis_testing']['variance_ratio']}\\times}}$$
+$$
+\\text{{Variance Ratio}} = \\frac{{\\operatorname{{Var}}(\\text{{Realized Yield}})}}{{\\operatorname{{Var}}(\\text{{Net CLV}})}} = \\mathbf{{{s4['hypothesis_testing']['variance_ratio']}\\times}}
+$$
 
 ### C. Time-to-Profit ($N_{{\\min}}$) & Noise Decay
 
