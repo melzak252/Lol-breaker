@@ -1,6 +1,6 @@
 # Project Map & Architecture
 
-Scope: EnsembleLegends repository, inspected local contracts as of 2026-10-06. **Local implementation, historical server observations and deployment are separate facts.** This guide does not authorize collectors, training, notifications, database changes or deployment.
+Scope: LoL-Breaker repository, inspected local contracts as of 2026-10-06. **Local implementation, historical server observations and deployment are separate facts.** This guide does not authorize collectors, training, notifications, database changes or deployment.
 
 Current model choices, completed study decisions, prop recovery and archive/trash boundaries: **[MODEL_CATALOG.md](MODEL_CATALOG.md)**. Historical reports and frozen paths remain in place; this architecture guide describes implementation contracts, not a current candidate shortlist or research promotion.
 

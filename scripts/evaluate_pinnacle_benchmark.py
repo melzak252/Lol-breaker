@@ -78,22 +78,13 @@ def main() -> int:
 
     quotes_path = args.quotes
     if not quotes_path.exists():
-        fallback = PROJECT_ROOT.parent / "inzynierka" / "data/oddspapi_lol_2026_model_audit/selected_pre_match_quotes.csv"
-        if fallback.exists():
-            quotes_path = fallback
-        else:
-            print(f"Error: quotes file not found: {args.quotes}", file=sys.stderr)
-            return 1
+        print(f"Error: quotes file not found: {args.quotes}", file=sys.stderr)
+        return 1
 
     common_path = args.common
     if not common_path.exists():
-        fallback = PROJECT_ROOT.parent / "inzynierka" / "reports/exp039_db_market_backtest_v3_corrected/exp039_market_common.csv"
-        if fallback.exists():
-            common_path = fallback
-        else:
-            print(f"Error: common file not found: {args.common}", file=sys.stderr)
-            return 1
-
+        print(f"Error: common file not found: {args.common}", file=sys.stderr)
+        return 1
     print(f"Loading quotes from: {quotes_path}")
     df_quotes = pd.read_csv(quotes_path)
     pin_quotes = df_quotes[df_quotes["bookmaker"] == "pinnacle"].copy()

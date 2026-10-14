@@ -21,6 +21,7 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import accuracy_score, brier_score_loss, log_loss, roc_auc_score
 
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 def clip(p: np.ndarray) -> np.ndarray:
     return np.clip(p.astype(float), 1e-6, 1.0 - 1e-6)
@@ -102,8 +103,8 @@ def clv_and_betting_simulation(
 
 def main():
     print("Loading data...")
-    df_meta = pd.read_csv("/home/melzak/dev/inzynierka/data/golgg_stacking_results.csv")
-    df_odds = pd.read_csv("/home/melzak/dev/inzynierka/data/odds.csv")
+    df_meta = pd.read_csv(PROJECT_ROOT / "data" / "golgg_stacking_results.csv")
+    df_odds = pd.read_csv(PROJECT_ROOT / "data" / "odds.csv")
 
     df_meta["golgg_match_id"] = df_meta["golgg_match_id"].astype(str)
     df_odds["golgg_match_id"] = df_odds["golgg_match_id"].astype(str)

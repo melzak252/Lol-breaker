@@ -7,6 +7,7 @@ calibrated = sigmoid(logit(hybrid_prob) / T)
 Grid search over alpha and T for each Fusion model.
 """
 
+from pathlib import Path
 import pandas as pd
 import numpy as np
 import psycopg2
@@ -15,10 +16,11 @@ from scipy.special import logit as sp_logit, expit as sp_expit
 import warnings
 warnings.filterwarnings('ignore')
 
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DB_DSN = "postgresql://betting:betting_local_password@192.168.1.17:5432/betting"
 
 def load_data():
-    odds = pd.read_csv('/home/melzak/dev/inzynierka/data/odds.csv')
+    odds = pd.read_csv(PROJECT_ROOT / 'data' / 'odds.csv')
     odds['golgg_date'] = pd.to_datetime(odds['golgg_date'])
     odds_2025 = odds[odds['golgg_date'] >= '2025-01-01'].copy()
     odds_2025['golgg_match_id'] = odds_2025['golgg_match_id'].astype(str)
@@ -246,7 +248,7 @@ def main():
         print_top_results(results, model_name)
         
         # Save full grid
-        results.to_csv(f'/home/melzak/dev/inzynierka/hybrid_grid_{model_name.replace("-", "_")}.csv', index=False)
+        results.to_csv(PROJECT_ROOT / f'hybrid_grid_{model_name.replace("-", "_")}.csv', index=False)
     
     print(f"\n{'='*90}")
     print("DONE")

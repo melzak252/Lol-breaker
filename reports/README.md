@@ -1,6 +1,6 @@
 # Master Research Reports Index & Evidence Navigation
 
-This directory contains the primary research reports, statistical audits, econometric backtests, and architectural specifications produced across the **EnsembleLegends** project.
+This directory contains the primary research reports, statistical audits, econometric backtests, and architectural specifications produced across the **LoL-Breaker** project.
 
 > **Research Governance Rules:**
 > 1. **Do Not Delete or Overwrite Historical Reports:** Negative findings and rejected hypotheses must be preserved in place to prevent ungrounded experiment repetition.

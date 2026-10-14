@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pandas as pd
 
-REPO=Path('/home/melzak/dev/inzynierka')
+REPO = Path(__file__).resolve().parents[3]
 sys.path.insert(0,str(REPO/'docs/assets/exp-093-crossgame-team'))
 from experiment import DailyRatings,evaluate,bootstrap
 

@@ -1,1 +1,1 @@
-"""Core package for the EnsembleLegends thesis project."""
+"""Core package for the LoL-Breaker project."""

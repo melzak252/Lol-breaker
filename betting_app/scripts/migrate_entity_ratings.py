@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """Migrate entity_ratings from SQLite to PostgreSQL with correct rating_run_id mapping."""
 
+from pathlib import Path
 import sqlite3
 import psycopg2
 from psycopg2.extras import execute_values
 
-SQLITE_PATH = "/home/melzak/dev/inzynierka/data/betting_app.sqlite3"
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+SQLITE_PATH = str(PROJECT_ROOT / "data" / "betting_app.sqlite3")
 PG_DSN = "postgresql://betting:betting_local_password@localhost:5432/betting"
 
 def migrate():

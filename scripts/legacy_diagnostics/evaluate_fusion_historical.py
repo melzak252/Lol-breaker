@@ -7,6 +7,7 @@ Compares:
 - Hybrid-Thesis-Market (baseline model)
 """
 
+from pathlib import Path
 import pandas as pd
 import numpy as np
 import psycopg2
@@ -17,11 +18,12 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # Database connection
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DB_DSN = "postgresql://betting:betting_local_password@192.168.1.17:5432/betting"
 
 def load_odds_data():
     """Load odds.csv with 2025+ filter"""
-    odds = pd.read_csv('/home/melzak/dev/inzynierka/data/odds.csv')
+    odds = pd.read_csv(PROJECT_ROOT / 'data' / 'odds.csv')
     odds['golgg_date'] = pd.to_datetime(odds['golgg_date'])
     odds_2025 = odds[odds['golgg_date'] >= '2025-01-01'].copy()
     
@@ -348,7 +350,7 @@ def main():
         ('Hybrid-Thesis-Market', matched_data['Hybrid-Thesis-Market'], 'prob_a'),
     ]
     
-    plot_calibration(models_for_plot, '/home/melzak/dev/inzynierka/fusion_calibration_2025.png')
+    plot_calibration(models_for_plot, str(PROJECT_ROOT / 'fusion_calibration_2025.png'))
     
     # Summary table
     print("\n" + "=" * 80)
@@ -362,7 +364,7 @@ def main():
     print("\n" + summary_df.to_string(index=False))
     
     # Save to CSV
-    summary_df.to_csv('/home/melzak/dev/inzynierka/fusion_evaluation_2025.csv', index=False)
+    summary_df.to_csv(PROJECT_ROOT / 'fusion_evaluation_2025.csv', index=False)
     print("\nSaved summary to fusion_evaluation_2025.csv")
     
     print("\n" + "=" * 80)

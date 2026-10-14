@@ -1,6 +1,6 @@
 # Repository instructions
 
-Scope: the entire EnsembleLegends repository. Updated: 2026-10-07.
+Scope: the entire LoL-Breaker repository. Updated: 2026-10-07.
 
 This project predicts League of Legends match outcomes and simulates tournament probability distributions. It also contains an application for collecting odds, betting research, and recording manual bets. The application does not place bets automatically.
 

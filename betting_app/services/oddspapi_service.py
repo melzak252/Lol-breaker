@@ -212,7 +212,7 @@ class OddsPapiClient:
                 url,
                 headers={
                     "Accept": "application/json",
-                    "User-Agent": "EnsembleLegends OddsPapi Client/1.0",
+                    "User-Agent": "LoL-Breaker OddsPapi Client/1.0",
                 },
             )
 
@@ -271,7 +271,7 @@ class OddsPapiClient:
             url,
             headers={
                 "Accept": "application/json",
-                "User-Agent": "EnsembleLegends OddsPapi Client/1.0",
+                "User-Agent": "LoL-Breaker OddsPapi Client/1.0",
             },
         )
         request_started_at = datetime.now(UTC)

@@ -1,1 +1,1 @@
-"""Rating-system implementations used by EnsembleLegends."""
+"""Rating-system implementations used by LoL-Breaker."""

@@ -1,5 +1,8 @@
+from pathlib import Path
 import json
 import numpy as np
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 def check_ranges(path):
     print(f"Checking ranges in {path}...")
@@ -32,4 +35,4 @@ def check_ranges(path):
         print(f"  Feat {i:2}: min={np.min(vals):.4f}, max={np.max(vals):.4f}, mean={np.mean(vals):.4f}")
 
 if __name__ == "__main__":
-    check_ranges('/home/melzak/dev/inzynierka/data/fusion_dataset_v1.json')
+    check_ranges(PROJECT_ROOT / "data" / "fusion_dataset_v1.json")

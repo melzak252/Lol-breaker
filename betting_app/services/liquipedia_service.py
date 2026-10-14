@@ -16,7 +16,7 @@ from betting_app.services.liquipedia_transport import LiquipediaRequestError, qu
 logger = logging.getLogger(__name__)
 
 LIQUIPEDIA_API_URL = "https://liquipedia.net/leagueoflegends/api.php"
-DEFAULT_USER_AGENT = "EnsembleLegendsResearch/1.0 (academic research; melzacki.jakubl@gmail.com)"
+DEFAULT_USER_AGENT = "LoL-Breaker/1.0 (academic research; melzacki.jakubl@gmail.com)"
 
 ROLE_MAP = {
     "top": "TOP",

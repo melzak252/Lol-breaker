@@ -41,7 +41,7 @@ def save_markdown(content: str, file_path: str | Path) -> None:
 def generate_obsidian_header(
     doc_type: str = "research_log",
     tags: Optional[Sequence[str]] = None,
-    project: str = "EnsembleLegends",
+    project: str = "LoL-Breaker",
 ) -> str:
     """Generate a YAML header for Obsidian documents.
 

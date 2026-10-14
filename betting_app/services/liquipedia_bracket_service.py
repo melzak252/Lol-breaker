@@ -31,7 +31,7 @@ FANDOM_CARGO_EXPORT_URL = "https://lol.fandom.com/wiki/Special:CargoExport"
 LIQUIPEDIA_API_URL = "https://liquipedia.net/leagueoflegends/api.php"
 
 DEFAULT_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
-LIQUIPEDIA_USER_AGENT = "EnsembleLegendsResearch/1.0 (academic research; melzacki.jakubl@gmail.com)"
+LIQUIPEDIA_USER_AGENT = "LoL-Breaker/1.0 (academic research; melzacki.jakubl@gmail.com)"
 
 CACHE_DIR = Path("data/cache/tournaments")
 CACHE_TTL_SECONDS = 1800  # 30 minutes

@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 
-PROJECT_ROOT = Path("/home/melzak/dev/inzynierka")
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 PIPELINE_PATH = PROJECT_ROOT / "betting_app" / "models" / "sym_cal_lr_elasticnet_w20_binomial_pipeline.joblib"
 
 def main():

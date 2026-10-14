@@ -35,10 +35,10 @@ from typing import Any
 import numpy as np
 from sklearn.metrics import accuracy_score, brier_score_loss, log_loss, roc_auc_score
 
-# Add worktree src to path
-SRC_ROOT = Path("/tmp/inzynierka-operational-model-cutover")
-if str(SRC_ROOT) not in sys.path:
-    sys.path.insert(0, str(SRC_ROOT))
+# Add project root to path
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.ratings.glicko2_core import (
     Glicko2Observation,
@@ -280,7 +280,7 @@ def run_simulation(
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--data-file", default="/home/melzak/dev/inzynierka/data/golgg_matches.json")
+    parser.add_argument("--data-file", default=str(PROJECT_ROOT / "data/golgg_matches.json"))
     parser.add_argument("--test-start", default="2024-01-01")
     parser.add_argument("--max-delta", type=float, default=0.15)
     parser.add_argument("--delta-scale", type=float, default=0.20)

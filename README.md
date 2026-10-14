@@ -1,6 +1,6 @@
 # LoL-Breaker — League of Legends Quantitative Modeling & Betting Intelligence
 
-Standalone application and modeling repository extracted from the engineering thesis workspace (`/home/melzak/dev/inzynierka`).
+Standalone application and modeling repository for League of Legends quantitative modeling and betting intelligence.
 
 **LoL-Breaker** combines pre-match causal match-winner and prop-distribution models (`src/`, `conf/`) with a full-stack manual betting analytics & EV intelligence manager (`betting_app/`, `client/`). The application does **not** place bets automatically.
 
@@ -16,9 +16,9 @@ Standalone application and modeling repository extracted from the engineering th
 | `conf/base/` | Serving contract (`c0_serving.json`) and canonical benchmark manifest (`research_benchmark.json`). |
 | `scripts/` | Benchmark runners (`run_model_benchmark.py`, `run_unified_betting_evaluation.py`), shadow forward ledger (`run_shadow_forward_ledger.py`), and prop preservation utilities. |
 | `docs/`, `reports/` | Model catalog ([`docs/MODEL_CATALOG.md`](docs/MODEL_CATALOG.md)), research journal ([`docs/RESEARCH.md`](docs/RESEARCH.md)), architecture map ([`docs/PROJECT_ARCHITECTURE.md`](docs/PROJECT_ARCHITECTURE.md)), and econometric audit reports ([`reports/README.md`](reports/README.md)). |
-| `data/` | Local datasets, model checkpoints, and reporting receipts (symlinked to `/home/melzak/dev/inzynierka/data`). |
+| `data/` | Local datasets, model checkpoints, and reporting receipts (standalone local directory in `/home/melzak/dev/lol-breaker/data`). |
 
-> **Engineering Thesis Separation**: All LaTeX sources, chapters, figures, and thesis documents remain in `/home/melzak/dev/inzynierka/thesis/`.
+> **Standalone Environment**: `data/` and `.venv/` are standalone local directories in `/home/melzak/dev/lol-breaker` with no external repository dependencies or symlinks.
 
 ---
 

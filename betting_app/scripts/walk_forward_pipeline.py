@@ -42,7 +42,8 @@ from sklearn.metrics import log_loss, roc_auc_score, brier_score_loss
 import xgboost as xgb
 
 # ─── Paths ─────────────────────────────────────────────────────────────────
-BASE_DIR = Path("/home/melzak/dev/inzynierka")
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+BASE_DIR = PROJECT_ROOT
 DATA_DIR = BASE_DIR / "data"
 MODELS_DIR = BASE_DIR / "models"
 RESULTS_DIR = DATA_DIR / "walk_forward_results"

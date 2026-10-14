@@ -8,8 +8,8 @@ Steps:
 3. Insert fusion predictions into canonical_predictions
 
 Usage:
-    cd /home/melzak/dev/inzynierka
-    /home/melzak/dev/embedded-rift/.venv/bin/python scripts/populate_fusion_predictions.py [--dry-run]
+    cd /home/melzak/dev/lol-breaker
+    .venv/bin/python scripts/populate_fusion_predictions.py [--dry-run]
 """
 
 import argparse
