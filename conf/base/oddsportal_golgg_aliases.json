@@ -1,0 +1,1328 @@
+{
+  "version": "oddsportal-golgg-lol-identities-20261008-v3",
+  "reviewed": true,
+  "reviewed_at_utc": "2026-10-08T18:33:02.166833+00:00",
+  "scope": "Retrospective LoL fixture identity variants only. Source catalog names can be backfilled. Date bounds describe fixture history, not naming/sponsor announcement dates. No fuzzy matching, outcome-selected aliases, organization/team-ID/ratings/W20 merging, historical issuance certification, or automatic future expansion.",
+  "review_basis": "Independently cited LoL division/name evidence, source participant IDs, competition scope, and bounded fixture dates. Candidate frequencies and source outcomes do not certify aliases.",
+  "aliases": {},
+  "scoped_aliases": [
+    {
+      "id": "omg-full-name",
+      "source_name": "Oh My God",
+      "target_name": "OMG",
+      "source_participant_id": "382149",
+      "valid_from": "2017-01-01",
+      "valid_to": "2026-09-08",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://lolesports.com/en-US/season/115547545029543948/handbook"
+      ]
+    },
+    {
+      "id": "big-full-name",
+      "source_name": "BIG",
+      "target_name": "Berlin International Gaming",
+      "source_participant_id": "966966",
+      "valid_from": "2018-03-01",
+      "valid_to": "2026-09-08",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://bigclan.gg/pages/about"
+      ]
+    },
+    {
+      "id": "tsm-full-name",
+      "source_name": "Team SoloMid",
+      "target_name": "TSM",
+      "source_participant_id": "369460",
+      "valid_from": "2017-01-01",
+      "valid_to": "2023-12-31",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://teamliquid.com/news/2015/02/19/battle-report-week-4"
+      ]
+    },
+    {
+      "id": "clg-full-name",
+      "source_name": "Counter Logic Gaming",
+      "target_name": "CLG",
+      "source_participant_id": "372894",
+      "valid_from": "2017-01-01",
+      "valid_to": "2023-12-31",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://teamliquid.com/news/2015/02/19/battle-report-week-4"
+      ]
+    },
+    {
+      "id": "al-former-rogue-warriors",
+      "source_name": "Anyone's Legend",
+      "target_name": "Rogue Warriors",
+      "source_participant_id": "720686",
+      "valid_from": "2018-01-01",
+      "valid_to": "2021-12-31",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://www.thepaper.cn/newsDetail_forward_15721166"
+      ]
+    },
+    {
+      "id": "wbg-former-suning",
+      "source_name": "Weibo Gaming",
+      "target_name": "Suning",
+      "source_participant_id": "585846",
+      "valid_from": "2019-01-01",
+      "valid_to": "2021-12-31",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://www.ithome.com/0/588/125.htm"
+      ],
+      "identity_scope": "Former SUNING LoL division. The separate Suning Gaming spelling/era is not approved here."
+    },
+    {
+      "id": "ra-former-vici",
+      "source_name": "Rare Atom",
+      "target_name": "Vici Gaming",
+      "source_participant_id": "382146",
+      "valid_from": "2017-01-01",
+      "valid_to": "2020-12-31",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://www.ithome.com/0/528/041.htm"
+      ]
+    },
+    {
+      "id": "tt-former-dominus",
+      "source_name": "TT Gaming",
+      "target_name": "Dominus Esports",
+      "source_participant_id": "739824",
+      "valid_from": "2019-01-01",
+      "valid_to": "2020-12-31",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://www.lolfun.cn/news/detail/8524.html",
+        "https://wanplus.cn/article/313752.html"
+      ]
+    },
+    {
+      "id": "tt-full-name",
+      "source_name": "TT Gaming",
+      "target_name": "ThunderTalk Gaming",
+      "source_participant_id": "739824",
+      "valid_from": "2020-09-01",
+      "valid_to": "2026-09-08",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://wanplus.cn/article/313752.html",
+        "https://lolesports.com/en-US/season/115547545029543948/handbook"
+      ]
+    },
+    {
+      "id": "lng-former-snake",
+      "source_name": "LNG Esports",
+      "target_name": "Snake Esports",
+      "source_participant_id": "374960",
+      "valid_from": "2017-01-01",
+      "valid_to": "2019-12-31",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://www.lolfun.cn/news/detail/8524.html"
+      ]
+    },
+    {
+      "id": "tes-former-topsports",
+      "source_name": "Top Esports",
+      "target_name": "Topsports Gaming",
+      "source_participant_id": "720969",
+      "valid_from": "2018-01-01",
+      "valid_to": "2019-12-31",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://www.lolfun.cn/news/detail/8524.html"
+      ]
+    },
+    {
+      "id": "talon-psg-co-brand",
+      "source_name": "Talon",
+      "target_name": "PSG Talon",
+      "source_participant_id": "1008852",
+      "valid_from": "2020-01-01",
+      "valid_to": "2026-09-08",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://talon.gg/blogs/news/talon-partners-with-psg"
+      ],
+      "identity_scope": "PCS LoL co-branded team, not a merger of Talon and PSG corporate identities."
+    },
+    {
+      "id": "krx-longzhu-gaming",
+      "source_name": "KRX",
+      "target_name": "Longzhu Gaming",
+      "source_participant_id": "723231",
+      "valid_from": "2017-01-01",
+      "valid_to": "2017-12-31",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://en.drx.gg/news/?bmode=view&idx=174924152",
+        "https://www.yna.co.kr/view/AKR20260427026400008"
+      ],
+      "identity_scope": "Retrospective source catalog label for the same LoL division; bounds are fixture-identity scope, not asserted sponsor/name announcement dates."
+    },
+    {
+      "id": "krx-kingzone-dragonx",
+      "source_name": "KRX",
+      "target_name": "Kingzone DragonX",
+      "source_participant_id": "723231",
+      "valid_from": "2018-01-01",
+      "valid_to": "2019-12-31",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://en.drx.gg/news/?bmode=view&idx=174924152",
+        "https://www.yna.co.kr/view/AKR20260427026400008"
+      ],
+      "identity_scope": "Retrospective source catalog label for the same LoL division; bounds are fixture-identity scope, not asserted sponsor/name announcement dates."
+    },
+    {
+      "id": "krx-dragonx",
+      "source_name": "KRX",
+      "target_name": "DragonX",
+      "source_participant_id": "723231",
+      "valid_from": "2020-01-01",
+      "valid_to": "2020-12-31",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://en.drx.gg/news/?bmode=view&idx=174924152",
+        "https://www.yna.co.kr/view/AKR20260427026400008"
+      ],
+      "identity_scope": "Retrospective source catalog label for the same LoL division; bounds are fixture-identity scope, not asserted sponsor/name announcement dates."
+    },
+    {
+      "id": "krx-drx",
+      "source_name": "KRX",
+      "target_name": "DRX",
+      "source_participant_id": "723231",
+      "valid_from": "2021-01-01",
+      "valid_to": "2026-09-08",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://en.drx.gg/news/?bmode=view&idx=174924152",
+        "https://www.yna.co.kr/view/AKR20260427026400008"
+      ],
+      "identity_scope": "Retrospective source catalog label for the same LoL division; bounds are fixture-identity scope, not asserted sponsor/name announcement dates."
+    },
+    {
+      "id": "krx-kiwoom-drx",
+      "source_name": "KRX",
+      "target_name": "Kiwoom DRX",
+      "source_participant_id": "723231",
+      "valid_from": "2025-01-01",
+      "valid_to": "2026-09-08",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://en.drx.gg/news/?bmode=view&idx=174924152",
+        "https://www.yna.co.kr/view/AKR20260427026400008"
+      ],
+      "identity_scope": "Retrospective source catalog label for the same LoL division; bounds are fixture-identity scope, not asserted sponsor/name announcement dates."
+    },
+    {
+      "id": "dn-soopers-afreeca-freecs",
+      "source_name": "DN SOOPers",
+      "target_name": "Afreeca Freecs",
+      "source_participant_id": "420723",
+      "valid_from": "2017-01-01",
+      "valid_to": "2021-12-31",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://view.asiae.co.kr/en/article/2021122114580271754",
+        "https://www.gamemeca.com/en/view.php?gid=1769447",
+        "https://www.g-enews.com/article/ICT/2024/12/202412260947578034c5fa75ef86_1"
+      ],
+      "identity_scope": "LoL naming-sponsor lineage only; no organization IDs, ratings, or W20 history are merged."
+    },
+    {
+      "id": "dn-soopers-kwangdong-freecs",
+      "source_name": "DN SOOPers",
+      "target_name": "Kwangdong Freecs",
+      "source_participant_id": "420723",
+      "valid_from": "2022-01-01",
+      "valid_to": "2024-12-31",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://view.asiae.co.kr/en/article/2021122114580271754",
+        "https://www.gamemeca.com/en/view.php?gid=1769447",
+        "https://www.g-enews.com/article/ICT/2024/12/202412260947578034c5fa75ef86_1"
+      ],
+      "identity_scope": "LoL naming-sponsor lineage only; no organization IDs, ratings, or W20 history are merged."
+    },
+    {
+      "id": "dn-soopers-dn-freecs",
+      "source_name": "DN SOOPers",
+      "target_name": "DN Freecs",
+      "source_participant_id": "420723",
+      "valid_from": "2025-01-01",
+      "valid_to": "2025-12-31",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://view.asiae.co.kr/en/article/2021122114580271754",
+        "https://www.gamemeca.com/en/view.php?gid=1769447",
+        "https://www.g-enews.com/article/ICT/2024/12/202412260947578034c5fa75ef86_1"
+      ],
+      "identity_scope": "LoL naming-sponsor lineage only; no organization IDs, ratings, or W20 history are merged."
+    },
+    {
+      "id": "dplus-former-damwon",
+      "source_name": "Dplus Kia",
+      "target_name": "DAMWON Gaming",
+      "source_participant_id": "636083",
+      "valid_from": "2019-01-01",
+      "valid_to": "2020-12-31",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://navgtr.org/2023/01/09/damwon-gaming-kia-rebrands-to-dplus-kia-for-next-league-of-legends-champions-korea-season/"
+      ]
+    },
+    {
+      "id": "dplus-former-dwg-kia",
+      "source_name": "Dplus Kia",
+      "target_name": "DWG KIA",
+      "source_participant_id": "636083",
+      "valid_from": "2021-01-01",
+      "valid_to": "2022-12-31",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://navgtr.org/2023/01/09/damwon-gaming-kia-rebrands-to-dplus-kia-for-next-league-of-legends-champions-korea-season/"
+      ]
+    },
+    {
+      "id": "t1-former-sk-telecom",
+      "source_name": "T1",
+      "target_name": "SK Telecom T1",
+      "source_participant_id": "421972",
+      "valid_from": "2017-01-01",
+      "valid_to": "2019-12-31",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://corporate.comcast.com/press/releases/sk-telecom-and-comcast-spectacor-announce-global-esports-joint-venture"
+      ],
+      "identity_scope": "Retrospective identity of the included SK Telecom T1 LoL team; not a precise competitive-name transition date."
+    },
+    {
+      "id": "fearx-former-sandbox",
+      "source_name": "FearX",
+      "target_name": "Sandbox Gaming",
+      "source_participant_id": "859999",
+      "valid_from": "2019-01-01",
+      "valid_to": "2020-12-31",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://omoney.kbstar.com/quics?page=C104371",
+        "https://www.inven.co.kr/webzine/news/?news=291541&site=lol"
+      ]
+    },
+    {
+      "id": "fearx-former-liiv",
+      "source_name": "FearX",
+      "target_name": "Liiv SANDBOX",
+      "source_participant_id": "859999",
+      "valid_from": "2021-01-01",
+      "valid_to": "2023-12-31",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://omoney.kbstar.com/quics?page=C104371",
+        "https://www.inven.co.kr/webzine/news/?news=291541&site=lol"
+      ]
+    },
+    {
+      "id": "fearx-bnk-sponsor",
+      "source_name": "FearX",
+      "target_name": "BNK FearX",
+      "source_participant_id": "859999",
+      "valid_from": "2024-06-01",
+      "valid_to": "2026-09-08",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://en.4by4inc.co.kr/press/?bmode=view&idx=24755337"
+      ]
+    },
+    {
+      "id": "hanjin-fredit-brion",
+      "source_name": "Hanjin Brion",
+      "target_name": "Fredit BRION",
+      "source_participant_id": "858511",
+      "valid_from": "2021-01-01",
+      "valid_to": "2022-12-31",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://brionesports.gg/73",
+        "https://www.yna.co.kr/view/AKR20260114114500030"
+      ],
+      "identity_scope": "Main LCK LoL team only. Challengers and Academy identities are not aliases."
+    },
+    {
+      "id": "hanjin-brion",
+      "source_name": "Hanjin Brion",
+      "target_name": "BRION",
+      "source_participant_id": "858511",
+      "valid_from": "2023-01-01",
+      "valid_to": "2023-12-31",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://brionesports.gg/73",
+        "https://www.yna.co.kr/view/AKR20260114114500030"
+      ],
+      "identity_scope": "Main LCK LoL team only. Challengers and Academy identities are not aliases."
+    },
+    {
+      "id": "hanjin-ok-brion",
+      "source_name": "Hanjin Brion",
+      "target_name": "OK BRION",
+      "source_participant_id": "858511",
+      "valid_from": "2023-01-01",
+      "valid_to": "2025-12-31",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://brionesports.gg/73",
+        "https://www.yna.co.kr/view/AKR20260114114500030"
+      ],
+      "identity_scope": "Main LCK LoL team only. Challengers and Academy identities are not aliases."
+    },
+    {
+      "id": "koi-lec-mad-lions-lec",
+      "source_name": "Movistar KOI",
+      "target_name": "MAD Lions",
+      "source_participant_id": "684367",
+      "valid_from": "2020-01-01",
+      "valid_to": "2023-12-31",
+      "tournament_pattern": "LEC",
+      "evidence": [
+        "https://www.newswire.ca/news-releases/overactive-media-executes-definitive-purchase-agreements-with-koi-and-movistar-riders-895202031.html",
+        "https://www.newswire.ca/news-releases/overactive-media-announces-telefonica-naming-partnership-and-2025-strategic-vision-at-movistar-koicon-2024-857416858.html"
+      ],
+      "identity_scope": "LEC franchise participant 684367; never the Spanish participant 825116."
+    },
+    {
+      "id": "koi-lec-mad-lions-european-championship",
+      "source_name": "Movistar KOI",
+      "target_name": "MAD Lions",
+      "source_participant_id": "684367",
+      "valid_from": "2020-01-01",
+      "valid_to": "2023-12-31",
+      "tournament_pattern": "European Championship",
+      "evidence": [
+        "https://www.newswire.ca/news-releases/overactive-media-executes-definitive-purchase-agreements-with-koi-and-movistar-riders-895202031.html",
+        "https://www.newswire.ca/news-releases/overactive-media-announces-telefonica-naming-partnership-and-2025-strategic-vision-at-movistar-koicon-2024-857416858.html"
+      ],
+      "identity_scope": "LEC franchise participant 684367; never the Spanish participant 825116."
+    },
+    {
+      "id": "koi-lec-mad-lions-world-championship",
+      "source_name": "Movistar KOI",
+      "target_name": "MAD Lions",
+      "source_participant_id": "684367",
+      "valid_from": "2020-01-01",
+      "valid_to": "2023-12-31",
+      "tournament_pattern": "World Championship",
+      "evidence": [
+        "https://www.newswire.ca/news-releases/overactive-media-executes-definitive-purchase-agreements-with-koi-and-movistar-riders-895202031.html",
+        "https://www.newswire.ca/news-releases/overactive-media-announces-telefonica-naming-partnership-and-2025-strategic-vision-at-movistar-koicon-2024-857416858.html"
+      ],
+      "identity_scope": "LEC franchise participant 684367; never the Spanish participant 825116."
+    },
+    {
+      "id": "koi-lec-mad-lions-mid-season-invitational",
+      "source_name": "Movistar KOI",
+      "target_name": "MAD Lions",
+      "source_participant_id": "684367",
+      "valid_from": "2020-01-01",
+      "valid_to": "2023-12-31",
+      "tournament_pattern": "Mid Season Invitational",
+      "evidence": [
+        "https://www.newswire.ca/news-releases/overactive-media-executes-definitive-purchase-agreements-with-koi-and-movistar-riders-895202031.html",
+        "https://www.newswire.ca/news-releases/overactive-media-announces-telefonica-naming-partnership-and-2025-strategic-vision-at-movistar-koicon-2024-857416858.html"
+      ],
+      "identity_scope": "LEC franchise participant 684367; never the Spanish participant 825116."
+    },
+    {
+      "id": "koi-lec-mad-lions-koi-lec",
+      "source_name": "Movistar KOI",
+      "target_name": "MAD Lions KOI",
+      "source_participant_id": "684367",
+      "valid_from": "2024-01-01",
+      "valid_to": "2024-12-31",
+      "tournament_pattern": "LEC",
+      "evidence": [
+        "https://www.newswire.ca/news-releases/overactive-media-executes-definitive-purchase-agreements-with-koi-and-movistar-riders-895202031.html",
+        "https://www.newswire.ca/news-releases/overactive-media-announces-telefonica-naming-partnership-and-2025-strategic-vision-at-movistar-koicon-2024-857416858.html"
+      ],
+      "identity_scope": "LEC franchise participant 684367; never the Spanish participant 825116."
+    },
+    {
+      "id": "koi-lec-mad-lions-koi-european-championship",
+      "source_name": "Movistar KOI",
+      "target_name": "MAD Lions KOI",
+      "source_participant_id": "684367",
+      "valid_from": "2024-01-01",
+      "valid_to": "2024-12-31",
+      "tournament_pattern": "European Championship",
+      "evidence": [
+        "https://www.newswire.ca/news-releases/overactive-media-executes-definitive-purchase-agreements-with-koi-and-movistar-riders-895202031.html",
+        "https://www.newswire.ca/news-releases/overactive-media-announces-telefonica-naming-partnership-and-2025-strategic-vision-at-movistar-koicon-2024-857416858.html"
+      ],
+      "identity_scope": "LEC franchise participant 684367; never the Spanish participant 825116."
+    },
+    {
+      "id": "koi-lec-mad-lions-koi-world-championship",
+      "source_name": "Movistar KOI",
+      "target_name": "MAD Lions KOI",
+      "source_participant_id": "684367",
+      "valid_from": "2024-01-01",
+      "valid_to": "2024-12-31",
+      "tournament_pattern": "World Championship",
+      "evidence": [
+        "https://www.newswire.ca/news-releases/overactive-media-executes-definitive-purchase-agreements-with-koi-and-movistar-riders-895202031.html",
+        "https://www.newswire.ca/news-releases/overactive-media-announces-telefonica-naming-partnership-and-2025-strategic-vision-at-movistar-koicon-2024-857416858.html"
+      ],
+      "identity_scope": "LEC franchise participant 684367; never the Spanish participant 825116."
+    },
+    {
+      "id": "koi-lec-mad-lions-koi-mid-season-invitational",
+      "source_name": "Movistar KOI",
+      "target_name": "MAD Lions KOI",
+      "source_participant_id": "684367",
+      "valid_from": "2024-01-01",
+      "valid_to": "2024-12-31",
+      "tournament_pattern": "Mid Season Invitational",
+      "evidence": [
+        "https://www.newswire.ca/news-releases/overactive-media-executes-definitive-purchase-agreements-with-koi-and-movistar-riders-895202031.html",
+        "https://www.newswire.ca/news-releases/overactive-media-announces-telefonica-naming-partnership-and-2025-strategic-vision-at-movistar-koicon-2024-857416858.html"
+      ],
+      "identity_scope": "LEC franchise participant 684367; never the Spanish participant 825116."
+    },
+    {
+      "id": "koi-spanish-riders-lvp-superliga",
+      "source_name": "Movistar KOI",
+      "target_name": "Movistar Riders",
+      "source_participant_id": "825116",
+      "valid_from": "2017-01-01",
+      "valid_to": "2023-12-31",
+      "tournament_pattern": "LVP SuperLiga",
+      "evidence": [
+        "https://www.newswire.ca/news-releases/overactive-media-executes-definitive-purchase-agreements-with-koi-and-movistar-riders-895202031.html",
+        "https://www.telefonica.com/en/wp-content/uploads/sites/5/2024/02/Press-Release-Movistar-extends-its-sponsorship-with-Movistar-KOI.pdf"
+      ],
+      "identity_scope": "Spanish LoL participant 825116, not the LEC franchise or every team bought under KOI."
+    },
+    {
+      "id": "koi-spanish-riders-european-masters",
+      "source_name": "Movistar KOI",
+      "target_name": "Movistar Riders",
+      "source_participant_id": "825116",
+      "valid_from": "2017-01-01",
+      "valid_to": "2023-12-31",
+      "tournament_pattern": "European Masters",
+      "evidence": [
+        "https://www.newswire.ca/news-releases/overactive-media-executes-definitive-purchase-agreements-with-koi-and-movistar-riders-895202031.html",
+        "https://www.telefonica.com/en/wp-content/uploads/sites/5/2024/02/Press-Release-Movistar-extends-its-sponsorship-with-Movistar-KOI.pdf"
+      ],
+      "identity_scope": "Spanish LoL participant 825116, not the LEC franchise or every team bought under KOI."
+    },
+    {
+      "id": "koi-spanish-riders-eu-masters",
+      "source_name": "Movistar KOI",
+      "target_name": "Movistar Riders",
+      "source_participant_id": "825116",
+      "valid_from": "2017-01-01",
+      "valid_to": "2023-12-31",
+      "tournament_pattern": "EU Masters",
+      "evidence": [
+        "https://www.newswire.ca/news-releases/overactive-media-executes-definitive-purchase-agreements-with-koi-and-movistar-riders-895202031.html",
+        "https://www.telefonica.com/en/wp-content/uploads/sites/5/2024/02/Press-Release-Movistar-extends-its-sponsorship-with-Movistar-KOI.pdf"
+      ],
+      "identity_scope": "Spanish LoL participant 825116, not the LEC franchise or every team bought under KOI."
+    },
+    {
+      "id": "koi-spanish-riders-emea-masters",
+      "source_name": "Movistar KOI",
+      "target_name": "Movistar Riders",
+      "source_participant_id": "825116",
+      "valid_from": "2017-01-01",
+      "valid_to": "2023-12-31",
+      "tournament_pattern": "EMEA Masters",
+      "evidence": [
+        "https://www.newswire.ca/news-releases/overactive-media-executes-definitive-purchase-agreements-with-koi-and-movistar-riders-895202031.html",
+        "https://www.telefonica.com/en/wp-content/uploads/sites/5/2024/02/Press-Release-Movistar-extends-its-sponsorship-with-Movistar-KOI.pdf"
+      ],
+      "identity_scope": "Spanish LoL participant 825116, not the LEC franchise or every team bought under KOI."
+    },
+    {
+      "id": "shifters-bds-lec",
+      "source_name": "Shifters",
+      "target_name": "Team BDS",
+      "source_participant_id": "1133169",
+      "valid_from": "2022-01-01",
+      "valid_to": "2025-12-31",
+      "tournament_pattern": "LEC",
+      "evidence": [
+        "https://www.linkedin.com/posts/shiftersgg_team-bds-is-now-shifters-shifters-is-built-activity-7406735331594604544-Sd2q"
+      ],
+      "identity_scope": "BDS main LoL division only; no Schalke slot lineage or BDS Academy alias."
+    },
+    {
+      "id": "shifters-bds-world-championship",
+      "source_name": "Shifters",
+      "target_name": "Team BDS",
+      "source_participant_id": "1133169",
+      "valid_from": "2022-01-01",
+      "valid_to": "2025-12-31",
+      "tournament_pattern": "World Championship",
+      "evidence": [
+        "https://www.linkedin.com/posts/shiftersgg_team-bds-is-now-shifters-shifters-is-built-activity-7406735331594604544-Sd2q"
+      ],
+      "identity_scope": "BDS main LoL division only; no Schalke slot lineage or BDS Academy alias."
+    },
+    {
+      "id": "giantx-academy-pride-lvp-superliga",
+      "source_name": "GIANTX Academy",
+      "target_name": "GIANTX Pride",
+      "source_participant_id": "1581277",
+      "valid_from": "2025-01-01",
+      "valid_to": "2025-12-31",
+      "tournament_pattern": "LVP SuperLiga",
+      "evidence": [
+        "https://giantx.gg/en/blogs/news/giantx-unveils-its-team-for-the-spanish-superliga-of-league-of-legends"
+      ],
+      "identity_scope": "Only the explicitly documented 2025 regional academy squad, not GIANTX LEC or 2024 by inference."
+    },
+    {
+      "id": "giantx-academy-pride-emea-masters",
+      "source_name": "GIANTX Academy",
+      "target_name": "GIANTX Pride",
+      "source_participant_id": "1581277",
+      "valid_from": "2025-01-01",
+      "valid_to": "2025-12-31",
+      "tournament_pattern": "EMEA Masters",
+      "evidence": [
+        "https://giantx.gg/en/blogs/news/giantx-unveils-its-team-for-the-spanish-superliga-of-league-of-legends"
+      ],
+      "identity_scope": "Only the explicitly documented 2025 regional academy squad, not GIANTX LEC or 2024 by inference."
+    },
+    {
+      "id": "schalke-main-lec",
+      "source_name": "Schalke 04",
+      "target_name": "FC Schalke 04",
+      "source_participant_id": "448092",
+      "valid_from": "2017-01-01",
+      "valid_to": "2021-12-31",
+      "tournament_pattern": "LEC",
+      "evidence": [
+        "https://schalke04.de/esports/lol-academy-team-vorstellung/",
+        "https://lolesports.com/en-US/news/team-bds-acquires-schalke-04-s-lec-slot"
+      ],
+      "identity_scope": "Main LEC identity only; this source ID also labels the academy in other competitions."
+    },
+    {
+      "id": "schalke-main-european-championship",
+      "source_name": "Schalke 04",
+      "target_name": "FC Schalke 04",
+      "source_participant_id": "448092",
+      "valid_from": "2017-01-01",
+      "valid_to": "2021-12-31",
+      "tournament_pattern": "European Championship",
+      "evidence": [
+        "https://schalke04.de/esports/lol-academy-team-vorstellung/",
+        "https://lolesports.com/en-US/news/team-bds-acquires-schalke-04-s-lec-slot"
+      ],
+      "identity_scope": "Main LEC identity only; this source ID also labels the academy in other competitions."
+    },
+    {
+      "id": "schalke-main-championship-series",
+      "source_name": "Schalke 04",
+      "target_name": "FC Schalke 04",
+      "source_participant_id": "448092",
+      "valid_from": "2017-01-01",
+      "valid_to": "2021-12-31",
+      "tournament_pattern": "Championship Series",
+      "evidence": [
+        "https://schalke04.de/esports/lol-academy-team-vorstellung/",
+        "https://lolesports.com/en-US/news/team-bds-acquires-schalke-04-s-lec-slot"
+      ],
+      "identity_scope": "Main LEC identity only; this source ID also labels the academy in other competitions."
+    },
+    {
+      "id": "schalke-evolution-prime-league",
+      "source_name": "Schalke 04",
+      "target_name": "FC Schalke 04 Evolution",
+      "source_participant_id": "448092",
+      "valid_from": "2020-01-01",
+      "valid_to": "2026-09-08",
+      "tournament_pattern": "Prime League",
+      "evidence": [
+        "https://schalke04.de/esports/lol-academy-team-vorstellung/"
+      ],
+      "identity_scope": "Explicit academy/regional competition scope; never normalize Evolution away or alias to BDS."
+    },
+    {
+      "id": "schalke-evolution-european-masters",
+      "source_name": "Schalke 04",
+      "target_name": "FC Schalke 04 Evolution",
+      "source_participant_id": "448092",
+      "valid_from": "2020-01-01",
+      "valid_to": "2026-09-08",
+      "tournament_pattern": "European Masters",
+      "evidence": [
+        "https://schalke04.de/esports/lol-academy-team-vorstellung/"
+      ],
+      "identity_scope": "Explicit academy/regional competition scope; never normalize Evolution away or alias to BDS."
+    },
+    {
+      "id": "schalke-evolution-eu-masters",
+      "source_name": "Schalke 04",
+      "target_name": "FC Schalke 04 Evolution",
+      "source_participant_id": "448092",
+      "valid_from": "2020-01-01",
+      "valid_to": "2026-09-08",
+      "tournament_pattern": "EU Masters",
+      "evidence": [
+        "https://schalke04.de/esports/lol-academy-team-vorstellung/"
+      ],
+      "identity_scope": "Explicit academy/regional competition scope; never normalize Evolution away or alias to BDS."
+    },
+    {
+      "id": "schalke-evolution-emea-masters",
+      "source_name": "Schalke 04",
+      "target_name": "FC Schalke 04 Evolution",
+      "source_participant_id": "448092",
+      "valid_from": "2020-01-01",
+      "valid_to": "2026-09-08",
+      "tournament_pattern": "EMEA Masters",
+      "evidence": [
+        "https://schalke04.de/esports/lol-academy-team-vorstellung/"
+      ],
+      "identity_scope": "Explicit academy/regional competition scope; never normalize Evolution away or alias to BDS."
+    },
+    {
+      "id": "vivo-keyd-post-merger-name",
+      "source_name": "Vivo Keyd",
+      "target_name": "Vivo Keyd Stars",
+      "source_participant_id": "584553",
+      "valid_from": "2023-01-01",
+      "valid_to": "2026-09-08",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://ge.globo.com/esports/noticia/2022/11/07/vivo-keyd-anuncia-fusao-com-stars-horizon-veja-detalhes.ghtml"
+      ],
+      "identity_scope": "Only the post-November-2022 merged LoL brand; not original Keyd/Stars Horizon/Netshoes Miners equivalence."
+    },
+    {
+      "id": "los-former-los-grandes-name",
+      "source_name": "LOS",
+      "target_name": "Los Grandes",
+      "source_participant_id": "1429070",
+      "valid_from": "2023-01-01",
+      "valid_to": "2026-09-08",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://ge.globo.com/esports/noticia/2023/06/06/los-grandes-tem-nova-identidade-visual-e-inicia-transicao-de-nome.ghtml"
+      ],
+      "identity_scope": "Same 2023 LoL division gradually renamed LOS. Earlier 2023 source labels are retrospective, not asserted debut dates."
+    },
+    {
+      "id": "infinity-costa-rica-name",
+      "source_name": "Infinity eSports CR",
+      "target_name": "Infinity eSports",
+      "source_participant_id": "582837",
+      "valid_from": "2018-01-01",
+      "valid_to": "2026-09-08",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://infinityesportslatam.com/2022/01/20/tiktok-e-infinity-continuan-con-la-alianza-en-2022/"
+      ],
+      "identity_scope": "Same Costa Rican LoL division; LLN 2018 is not relabeled LLA."
+    },
+    {
+      "id": "chiefs-golgg-spelling-opl",
+      "source_name": "Chiefs Esports Club",
+      "target_name": "Chief Esports Club",
+      "source_participant_id": "387280",
+      "valid_from": "2017-01-01",
+      "valid_to": "2023-11-03",
+      "tournament_pattern": "OPL",
+      "evidence": [
+        "https://www.chiefsesc.com.au/blogs/news/the-chiefs-announce-their-departure-from-lco",
+        "https://gol.gg/teams/team-stats/1662/split-Summer/tournament-ALL/"
+      ],
+      "identity_scope": "GOLGG S12 Chief profile uses The_chiefs_profile.png; official Chiefs confirms LoL 2014-2023. No generic plural removal or Fury/Bliss alias."
+    },
+    {
+      "id": "chiefs-golgg-spelling-lco",
+      "source_name": "Chiefs Esports Club",
+      "target_name": "Chief Esports Club",
+      "source_participant_id": "387280",
+      "valid_from": "2017-01-01",
+      "valid_to": "2023-11-03",
+      "tournament_pattern": "LCO",
+      "evidence": [
+        "https://www.chiefsesc.com.au/blogs/news/the-chiefs-announce-their-departure-from-lco",
+        "https://gol.gg/teams/team-stats/1662/split-Summer/tournament-ALL/"
+      ],
+      "identity_scope": "GOLGG S12 Chief profile uses The_chiefs_profile.png; official Chiefs confirms LoL 2014-2023. No generic plural removal or Fury/Bliss alias."
+    },
+    {
+      "id": "chiefs-golgg-spelling-world-championship",
+      "source_name": "Chiefs Esports Club",
+      "target_name": "Chief Esports Club",
+      "source_participant_id": "387280",
+      "valid_from": "2017-01-01",
+      "valid_to": "2023-11-03",
+      "tournament_pattern": "World Championship",
+      "evidence": [
+        "https://www.chiefsesc.com.au/blogs/news/the-chiefs-announce-their-departure-from-lco",
+        "https://gol.gg/teams/team-stats/1662/split-Summer/tournament-ALL/"
+      ],
+      "identity_scope": "GOLGG S12 Chief profile uses The_chiefs_profile.png; official Chiefs confirms LoL 2014-2023. No generic plural removal or Fury/Bliss alias."
+    },
+    {
+      "id": "kanga-acquired-legacy-lol-history",
+      "source_name": "Kanga Esports",
+      "target_name": "Legacy Esports",
+      "source_participant_id": "523974",
+      "valid_from": "2017-01-01",
+      "valid_to": "2021-12-31",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://www.afc.com.au/news/1032125/crows-finalise-esports-sale"
+      ],
+      "identity_scope": "Seller explicitly states the acquired LoL team was rebranded Kanga. Only retrospective catalog identity for this LoL team; never corporate/W20/rating equivalence or slot-only BDS-type aliasing."
+    },
+    {
+      "id": "nasr-turkey-division",
+      "source_name": "NASR",
+      "target_name": "NASR eSports Turkey",
+      "source_participant_id": "1203446",
+      "valid_from": "2021-01-01",
+      "valid_to": "2024-12-31",
+      "tournament_pattern": "TCL",
+      "evidence": [
+        "http://www.bolumsonucanavari.com/AramaDetay-videodetay-Split/Haberler-Royal_Youth_2021_Kis_Mevsiminden_itibaren_NASR_ESPORTS_Turkiye_Olarak_Mucadele_Edecek-107147.htm"
+      ],
+      "identity_scope": "Only the documented Turkish LoL division, not every NASR game or regional operation."
+    },
+    {
+      "id": "softbank-fukuoka-full-name",
+      "source_name": "Fukuoka SoftBank Hawks",
+      "target_name": "SoftBank Hawks Gaming",
+      "source_participant_id": "1008854",
+      "valid_from": "2020-01-01",
+      "valid_to": "2024-12-31",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://gaming.softbankhawks.co.jp/2024/06/01/3917/"
+      ],
+      "identity_scope": "Fukuoka SoftBank Hawks Gaming LoL division, not the parent baseball team."
+    },
+    {
+      "id": "supermassive-papara-2020",
+      "source_name": "SuperMassive",
+      "target_name": "Papara SuperMassive",
+      "source_participant_id": "441150",
+      "valid_from": "2020-01-01",
+      "valid_to": "2020-12-31",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://tr.linkedin.com/posts/supmassgg_ho%C5%9F-geldin-zeitnot-activity-7058867269174501377-ISWB",
+        "https://www.dha.com.tr/yerel-haberler/istanbul/papara-espor-kulubu-supermassivei-satin-aldi-2366786"
+      ],
+      "identity_scope": "LoL sponsor-name relation outside the 2021-2022 SuperMassive Blaze period; Academy remains separate."
+    },
+    {
+      "id": "supermassive-papara-2023-25",
+      "source_name": "SuperMassive",
+      "target_name": "Papara SuperMassive",
+      "source_participant_id": "441150",
+      "valid_from": "2023-01-01",
+      "valid_to": "2025-12-31",
+      "tournament_pattern": "League of Legends",
+      "evidence": [
+        "https://tr.linkedin.com/posts/supmassgg_ho%C5%9F-geldin-zeitnot-activity-7058867269174501377-ISWB",
+        "https://www.dha.com.tr/yerel-haberler/istanbul/papara-espor-kulubu-supermassivei-satin-aldi-2366786"
+      ],
+      "identity_scope": "LoL sponsor-name relation outside the 2021-2022 SuperMassive Blaze period; Academy remains separate."
+    },
+    {
+      "id": "emea-2026-wl-gaming-1033196",
+      "source_name": "WL Gaming Esports",
+      "target_name": "WLGaming Esports",
+      "source_participant_id": "1033196",
+      "valid_from": "2026-03-09",
+      "valid_to": "2026-06-12",
+      "tournament_pattern": "EMEA Masters",
+      "evidence": [
+        "https://gol.gg/teams/team-stats/2869/split-ALL/tournament-EMEA%20Masters%202026%20Winter/",
+        "https://gol.gg/game/stats/75342/page-summary/",
+        "https://gol.gg/game/stats/75445/page-summary/",
+        "https://gol.gg/game/stats/75496/page-summary/",
+        "https://gol.gg/game/stats/79367/page-summary/",
+        "https://gol.gg/game/stats/79384/page-summary/",
+        "https://gol.gg/game/stats/79426/page-summary/"
+      ],
+      "rationale": "Orthographic spacing variant for Greek regional roster, not generic organization merge: six observed source rows6665,6641,6632,17671,17666,17662 on identical dates/opponents to raw map team2869. Standalone Gaming removal makes source wl differ from fused target wlgaming. No outcome-based evidence; no extension to Summer or other competitions.",
+      "source_rows": [
+        6665,
+        6641,
+        6632,
+        17671,
+        17666,
+        17662
+      ]
+    },
+    {
+      "id": "emea-2026-otter-2114595",
+      "source_name": "The Otter Side",
+      "target_name": "Otter Side",
+      "source_participant_id": "2114595",
+      "valid_from": "2026-03-11",
+      "valid_to": "2026-06-08",
+      "tournament_pattern": "EMEA Masters",
+      "evidence": [
+        "https://gol.gg/teams/team-stats/2977/split-ALL/tournament-EMEA%20Masters%202026%20Winter/",
+        "https://gol.gg/game/stats/75400/page-summary/",
+        "https://gol.gg/game/stats/75448/page-summary/",
+        "https://gol.gg/game/stats/79301/page-summary/"
+      ],
+      "rationale": "Leading-article variant restricted to observed source PID and EMEA competition window. Three exact-date/opponent Winter/Spring fixtures carry frozen raw map team2977; first-party GOLGG identity page identifies Otter Side Portuguese S16 roster. Existing BIG alias and generic E WIE EINFACH normalization remain unchanged. No extension to Summer.",
+      "source_rows": [
+        6651,
+        6642,
+        17688
+      ]
+    },
+    {
+      "id": "prime-2026-winter-aoma-prime-p2219241",
+      "source_name": "AOMA",
+      "target_name": "A One Man Army Prime",
+      "source_participant_id": "2219241",
+      "valid_from": "2026-02-12",
+      "valid_to": "2026-02-20",
+      "tournament_pattern": "League of Legends Prime League",
+      "evidence": [
+        "https://gol.gg/teams/team-stats/2964/split-ALL/tournament-Prime%20League%201st%20Div%202026%20Winter%20Split/"
+      ],
+      "rationale": "The six observed OddsPortal Winter first-division fixtures have participant 2219241 and exact UTC-day/opponent counterparts under GOLGG team 2964. In raw source each top-level sname identifies AOMA and each map names A One Man Army Prime. The GOLGG first-party identity page calls the team A One Man Army Prime and labels sides AOMA. Scope is a literal normalized source-tournament substring and observed Winter date interval; no academy, Benelux, second-division or buyout-slot alias is authorized.",
+      "source_rows": [
+        9772,
+        9773,
+        9775,
+        9777,
+        9784,
+        9787
+      ],
+      "target_golgg_team_id": "2964",
+      "excluded_identities": [
+        "VfB eSports (GOLGG 3065; OddsPortal 2253257)",
+        "A One Man Army without Prime suffix",
+        "academy and second-division rosters"
+      ],
+      "publication_caveat": "Current public page is provider identity evidence, not proof of contemporaneous public publication."
+    },
+    {
+      "id": "ewc-2026-fluxo-w7m-june-observed",
+      "source_name": "Fluxo",
+      "target_name": "Fluxo W7M",
+      "source_participant_id": "1429071",
+      "valid_from": "2026-06-07",
+      "valid_to": "2026-06-10",
+      "tournament_pattern": "League of Legends Esports World Cup",
+      "evidence": [
+        "https://lolesports.com/en-US/season/115547545029543948/handbook/115548016979679445/league/98767991332355509",
+        "https://gol.gg/game/stats/79402/page-summary/",
+        "https://gol.gg/game/stats/79410/page-summary/",
+        "https://gol.gg/game/stats/79412/page-summary/"
+      ],
+      "rationale": "Bound local raw header and maps identify Fluxo W7M team2888 against paiN Gaming June7,RED Canids June8,LOUD June10; archive source names Fluxo,PID1429071, same opponents and UTCdays. Riot2026 handbook independently lists Fluxo W7M(FX). Only these observed EWC fixture days are covered; no global Fluxo/W7M equivalence or earlier publication timing is asserted. GOLGG URLs are locators backed by the frozen local raw snapshot, not live-page fetch claims.",
+      "observed_source_rows": [
+        18038,
+        18035,
+        18034
+      ],
+      "golgg_match_ids": [
+        "79402",
+        "79410",
+        "79412"
+      ],
+      "publication_timing_limit": "Official handbook was read2026-10-08; it is not proof of June publication date."
+    },
+    {
+      "id": "lfl-2026-invitational-rising-bees",
+      "source_name": "Rising Bees",
+      "target_name": "Vitality Rising Bees",
+      "source_participant_id": "2199651",
+      "valid_from": "2026-01-21",
+      "valid_to": "2026-01-29",
+      "tournament_pattern": "League of Legends LFL",
+      "evidence": [
+        "https://vitality.gg/en-eu/blogs/presse/team-vitality-devoile-ses-rising-bees-pour-la-saison-2026"
+      ],
+      "rationale": "Observed source_row9003/event8dExksmo and source_row8989/eventfZauAiit have archive-direct PID2199651 and exact UTC dates/opponents of raw GOLGG73504 and73593, map teamID2935 Vitality Rising Bees. The official January20 announcement names Rising Bees as Team Vitality’s women’s LoL team participating specifically in the2026 LFL Invitational. This is not Vitality.Bee PID877398. Window intentionally spans only the two observed2026 fixtures; tournament_pattern is the existing source competition literal substring, not a regex.",
+      "source_rows": [
+        9003,
+        8989
+      ],
+      "golgg_match_ids": [
+        "73504",
+        "73593"
+      ]
+    },
+    {
+      "id": "fluxo-w7m-main-cblol-observed-2026",
+      "source_name": "Fluxo",
+      "target_name": "Fluxo W7M",
+      "source_participant_id": "1429071",
+      "valid_from": "2026-01-17",
+      "valid_to": "2026-08-29",
+      "tournament_pattern": "CBLOL",
+      "evidence": [
+        "https://www.youtube.com/watch?v=D13yZXjg_Nc",
+        "https://www.youtube.com/watch?v=zScMsozWOaM",
+        "https://lolesports.com/en-US/season/115547545029543948/handbook/115547545030002701/league/98767991332355509",
+        "https://lolesports.com/en-US/season/115547545029543948/handbook/115548016979679445/league/98767991332355509",
+        "https://lolesports.com/en-US/season/115547545029543948/handbook/115548016979679447/league/98767991332355509"
+      ],
+      "rationale": "Bind only the 23 observed 2026 main-CBLOL fixtures for archive participant 1429071. The official CBLOL 2026-01-17 video names Fluxo W7M in its title and FLUXO in its description for the same RED fixture; the official 2026-05-30 video and three current 2026 handbooks corroborate the full name. All 23 candidate raw series/map identities preserve the same opponents, main competition and existing UTC-date tolerance. This does not equate independent W7M teams, academy squads, corporate entities, acquired franchises, slots, ratings, rosters, or pre-2026 history.",
+      "observed_source_rows": [
+        3962,
+        3967,
+        3973,
+        3985,
+        3987,
+        3993,
+        3998,
+        4000,
+        4007,
+        4009,
+        4013,
+        17421,
+        17424,
+        17427,
+        17433,
+        17438,
+        17440,
+        17443,
+        17448,
+        17449,
+        17452,
+        17457,
+        17462
+      ],
+      "observed_candidate_match_ids": [
+        "76234",
+        "76219",
+        "75760",
+        "74023",
+        "73746",
+        "73740",
+        "73423",
+        "73421",
+        "73262",
+        "73260",
+        "73256",
+        "82147",
+        "81749",
+        "81463",
+        "80960",
+        "80945",
+        "80469",
+        "78905",
+        "78125",
+        "78037",
+        "77292",
+        "76905",
+        "76658"
+      ],
+      "date_bounds_basis": "Earliest/latest actual assigned 2026 source fixtures, not inferred organization-announcement dates.",
+      "scope_matching_semantics": "Normalized literal substring, not regex. CBLOL restricts the source competition; no EWC/Academy/history alias is proposed."
+    },
+    {
+      "id": "emea-2026-ruddy-sack-corporation-observed",
+      "source_name": "The Ruddy Sack",
+      "target_name": "Ruddy Corporation",
+      "source_participant_id": "1435582",
+      "valid_from": "2026-06-08",
+      "valid_to": "2026-06-08",
+      "tournament_pattern": "EMEA Masters",
+      "evidence": [
+        "https://x.com/TheRuddySack/status/1944772947014480254",
+        "https://lol.fandom.com/wiki/Ruddy_Corporation",
+        "https://gol.gg/game/stats/79307/page-summary/"
+      ],
+      "rationale": "Official Ruddy account July14 2025 farewell to Ruddy Sack, retrieved via the read tool Nitter mirror under Ruddy Corporation, plus explicitly documented Leaguepedia rename, supports the retrospective LoL name relation. Archive PID1435582 and the June8 EMEA fixture against Frites match raw series79307. Restricted to that observed competition/day; no NLC/global, academy, franchise, rating or organization-history merger. No claim of direct-X authentication or historical quote publication.",
+      "source_rows": [
+        17689
+      ],
+      "target_golgg_team_id": "2878"
+    },
+    {
+      "id": "europe-2026-koi-emea",
+      "source_name": "KOI Academy",
+      "target_name": "Movistar KOI Fenix",
+      "source_participant_id": "1434333",
+      "valid_from": "2026-03-09",
+      "valid_to": "2026-10-06",
+      "tournament_pattern": "EMEA Masters",
+      "evidence": [
+        "https://movistaresports.com/movistar-koi-fenix-campeon-les-madrid-arena/",
+        "https://lol.fandom.com/wiki/Movistar_KOI_F%C3%A9nix",
+        "https://gol.gg/teams/team-stats/2995/split-ALL/tournament-ALL/"
+      ],
+      "rationale": "PID1434333 has 23 exact-day regional Fenix fixture corroborations in2025; the official club identifies Fenix as its academy. Restricted to observed2026 EMEA dates; excludes LEC Movistar KOI, Tormenta Karps and VALORANT. No organization/rating/history merger.",
+      "source_rows": [6608, 6614, 6662, 17554, 17558]
+    },
+    {
+      "id": "europe-2026-koi-les",
+      "source_name": "KOI Academy",
+      "target_name": "Movistar KOI Fenix",
+      "source_participant_id": "1434333",
+      "valid_from": "2026-05-07",
+      "valid_to": "2026-09-06",
+      "tournament_pattern": "LES",
+      "evidence": [
+        "https://movistaresports.com/movistar-koi-fenix-campeon-les-madrid-arena/",
+        "https://lol.fandom.com/wiki/Movistar_KOI_F%C3%A9nix",
+        "https://gol.gg/teams/team-stats/2995/split-ALL/tournament-ALL/"
+      ],
+      "rationale": "The official club identifies Fenix as its academy; PID1434333 also has prior exact-day regional Fenix fixtures. Observed2026 LES dates only; excludes the LEC main team and Tormenta Karps.",
+      "source_rows": [17954, 17955, 17957, 17960, 17961, 17968, 17969, 17971, 17978, 17980]
+    },
+    {
+      "id": "europe-2026-ruddy-nlc",
+      "source_name": "The Ruddy Sack",
+      "target_name": "Ruddy Corporation",
+      "source_participant_id": "1435582",
+      "valid_from": "2026-01-15",
+      "valid_to": "2026-09-07",
+      "tournament_pattern": "NLC",
+      "evidence": [
+        "https://x.com/TheRuddySack/status/1944772947014480254",
+        "https://lol.fandom.com/wiki/Ruddy_Corporation",
+        "https://gol.gg/teams/team-stats/2878/split-ALL/tournament-ALL/"
+      ],
+      "rationale": "Official account farewell and documented rename support the retrospective LoL name relation. PID-bound observed NLC fixtures only; separate from the prior June8 EMEA rule.",
+      "source_rows": [11941, 11947, 11951, 11955, 11964, 11968, 11971, 11978, 11981, 17985, 17986, 17990, 17997, 17999]
+    },
+    {
+      "id": "europe-2026-ruddy-emea-autumn",
+      "source_name": "The Ruddy Sack",
+      "target_name": "Ruddy Corporation",
+      "source_participant_id": "1435582",
+      "valid_from": "2026-09-26",
+      "valid_to": "2026-10-07",
+      "tournament_pattern": "EMEA Masters",
+      "evidence": [
+        "https://x.com/TheRuddySack/status/1944772947014480254",
+        "https://lol.fandom.com/wiki/Ruddy_Corporation",
+        "https://gol.gg/teams/team-stats/2878/split-ALL/tournament-ALL/"
+      ],
+      "rationale": "Same independently documented PID/name relation, limited to observed autumn EMEA fixtures; not a global or future naming rule.",
+      "source_rows": [17548, 17573, 17584, 17602, 17605, 17633, 17645]
+    },
+    {
+      "id": "europe-2026-swines-nlc",
+      "source_name": "4 SWINES & A BUM",
+      "target_name": "4 Swines and A Bum",
+      "source_participant_id": "2194289",
+      "valid_from": "2026-01-15",
+      "valid_to": "2026-02-26",
+      "tournament_pattern": "NLC",
+      "evidence": [
+        "https://x.com/Drututt/status/2008203427181171067",
+        "https://gol.gg/teams/team-stats/2870/split-ALL/tournament-NLC%202026%20Winter%20Split/"
+      ],
+      "rationale": "Founder roster and GOLGG team2870 establish the spelling relation for this exact PID and observed winter fixtures. Does not invent played maps for documented forfeits.",
+      "source_rows": [11944, 11949, 11954, 11959, 11964, 11969, 11974, 11979, 11982]
+    },
+    {
+      "id": "europe-2026-giantx-les",
+      "source_name": "GIANTX Academy",
+      "target_name": "GIANTX iTero",
+      "source_participant_id": "1581277",
+      "valid_from": "2026-05-06",
+      "valid_to": "2026-08-13",
+      "tournament_pattern": "LES",
+      "evidence": [
+        "https://giantx.gg/en/blogs/news/giantx-junta-a-leyendas-del-lol-espanol-en-su-nuevo-equipo-para-la-liga-nacional"
+      ],
+      "rationale": "Official2026 national-team rebrand of the2025 GIANTX Pride regional squad bound to PID1581277. Observed LES fixtures only; excludes GIANTX LEC.",
+      "source_rows": [17962, 17972, 17978, 17981]
+    },
+    {
+      "id": "europe-2026-ub-les",
+      "source_name": "Universitat de Barcelona",
+      "target_name": "UB Alma Mater",
+      "source_participant_id": "2278597",
+      "valid_from": "2026-05-20",
+      "valid_to": "2026-08-12",
+      "tournament_pattern": "LES",
+      "evidence": [
+        "https://lol.fandom.com/wiki/UB_Alma_Mater"
+      ],
+      "rationale": "Documented university squad name plus exact archived participant PID. Observed LES fixtures only; secondary identity evidence, not an authenticated university announcement.",
+      "source_rows": [17964, 17966, 17975]
+    },
+    {
+      "id": "europe-2026-b2u-nlc",
+      "source_name": "Bardicted to U",
+      "target_name": "B2U",
+      "source_participant_id": "2323707",
+      "valid_from": "2026-08-19",
+      "valid_to": "2026-08-26",
+      "tournament_pattern": "NLC",
+      "evidence": [
+        "https://lol.fandom.com/wiki/B2U",
+        "https://gol.gg/teams/team-stats/3109/split-ALL/tournament-ALL/"
+      ],
+      "rationale": "Documented LoL squad former name and exact participant PID; observed August NLC fixtures only.",
+      "source_rows": [17989, 17992]
+    },
+    {
+      "id": "europe-2026-ozarox-tcl",
+      "source_name": "Ozarox",
+      "target_name": "DIA Ozarox Esports",
+      "source_participant_id": "2261809",
+      "valid_from": "2026-07-29",
+      "valid_to": "2026-08-27",
+      "tournament_pattern": "TCL",
+      "evidence": [
+        "https://lol.fandom.com/wiki/DIA_Ozarox_Esports",
+        "https://x.com/diaesportsgg/status/2080672930845917545"
+      ],
+      "rationale": "Post-July24 slot acquisition only, exact archived PID and observed TCL fixtures. Not a backwards spring rename, another DIA squad, or migration of organization history.",
+      "source_rows": [17698, 17701, 17711, 17714]
+    },
+    {
+      "id": "europe-2026-volda-nlc",
+      "source_name": "Volda Esport",
+      "target_name": "Volda E-Sport",
+      "source_participant_id": "2323699",
+      "valid_from": "2026-08-24",
+      "valid_to": "2026-08-26",
+      "tournament_pattern": "NLC",
+      "evidence": [
+        "https://gol.gg/teams/team-stats/3107/split-ALL/tournament-ALL/"
+      ],
+      "rationale": "Provider team3107 spelling and exact source participant PID. Observed August NLC fixtures only; no global normalization change.",
+      "source_rows": [17988, 17990]
+    },
+    {
+      "id": "fearx-demacia-october-observed-2026",
+      "source_name": "FearX",
+      "target_name": "BNK FearX",
+      "source_participant_id": "859999",
+      "valid_from": "2026-10-03",
+      "valid_to": "2026-10-04",
+      "tournament_pattern": "League of Legends Demacia Cup Global Invitational",
+      "evidence": [
+        "https://en.4by4inc.co.kr/press/?bmode=view&idx=24755337",
+        "https://gol.gg/game/stats/83453/page-summary/",
+        "https://gol.gg/game/stats/83450/page-game/",
+        "https://gol.gg/tournament/tournament-matchlist/Demacia%20Cup%20Global%20Invitational%202026/"
+      ],
+      "rationale": "Existing reviewed fearx-bnk-sponsor PID/name relation expires September8. Separate narrowly bounded rule for these two observed Demacia fixtures; provider team2800. Requires complete mapping-only fixture evidence, not a global future rename.",
+      "source_rows": [18140, 18143]
+    },
+    {
+      "id": "los-cblol-september-observed-2026",
+      "source_name": "LOS",
+      "target_name": "Los Grandes",
+      "source_participant_id": "1429070",
+      "valid_from": "2026-09-12",
+      "valid_to": "2026-09-27",
+      "tournament_pattern": "League of Legends CBLOL",
+      "evidence": [
+        "https://ge.globo.com/esports/noticia/2023/06/06/los-grandes-tem-nova-identidade-visual-e-inicia-transicao-de-nome.ghtml",
+        "https://lolesports.com/en-US/season/115547545029543948/handbook/115548016979679447/league/98767991332355509",
+        "https://gol.gg/game/stats/83090/page-summary/",
+        "https://gol.gg/game/stats/82755/page-summary/",
+        "https://gol.gg/tournament/tournament-matchlist/CBLOL%202026%20Split%202%20Playoffs/"
+      ],
+      "rationale": "Existing reviewed los-former-los-grandes-name PID/name relation expires September8. Observed September CBLOL fixtures only; provider team2895 and complete mapping-only fixture evidence required.",
+      "source_rows": [17411, 17416]
+    },
+    {
+      "id": "keyd-cblol-september-observed-2026",
+      "source_name": "Vivo Keyd",
+      "target_name": "Vivo Keyd Stars",
+      "source_participant_id": "584553",
+      "valid_from": "2026-09-19",
+      "valid_to": "2026-09-19",
+      "tournament_pattern": "League of Legends CBLOL",
+      "evidence": [
+        "https://ge.globo.com/esports/noticia/2022/11/07/vivo-keyd-anuncia-fusao-com-stars-horizon-veja-detalhes.ghtml",
+        "https://lolesports.com/en-US/season/115547545029543948/handbook/115548016979679447/league/98767991332355509",
+        "https://gol.gg/game/stats/82750/page-summary/",
+        "https://gol.gg/tournament/tournament-matchlist/CBLOL%202026%20Split%202%20Playoffs/"
+      ],
+      "rationale": "Existing reviewed vivo-keyd-post-merger-name PID/name relation expires September8. Observed September19 CBLOL fixture only; provider team2894 and complete mapping-only fixture evidence required.",
+      "source_rows": [17414]
+    },
+    {
+      "id": "big-emea-autumn-observed-2026",
+      "source_name": "BIG",
+      "target_name": "Berlin International Gaming",
+      "source_participant_id": "966966",
+      "valid_from": "2026-09-26",
+      "valid_to": "2026-10-06",
+      "tournament_pattern": "EMEA Masters",
+      "evidence": [
+        "https://bigclan.gg/pages/about",
+        "https://gol.gg/tournament/tournament-matchlist/EMEA%20Masters%202026%20Summer%20Main%20Event/"
+      ],
+      "rationale": "Existing reviewed big-full-name relation ends September8. Separate observed autumn EMEA window, original PID966966, and complete primary named fixture/map closure. No blanket future extension.",
+      "source_rows": [17552, 17568, 17585, 17597, 17608, 17623, 17649]
+    },
+    {
+      "id": "big-prime-september-observed-2026",
+      "source_name": "BIG",
+      "target_name": "Berlin International Gaming",
+      "source_participant_id": "966966",
+      "valid_from": "2026-09-12",
+      "valid_to": "2026-09-12",
+      "tournament_pattern": "Prime League",
+      "evidence": [
+        "https://bigclan.gg/pages/about",
+        "https://gol.gg/game/stats/82652/page-summary/"
+      ],
+      "rationale": "Existing reviewed BIG full-name relation, exact PID and observed Prime final only. Primary map IDs close the five-map series; score was not used to identify the fixture.",
+      "source_rows": [17844]
+    },
+    {
+      "id": "otter-emea-autumn-observed-2026",
+      "source_name": "The Otter Side",
+      "target_name": "Otter Side",
+      "source_participant_id": "2114595",
+      "valid_from": "2026-09-26",
+      "valid_to": "2026-10-01",
+      "tournament_pattern": "EMEA Masters",
+      "evidence": [
+        "https://gol.gg/teams/team-stats/2977/split-ALL/tournament-ALL/",
+        "https://gol.gg/tournament/tournament-matchlist/EMEA%20Masters%202026%20Summer%20Main%20Event/"
+      ],
+      "rationale": "Existing reviewed leading-article relation for the same archived PID and provider team2977. Separate six observed autumn fixtures after the June8 rule expiry; complete primary map evidence required.",
+      "source_rows": [17572, 17587, 17594, 17615, 17624, 17638]
+    },
+    {
+      "id": "gamespace-emea-autumn-observed-2026",
+      "source_name": "Gamespace",
+      "target_name": "Gamespace MCE",
+      "source_participant_id": "798743",
+      "valid_from": "2026-09-26",
+      "valid_to": "2026-09-30",
+      "tournament_pattern": "EMEA Masters",
+      "evidence": [
+        "https://hll.gr/en/team/gsmc/",
+        "https://gol.gg/teams/team-stats/2863/split-ALL/tournament-ALL/",
+        "https://gol.gg/tournament/tournament-matchlist/EMEA%20Masters%202026%20Summer%20Main%20Event/"
+      ],
+      "rationale": "Official HLL identifies Gamespace Mediterranean College Esports; GOLGG abbreviates it Gamespace MCE and retains provider team2863 in frozen and current2026 fixtures. Archived PID798743 retains short label Gamespace. Five observed EMEA fixtures only; no academy or organization-history merger and no inferred historical announcement clock.",
+      "source_rows": [17575, 17598, 17606, 17627, 17637]
+    }
+  ]
+}

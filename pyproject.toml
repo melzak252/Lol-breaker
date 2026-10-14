@@ -1,0 +1,10 @@
+[tool.kedro]
+package_name = "kedro_project"
+project_name = "betting_app_kedro"
+kedro_init_version = "1.5.0"
+
+[tool.setuptools]
+packages = ["kedro_project"]
+
+[tool.setuptools.package-dir]
+kedro_project = "src/kedro_project"

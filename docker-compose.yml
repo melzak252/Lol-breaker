@@ -1,0 +1,151 @@
+services:
+  timescaledb:
+    image: timescale/timescaledb:2.17.2-pg16
+    container_name: ensemblelegends-timescaledb
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-betting}
+      POSTGRES_USER: ${POSTGRES_USER:-betting}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    ports:
+      - "${POSTGRES_BIND_ADDRESS:-127.0.0.1}:${POSTGRES_PORT:-5432}:5432"
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "3"
+    volumes:
+      - /data/inzynierka/pgdata:/var/lib/postgresql/data
+      - ./docker/timescale/init.sql:/docker-entrypoint-initdb.d/001_timescale.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-betting} -d ${POSTGRES_DB:-betting}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  betting-scheduler:
+    image: ensemblelegends-betting:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.betting
+    container_name: ensemblelegends-betting-scheduler
+    restart: unless-stopped
+    gpus: all
+    depends_on:
+      timescaledb:
+        condition: service_healthy
+    environment:
+      BETTING_APP_DEBUG_DIR: /app/data/betting_scraper_debug
+      BETTING_APP_TAX_RATE: "${BETTING_APP_TAX_RATE:-0.12}"
+      BETTING_APP_MIN_EV: "${BETTING_APP_MIN_EV:-0.05}"
+      BETTING_APP_BANKROLL: "${BETTING_APP_BANKROLL:-100.0}"
+      BETTING_APP_HEADLESS: "1"
+      ODDSPAPI_API_KEY: "${ODDSPAPI_API_KEY:-}"
+      C0_SERVING_CONFIG: /app/conf/base/c0_serving.json
+      C0_MODEL_ROOT: /app/data/06_models/a0_data_focus/a0_data_focus_20260929_192443
+      C0_RESEARCH_ROOT: /research-root
+      C0_RELEASE_MAP_PATH: /research-root/a0-phase-walkforward-20260914/data/04_feature/release_corrected_bank/release_days.json
+      PYTHONPATH: /app:/app/src
+      DATABASE_URL: "postgresql+psycopg2://${POSTGRES_USER:-betting}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@timescaledb:5432/${POSTGRES_DB:-betting}"
+    shm_size: "512m"
+    tmpfs:
+      - /tmp:size=1024m,mode=1777
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "3"
+    volumes:
+      - ./data:/app/data
+      - ${C0_MODEL_HOST_ROOT:-./data/06_models/a0_data_focus/a0_data_focus_20260929_192443}:/app/data/06_models/a0_data_focus/a0_data_focus_20260929_192443:ro
+      - ./data/artifacts/golgg-database-recovery-20260909:/app/data/artifacts/golgg-database-recovery-20260909:ro
+      - ${C0_RESEARCH_HOST_ROOT:?Set C0_RESEARCH_HOST_ROOT to the local C0 research root}:/research-root:ro
+      - ./betting_app:/app/betting_app
+      - ./conf:/app/conf
+      - ./conf/base/c0_serving.json:/app/conf/base/c0_serving.json:ro
+      - ./src:/app/src
+      - ./pyproject.toml:/app/pyproject.toml
+    command: >
+      python -m betting_app.scheduler
+
+  betting-api:
+    image: ensemblelegends-betting:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.betting
+    container_name: ensemblelegends-betting-api
+    restart: unless-stopped
+    depends_on:
+      timescaledb:
+        condition: service_healthy
+    ports:
+      # Remote access must pass Caddy authentication, never a public API bind.
+      - "127.0.0.1:${BETTING_API_PORT:-8000}:8000"
+    environment:
+      BETTING_API_ALLOWED_ORIGINS: "${BETTING_API_ALLOWED_ORIGINS:-http://localhost:3000,http://127.0.0.1:3000}"
+      BETTING_APP_TAX_RATE: "${BETTING_APP_TAX_RATE:-0.12}"
+      BETTING_APP_MIN_EV: "${BETTING_APP_MIN_EV:-0.05}"
+      C0_SERVING_CONFIG: /app/conf/base/c0_serving.json
+      C0_MODEL_ROOT: /app/data/06_models/a0_data_focus/a0_data_focus_20260929_192443
+      C0_RESEARCH_ROOT: /research-root
+      C0_RELEASE_MAP_PATH: /research-root/a0-phase-walkforward-20260914/data/04_feature/release_corrected_bank/release_days.json
+      IDENTITY_REVIEW_TOKEN_FILE: /run/secrets/identity_review_token
+      PYTHONPATH: /app:/app/src
+      DATABASE_URL: "postgresql+psycopg2://${POSTGRES_USER:-betting}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@timescaledb:5432/${POSTGRES_DB:-betting}"
+    shm_size: "512m"
+    tmpfs:
+      - /tmp:size=512m,mode=1777
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "3"
+    volumes:
+      - ./data:/app/data
+      - ${C0_MODEL_HOST_ROOT:-./data/06_models/a0_data_focus/a0_data_focus_20260929_192443}:/app/data/06_models/a0_data_focus/a0_data_focus_20260929_192443:ro
+      - ./data/artifacts/golgg-database-recovery-20260909:/app/data/artifacts/golgg-database-recovery-20260909:ro
+      - ${C0_RESEARCH_HOST_ROOT:?Set C0_RESEARCH_HOST_ROOT to the local C0 research root}:/research-root:ro
+      - ./betting_app:/app/betting_app
+      - ./conf:/app/conf
+      - ./conf/base/c0_serving.json:/app/conf/base/c0_serving.json:ro
+      - ./src:/app/src
+      - ./pyproject.toml:/app/pyproject.toml
+    secrets:
+      - identity_review_token
+    command: >
+      uvicorn betting_app.api.main:app
+      --host 0.0.0.0
+      --port 8000
+
+  client:
+    image: caddy:2.8-alpine
+    container_name: ensemblelegends-client
+    restart: unless-stopped
+    depends_on:
+      - betting-api
+    ports:
+      - "${CLIENT_BIND_ADDRESS:-127.0.0.1}:${CLIENT_PORT:-3000}:80"
+      - "${CLIENT_BIND_ADDRESS:-127.0.0.1}:${CLIENT_TLS_PORT:-3443}:443"
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "3"
+    environment:
+      CADDY_APP_HOSTNAME: "${CADDY_APP_HOSTNAME:?Set CADDY_APP_HOSTNAME outside Git (http://localhost for local HTTP)}"
+      CADDY_OPERATOR_USERNAME: "${CADDY_OPERATOR_USERNAME:?Set CADDY_OPERATOR_USERNAME outside Git}"
+      CADDY_OPERATOR_PASSWORD_HASH: "${CADDY_OPERATOR_PASSWORD_HASH:?Set CADDY_OPERATOR_PASSWORD_HASH outside Git}"
+    volumes:
+      - ./client/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./client/dist:/srv:ro
+      - caddy-data:/data
+      - caddy-config:/config
+
+volumes:
+  timescale-data:
+  caddy-data:
+  caddy-config:
+
+secrets:
+  identity_review_token:
+    file: "${IDENTITY_REVIEW_TOKEN_SECRET_FILE:-./secrets/identity_review_token}"

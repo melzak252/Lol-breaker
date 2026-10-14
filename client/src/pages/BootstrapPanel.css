@@ -1,0 +1,301 @@
+/* ════════════════════════════════════════════════════════════
+   BootstrapPanel.css — Horizon bootstrap analysis page
+   ════════════════════════════════════════════════════════════ */
+
+.bootstrap-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  color: #e0e0e0;
+}
+
+.bootstrap-page h1 {
+  font-size: 1.8rem;
+  margin-bottom: 6px;
+  color: #fff;
+}
+
+.bootstrap-page h3 {
+  font-size: 1.2rem;
+  margin: 0 0 12px 0;
+  color: #ddd;
+}
+
+.bootstrap-subtitle {
+  font-size: 0.95rem;
+  color: #999;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* ─── Loading / Error ──────────────────────────────────── */
+
+.bootstrap-loading-text {
+  font-size: 1.1rem;
+  color: #aaa;
+  margin-top: 40px;
+}
+
+.bootstrap-error-box {
+  background: #2a1a1a;
+  border: 1px solid #ff5252;
+  border-radius: 8px;
+  padding: 24px;
+  margin-top: 20px;
+}
+
+.bootstrap-error-text {
+  color: #ff8a80;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.bootstrap-error-hint {
+  color: #aaa;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.bootstrap-retry-btn {
+  margin-top: 12px;
+  background: #333;
+  color: #e0e0e0;
+  border: 1px solid #555;
+  padding: 8px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.2s;
+}
+
+.bootstrap-retry-btn:hover {
+  background: #444;
+}
+
+/* ─── Controls ──────────────────────────────────────────── */
+
+.bootstrap-controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.bootstrap-refresh-btn {
+  background: #1a3a5c;
+  color: #90caf9;
+  border: 1px solid #2979a0;
+  padding: 10px 22px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.2s, opacity 0.2s;
+}
+
+.bootstrap-refresh-btn:hover:not(:disabled) {
+  background: #1e4970;
+}
+
+.bootstrap-refresh-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.bootstrap-refresh-btn-secondary {
+  background: #2a2a3a;
+  border-color: #444;
+  color: #ccc;
+}
+
+.bootstrap-refresh-btn-secondary:hover {
+  background: #333350;
+}
+
+/* ─── Stats cards ──────────────────────────────────────── */
+
+.bootstrap-stats-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.bootstrap-stat-card {
+  background: #1e1e30;
+  border: 1px solid #333;
+  border-left: 4px solid #4fc3f7;
+  border-radius: 8px;
+  padding: 12px 18px;
+  min-width: 120px;
+  flex: 1 0 auto;
+}
+
+.bootstrap-stat-label {
+  display: block;
+  font-size: 0.8rem;
+  color: #999;
+  margin-bottom: 4px;
+}
+
+.bootstrap-stat-value {
+  display: block;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* ─── CI Chart ─────────────────────────────────────────── */
+
+.bootstrap-model-section {
+  background: #151528;
+  border: 1px solid #2a2a4a;
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.bootstrap-ci-chart-wrapper {
+  width: 100%;
+}
+
+.bootstrap-ci-chart-wrapper h3 {
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+}
+
+.bootstrap-ci-subtitle {
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+
+.bootstrap-ci-chart {
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.bootstrap-no-data {
+  color: #888;
+  font-style: italic;
+}
+
+/* ─── Results table ────────────────────────────────────── */
+
+.bootstrap-table-section {
+  background: #151528;
+  border: 1px solid #2a2a4a;
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.bootstrap-table-wrapper {
+  overflow-x: auto;
+}
+
+.bootstrap-results-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.bootstrap-results-table th {
+  background: #1a1a35;
+  color: #aaa;
+  font-weight: 600;
+  padding: 10px 8px;
+  text-align: left;
+  border-bottom: 2px solid #333;
+  white-space: nowrap;
+}
+
+.bootstrap-results-table td {
+  padding: 8px;
+  border-bottom: 1px solid #2a2a3a;
+  white-space: nowrap;
+}
+
+.bootstrap-results-table tbody tr:hover {
+  background: #1a1a30;
+}
+
+.bootstrap-row-sig {
+  border-left: 3px solid #00e676;
+}
+
+.bootstrap-row-nonsig {
+  border-left: 3px solid #ff5252;
+}
+
+.bootstrap-sig-yes {
+  color: #00e676;
+  font-weight: 600;
+}
+
+.bootstrap-sig-no {
+  color: #ff5252;
+  font-weight: 600;
+}
+
+/* ─── Monthly section ──────────────────────────────────── */
+
+.bootstrap-monthly-section {
+  background: #151528;
+  border: 1px solid #2a2a4a;
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.bootstrap-monthly-subtitle {
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 12px;
+}
+
+/* ─── Plot ─────────────────────────────────────────────── */
+
+.bootstrap-plot-section {
+  background: #151528;
+  border: 1px solid #2a2a4a;
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.bootstrap-plot-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+/* ─── Legend ────────────────────────────────────────────── */
+
+.bootstrap-legend {
+  background: #151528;
+  border: 1px solid #2a2a4a;
+  border-radius: 10px;
+  padding: 24px;
+  margin-top: 20px;
+}
+
+.bootstrap-legend h3 {
+  margin-bottom: 12px;
+}
+
+.bootstrap-legend ul {
+  list-style: disc;
+  padding-left: 20px;
+  line-height: 1.8;
+  font-size: 0.92rem;
+  color: #bbb;
+}
+
+.bootstrap-legend li strong {
+  color: #ddd;
+}

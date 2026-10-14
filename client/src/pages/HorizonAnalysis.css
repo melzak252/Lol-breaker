@@ -1,0 +1,676 @@
+/* ─── Horizon Accuracy Page ──────────────────────────────── */
+.horizon-page {
+  padding: 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.horizon-page h1 {
+  font-size: 1.6rem;
+  color: #e0e0ff;
+  margin-bottom: 0.25rem;
+}
+
+.horizon-page .subtitle {
+  color: #888;
+  font-size: 0.9rem;
+  margin-bottom: 1.25rem;
+}
+
+/* ─── Controls ──────────────────────────────────────────── */
+.horizon-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.horizon-controls label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #ccc;
+  font-size: 0.85rem;
+}
+
+.horizon-controls select,
+.horizon-controls input[type="number"] {
+  background: #1e1e3a;
+  color: #e0e0ff;
+  border: 1px solid #3a3a5a;
+  border-radius: 4px;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.85rem;
+}
+
+.horizon-controls button {
+  background: #4fc3f7;
+  color: #0a0a1a;
+  border: none;
+  border-radius: 4px;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.horizon-controls button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* ─── Stats row ─────────────────────────────────────────── */
+.stats-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.stat-card {
+  background: #1a1a32;
+  border: 1px solid #2a2a4a;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.stat-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #e0e0ff;
+}
+
+/* ─── Chart section ─────────────────────────────────────── */
+.chart-section {
+  background: #141428;
+  border: 1px solid #2a2a4a;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.chart-section h3 {
+  font-size: 1rem;
+  color: #c0c0e0;
+  margin-bottom: 0.75rem;
+}
+
+.horizon-chart {
+  width: 100%;
+  height: auto;
+  max-height: 340px;
+}
+
+/* ─── Loading / Error ──────────────────────────────────── */
+.loading-text {
+  color: #888;
+  font-style: italic;
+}
+
+.error-text {
+  color: #ff6b6b;
+}
+
+.no-data {
+  color: #888;
+  font-style: italic;
+  padding: 1rem 0;
+}
+
+/* ─── Model Reference Lines Section ──────────────────────── */
+.model-refs-section {
+  background: #141428;
+  border: 1px solid #2a2a4a;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.model-refs-section h3 {
+  font-size: 1rem;
+  color: #c0c0e0;
+  margin-bottom: 0.25rem;
+}
+
+.model-refs-subtitle {
+  color: #888;
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+}
+
+.model-refs-grid {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.model-ref-card {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #1a1a32;
+  border: 1px solid #2a2a4a;
+  border-radius: 6px;
+  padding: 0.5rem 0.8rem;
+  flex-wrap: wrap;
+}
+
+.model-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.model-name {
+  color: #e0e0ff;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.model-metric {
+  color: #aaa;
+  font-size: 0.8rem;
+}
+
+.model-matches {
+  color: #666;
+  font-size: 0.75rem;
+}
+
+/* ─── Bookmaker Results Section ─────────────────────────── */
+.bookmaker-results-section {
+  background: #141428;
+  border: 1px solid #2a2a4a;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.bookmaker-results-section h3 {
+  font-size: 1rem;
+  color: #c0c0e0;
+  margin-bottom: 0.25rem;
+}
+
+.bookmaker-results-subtitle {
+  color: #888;
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+}
+
+.bookmaker-results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 0.75rem;
+}
+
+.bookmaker-result-card {
+  background: #1a1a32;
+  border: 1px solid #2a2a4a;
+  border-radius: 6px;
+  padding: 0.75rem;
+}
+
+.bookmaker-result-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.bookmaker-result-rank {
+  font-size: 0.8rem;
+  color: #666;
+  font-weight: 700;
+  min-width: 1.5rem;
+}
+
+.bookmaker-result-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.bookmaker-result-name {
+  color: #e0e0ff;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.bookmaker-result-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.3rem 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.bookmaker-result-metric {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Market Close Comparison ──────────────────────────── */
+.market-close-section {
+  background: #141428;
+  border: 1px solid #2a2a4a;
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.market-close-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.market-close-header h3 {
+  font-size: 1.1rem;
+  color: #fff;
+  margin: 0;
+}
+
+.market-close-status {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #0a0a1a;
+  text-transform: uppercase;
+}
+
+.market-close-subtitle {
+  color: #888;
+  font-size: 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+.market-close-summary-grid {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 800px) {
+  .market-close-summary-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.market-close-main-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mc-stat {
+  background: #1a1a32;
+  border: 1px solid #2a2a4a;
+  border-radius: 6px;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.mc-label {
+  font-size: 0.7rem;
+  color: #888;
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+
+.mc-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #e0e0ff;
+}
+
+.mc-value.better { color: #00e676; }
+.mc-value.worse { color: #ff5252; }
+
+.market-close-table-wrapper {
+  overflow-x: auto;
+}
+
+.market-close-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.market-close-table th {
+  text-align: left;
+  padding: 0.6rem;
+  border-bottom: 2px solid #2a2a4a;
+  color: #888;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.market-close-table td {
+  padding: 0.75rem 0.6rem;
+  border-bottom: 1px solid #1e1e3a;
+  color: #ccc;
+}
+
+.row-highlight-model {
+  background: rgba(255, 107, 157, 0.1);
+}
+
+.row-highlight-model td:nth-child(2) {
+  color: #ff6b9d;
+}
+
+.row-highlight-hybrid {
+  background: rgba(0, 212, 255, 0.1);
+}
+
+.row-highlight-hybrid td:nth-child(2) {
+  color: #00d4ff;
+}
+
+.market-close-bookmakers h4 {
+  font-size: 0.9rem;
+  color: #aaa;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid #2a2a4a;
+  padding-bottom: 0.4rem;
+}
+
+.mc-bookmakers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.5rem;
+}
+
+.mc-bk-card {
+  background: #1a1a32;
+  border: 1px solid #2a2a4a;
+  border-radius: 4px;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.mc-bk-rank {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #666;
+  min-width: 1.2rem;
+}
+
+.mc-bk-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.mc-bk-name {
+  font-size: 0.85rem;
+  color: #e0e0ff;
+  font-weight: 600;
+}
+
+.mc-bk-metrics {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.bookmaker-result-metric .metric-label {
+  font-size: 0.7rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.bookmaker-result-metric .metric-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #e0e0ff;
+}
+
+.bookmaker-bin-details {
+  margin-top: 0.25rem;
+}
+
+.bookmaker-bin-details summary {
+  color: #888;
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 0.2rem 0;
+}
+
+.bookmaker-bin-details summary:hover {
+  color: #aaa;
+}
+
+.bookmaker-bin-details table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+}
+
+.bookmaker-bin-details th,
+.bookmaker-bin-details td {
+  padding: 0.25rem 0.4rem;
+  text-align: right;
+  border-bottom: 1px solid #1e1e3a;
+}
+
+.bookmaker-bin-details th {
+  color: #888;
+  font-weight: 600;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+
+.bookmaker-bin-details td {
+  color: #ccc;
+}
+
+.bookmaker-bin-details td:first-child {
+  text-align: left;
+}
+
+/* ─── Statistical Tests Section ─────────────────────────── */
+.stat-tests-section {
+  background: #141428;
+  border: 1px solid #2a2a4a;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.stat-tests-section h3 {
+  font-size: 1rem;
+  color: #c0c0e0;
+  margin-bottom: 0.25rem;
+}
+
+.stat-tests-subtitle {
+  color: #888;
+  font-size: 0.85rem;
+  margin-bottom: 0.85rem;
+  line-height: 1.45;
+}
+
+.stat-tests-subtitle strong {
+  color: #cfd3ff;
+}
+
+.stat-tests-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.stat-test-card {
+  background: #1a1a32;
+  border: 1px solid #2a2a4a;
+  border-radius: 6px;
+  padding: 0.75rem;
+}
+
+.stat-test-card.significant {
+  border-color: rgba(0, 230, 118, 0.5);
+  box-shadow: 0 0 0 1px rgba(0, 230, 118, 0.08) inset;
+}
+
+.stat-test-card.not-significant {
+  border-color: rgba(255, 152, 0, 0.35);
+}
+
+.stat-test-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-bottom: 0.55rem;
+}
+
+.stat-test-title {
+  color: #e0e0ff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.stat-test-badge {
+  color: #0a0a1a;
+  background: #ff9800;
+  border-radius: 999px;
+  padding: 0.12rem 0.45rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.stat-test-card.significant .stat-test-badge {
+  background: #00e676;
+}
+
+.stat-test-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem 0.8rem;
+  color: #aaa;
+  font-size: 0.78rem;
+}
+
+.stat-test-metrics strong {
+  color: #e0e0ff;
+}
+
+.stat-test-note {
+  color: #888;
+  font-size: 0.78rem;
+  margin-top: 0.55rem;
+  margin-bottom: 0;
+}
+
+.stat-tests-chart-section {
+  background: #101024;
+  margin-bottom: 0;
+}
+
+.t-dist-chart {
+  max-height: 310px;
+}
+
+/* ─── Legend ───────────────────────────────────────────── */
+.legend-section {
+  background: #141428;
+  border: 1px solid #2a2a4a;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.legend-section h3 {
+  font-size: 1rem;
+  color: #c0c0e0;
+  margin-bottom: 0.5rem;
+}
+
+.legend-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.legend-section li {
+  color: #aaa;
+  font-size: 0.85rem;
+  padding: 0.2rem 0;
+}
+
+.legend-section li::before {
+  content: '•';
+  color: #4fc3f7;
+  margin-right: 0.4rem;
+}
+
+/* ─── Raw data table ───────────────────────────────────── */
+.raw-data {
+  background: #141428;
+  border: 1px solid #2a2a4a;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.raw-data h3 {
+  font-size: 1rem;
+  color: #c0c0e0;
+  margin-bottom: 0.75rem;
+}
+
+.raw-data table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.raw-data th,
+.raw-data td {
+  padding: 0.4rem 0.6rem;
+  text-align: right;
+  border-bottom: 1px solid #1e1e3a;
+}
+
+.raw-data th {
+  color: #888;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-size: 0.75rem;
+}
+
+.raw-data td {
+  color: #ccc;
+}
+
+.raw-data .row-skipped td {
+  color: #666;
+  font-style: italic;
+}

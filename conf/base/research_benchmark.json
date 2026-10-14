@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "name": "causal-a0-rating-controls-v1",
+  "expected_rows": 11550,
+  "input": {
+    "path": "rating-foundation-20260915/data/08_reporting/paired.parquet",
+    "sha256": "8041b6c7ffd4a99e4c67d55c3665c22c8cd653c8dffe4f153b10dfd9b264dfaf"
+  },
+  "models": {
+    "A0": "p_full",
+    "Glicko": "p_glicko",
+    "Elo": "p_elo",
+    "039": "p_039"
+  },
+  "nullable": [
+    "p_039",
+    "market_open"
+  ],
+  "evidence": [
+    {
+      "role": "baseline_receipt",
+      "path": "rating-foundation-20260915/data/07_model_output/receipt.json",
+      "sha256": "651228cbaae321a1bd583d7f94b07259a733264dd13eb37b32f4acbcd9fbf1a8"
+    },
+    {
+      "role": "baseline_audit",
+      "path": "rating-foundation-20260915/data/08_reporting/numeric_audit.json",
+      "sha256": "754dcff576c2919baafbd0c2471166db0acae4db67373a34d439c06cfcbbca2c"
+    },
+    {
+      "role": "research_status",
+      "path": "rating-foundation-20260915/STATUS.json",
+      "sha256": "897e1dd2e7c7b07cfc3479d02017d83f1314480b96f8aa9a93ae80a34f0df314"
+    },
+    {
+      "role": "phase_report_reference",
+      "path": "a0-phase-walkforward-20260914/RAPORT.md",
+      "sha256": "4ca05bce7c85b7e8c162bb6dd09de54c332cfd73a1d65f37ee4df0bd9b64b078"
+    }
+  ],
+  "limitations": [
+    "Retrospektywny development wielokrotnie używany do wyboru modeli; brak niezależnego potwierdzenia.",
+    "Znany skład pierwszej mapy to scenariusz; daily release nie jest timestampem publikacji.",
+    "039 to roczna pochodna badawcza, nie frozen039; aplikacyjny model produkcyjny nie jest baseline tej paczki.",
+    "Braki039 są jawne; A0/ratings na11550 i wspólne039 na9907 to różne próby.",
+    "Archival OPEN bez dokładnej godziny; nie używać do quote-time EV/CLV/Kelly.",
+    "Recomputing scores does not retrain models or replay walk-forward; annual forecasts were generated earlier.",
+    "Fazy mają osobny katalog/braki i jednostkę edycji; LL meczu nie certyfikuje symulacji.",
+    "Candidate timestamps are validated declarations, not independent proof of source availability."
+  ]
+}

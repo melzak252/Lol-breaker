@@ -1,0 +1,152 @@
+{
+  "experiment_id": "EXP-081",
+  "title": "Symmetrized Siamese Neural Network with Focal Loss and Epistemic Uncertainty Gating",
+  "date": "2026-09-06",
+  "status": "completed",
+  "dataset": {
+    "train_period": "2023-01-01 through 2024-12-31",
+    "train_rows": 9744,
+    "test_period": "2025-01-01 through 2026-09-01",
+    "test_rows": 5597,
+    "market_evaluated_rows": 2334,
+    "feature_count": 79
+  },
+  "architecture": {
+    "model_family": "Siamese MLP (32-16 ReLU)",
+    "symmetry": "Forward Anti-Symmetric z_sym = 0.5 * (f(x) - f(-x))",
+    "machine_symmetry_error": 2.220446049250313e-16,
+    "loss_function": "Focal Loss (gamma=1.0) with L2 regularization (1e-2)",
+    "uncertainty_mechanism": "5-Member Bootstrap Bagging (80% subsample with replacement)",
+    "gating_rule": "z_low = z_mean - kappa * z_std; p_low = sigmoid(z_low)",
+    "selected_kappa": 0.75
+  },
+  "test_metrics": {
+    "log_loss_baseline_lr": 0.5543,
+    "log_loss_bce_mlp": 0.5523,
+    "log_loss_focal_mlp": 0.5518,
+    "log_loss_bagged_mlp": 0.5524,
+    "roc_auc_baseline_lr": 0.7854,
+    "roc_auc_focal_mlp": 0.7875,
+    "roc_auc_bagged_mlp": 0.7872,
+    "brier_bagged_mlp": 0.1878
+  },
+  "financial_benchmark_12pct_tax": {
+    "baseline_lr": {
+      "bets_count": 747,
+      "win_rate": 0.5703,
+      "yield_netto_pct": 50.08,
+      "total_profit_pln": 37412.0,
+      "max_drawdown_pct": 5.98,
+      "coin_flip_50_55_wr": 0.365,
+      "coin_flip_50_55_gap_pp": 16.1,
+      "favorites_141_175_profit_pln": -156.0
+    },
+    "siamese_bce_mlp": {
+      "bets_count": 752,
+      "win_rate": 0.5758,
+      "yield_netto_pct": 49.92,
+      "total_profit_pln": 37540.0,
+      "max_drawdown_pct": 5.58,
+      "coin_flip_50_55_wr": 0.365,
+      "coin_flip_50_55_gap_pp": 16.1,
+      "favorites_141_175_profit_pln": -156.0
+    },
+    "siamese_focal_mlp_gamma1": {
+      "bets_count": 750,
+      "win_rate": 0.5733,
+      "yield_netto_pct": 48.67,
+      "total_profit_pln": 36501.0,
+      "max_drawdown_pct": 5.45,
+      "coin_flip_50_55_wr": 0.422,
+      "coin_flip_50_55_gap_pp": 10.4,
+      "favorites_141_175_profit_pln": 32.0
+    },
+    "bagged_mlp_uncertainty_gated_k075": {
+      "bets_count": 680,
+      "win_rate": 0.5868,
+      "yield_netto_pct": 54.48,
+      "total_profit_pln": 37047.0,
+      "max_drawdown_pct": 4.64,
+      "coin_flip_50_55_wr": 0.433,
+      "coin_flip_50_55_gap_pp": 9.4,
+      "favorites_141_175_profit_pln": 65.0
+    }
+  },
+  "kappa_sweep": [
+    {
+      "Kappa (Risk)": "0.00",
+      "Zak\u0142ady": 744,
+      "Win Rate": "57.9%",
+      "Yield Netto": "+49.73%",
+      "Zysk Netto": "+36,998 PLN",
+      "Max DD%": "5.30%",
+      "Coin [50-55) N": 70,
+      "Coin WR%": "42.9%",
+      "Coin Gap pp": "+9.7",
+      "Coin Zysk PLN": "+292",
+      "Fav N": 36,
+      "Fav Gap pp": "+11.1",
+      "Fav Zysk PLN": "-128"
+    },
+    {
+      "Kappa (Risk)": "0.25",
+      "Zak\u0142ady": 726,
+      "Win Rate": "58.3%",
+      "Yield Netto": "+51.66%",
+      "Zysk Netto": "+37,508 PLN",
+      "Max DD%": "5.33%",
+      "Coin [50-55) N": 66,
+      "Coin WR%": "43.9%",
+      "Coin Gap pp": "+8.7",
+      "Coin Zysk PLN": "+482",
+      "Fav N": 32,
+      "Fav Gap pp": "+12.6",
+      "Fav Zysk PLN": "-149"
+    },
+    {
+      "Kappa (Risk)": "0.50",
+      "Zak\u0142ady": 698,
+      "Win Rate": "58.5%",
+      "Yield Netto": "+53.12%",
+      "Zysk Netto": "+37,079 PLN",
+      "Max DD%": "5.33%",
+      "Coin [50-55) N": 61,
+      "Coin WR%": "42.6%",
+      "Coin Gap pp": "+10.1",
+      "Coin Zysk PLN": "+364",
+      "Fav N": 30,
+      "Fav Gap pp": "+11.3",
+      "Fav Zysk PLN": "-83"
+    },
+    {
+      "Kappa (Risk)": "0.75",
+      "Zak\u0142ady": 680,
+      "Win Rate": "58.7%",
+      "Yield Netto": "+54.48%",
+      "Zysk Netto": "+37,047 PLN",
+      "Max DD%": "4.64%",
+      "Coin [50-55) N": 60,
+      "Coin WR%": "43.3%",
+      "Coin Gap pp": "+9.4",
+      "Coin Zysk PLN": "+464",
+      "Fav N": 27,
+      "Fav Gap pp": "+7.8",
+      "Fav Zysk PLN": "+65"
+    },
+    {
+      "Kappa (Risk)": "1.00",
+      "Zak\u0142ady": 655,
+      "Win Rate": "58.8%",
+      "Yield Netto": "+55.01%",
+      "Zysk Netto": "+36,034 PLN",
+      "Max DD%": "4.81%",
+      "Coin [50-55) N": 56,
+      "Coin WR%": "41.1%",
+      "Coin Gap pp": "+11.6",
+      "Coin Zysk PLN": "+230",
+      "Fav N": 26,
+      "Fav Gap pp": "+9.1",
+      "Fav Zysk PLN": "+20"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "native_c0_serving_v1",
+  "model_name": "Causal-C0",
+  "model_version": "c0-native-2026-w32-e12-v1",
+  "feature_version": "native-c0-history16-v1",
+  "model_family": "native_c0",
+  "model_root": "data/06_models/a0_data_focus/a0_data_focus_20260929_192443",
+  "completion_report": "data/08_reporting/a0_data_focus/a0_data_focus_20260929_192443/completed.json",
+  "variant": "control",
+  "raw_history_path": "data/artifacts/golgg-database-recovery-20260909/matches.json",
+  "raw_history_sha256": "991c23cdc67a119a6a2be6b04cb60018ab0f3eeec979f34871f8213f9d6899ca",
+  "raw_history_source_kind": "canonical_frozen_golgg_history",
+  "release_map_relative": "a0-phase-walkforward-20260914/data/04_feature/release_corrected_bank/release_days.json",
+  "startup_timeout_seconds": 600,
+  "request_timeout_seconds": 300,
+  "max_worker_requests": 10000,
+  "max_worker_lifetime_seconds": 3600,
+  "minimum_decision_date": "2026-01-01",
+  "feature_replay_sha256": "f01fdc9eef9ff551cc1bc592628f44b0b17dacba84750dfb0328f21b9994e58d",
+  "forward_status": "frozen_static_2026_artifact_not_prospective_certified"
+}

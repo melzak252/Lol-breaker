@@ -1,0 +1,689 @@
+/* ─── System Page — Unified Design ─────────────────────────── */
+
+.system-page {
+  padding: 1rem 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ─── Header ────────────────────────────────────────────────── */
+
+.sys-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.sys-header h1 {
+  font-size: 1.8rem;
+  color: #4fc3f7;
+  margin: 0;
+}
+
+.sys-header-actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+/* ─── Buttons ───────────────────────────────────────────────── */
+
+.sys-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid #4fc3f7;
+  border-radius: 6px;
+  background: rgba(79, 195, 247, 0.1);
+  color: #4fc3f7;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.sys-btn:hover {
+  background: rgba(79, 195, 247, 0.2);
+}
+
+.sys-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.sys-btn-secondary {
+  border-color: #2a2a4a;
+  background: #16213e;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.sys-btn-secondary:hover {
+  border-color: #4fc3f7;
+  color: #4fc3f7;
+}
+
+.sys-btn-ghost {
+  border-color: transparent;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.sys-btn-ghost:hover {
+  color: #4fc3f7;
+}
+
+.sys-btn-small {
+  padding: 0.3rem 0.6rem;
+  font-size: 0.78rem;
+}
+
+/* ─── Toast ──────────────────────────────────────────────────── */
+
+.sys-toast {
+  background: #16213e;
+  border: 1px solid #4fc3f7;
+  border-radius: 6px;
+  padding: 0.7rem 1rem;
+  margin-bottom: 1rem;
+  color: #4fc3f7;
+  font-size: 0.9rem;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Health Banner ─────────────────────────────────────────── */
+
+.health-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.2rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  border: 1px solid;
+}
+
+.health-healthy {
+  background: rgba(76, 175, 80, 0.08);
+  border-color: rgba(76, 175, 80, 0.3);
+}
+
+.health-warning {
+  background: rgba(255, 152, 0, 0.08);
+  border-color: rgba(255, 152, 0, 0.3);
+}
+
+.health-critical {
+  background: rgba(239, 83, 80, 0.08);
+  border-color: rgba(239, 83, 80, 0.3);
+}
+
+.health-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.health-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.health-healthy .health-dot { background: #4caf50; box-shadow: 0 0 6px rgba(76, 175, 80, 0.5); }
+.health-warning .health-dot { background: #ff9800; box-shadow: 0 0 6px rgba(255, 152, 0, 0.5); }
+.health-critical .health-dot { background: #ef5350; box-shadow: 0 0 6px rgba(239, 83, 80, 0.5); }
+
+.health-label {
+  font-weight: 600;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.health-summary {
+  display: flex;
+  gap: 1.2rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.health-stat {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.health-stat-value {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.health-stat-warn .health-stat-value { color: #ff9800; }
+.health-stat-crit .health-stat-value { color: #ef5350; }
+
+/* ─── Tabs ───────────────────────────────────────────────────── */
+
+.sys-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid #2a2a4a;
+  margin-bottom: 1.5rem;
+}
+
+.sys-tab {
+  padding: 0.7rem 1.5rem;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sys-tab:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.sys-tab.active {
+  color: #4fc3f7;
+  border-bottom-color: #4fc3f7;
+}
+
+.tab-badge {
+  background: rgba(239, 83, 80, 0.2);
+  color: #ef5350;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.1rem 0.4rem;
+  border-radius: 8px;
+  min-width: 18px;
+  text-align: center;
+}
+
+.tab-badge-warn {
+  background: rgba(255, 152, 0, 0.2);
+  color: #ff9800;
+}
+
+/* ─── Sections ──────────────────────────────────────────────── */
+
+.sys-section {
+  margin-bottom: 2rem;
+}
+
+.sys-section h2 {
+  font-size: 1.15rem;
+  margin: 0 0 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  border-bottom: 1px solid #2a2a4a;
+  padding-bottom: 0.5rem;
+}
+
+.sys-section h3 {
+  font-size: 0.95rem;
+  margin: 0 0 0.6rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ─── Bookmaker Quick Grid (Overview tab) ────────────────────── */
+
+.bm-quick-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.6rem;
+}
+
+.bm-quick-card {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #1a1a2e;
+  border: 1px solid #2a2a4a;
+  border-radius: 6px;
+  padding: 0.6rem 0.8rem;
+  transition: border-color 0.2s;
+}
+
+.bm-quick-card.bm-warning { border-color: rgba(255, 152, 0, 0.4); }
+.bm-quick-card.bm-critical { border-color: rgba(239, 83, 80, 0.4); }
+.bm-quick-card.bm-unknown { border-color: rgba(255, 255, 255, 0.15); }
+
+.bm-quick-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.bm-healthy .bm-quick-indicator { background: #4caf50; }
+.bm-warning .bm-quick-indicator { background: #ff9800; }
+.bm-critical .bm-quick-indicator { background: #ef5350; }
+.bm-unknown .bm-quick-indicator { background: rgba(255, 255, 255, 0.3); }
+
+.bm-quick-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.bm-quick-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.bm-quick-time {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.bm-warning .bm-quick-time { color: #ff9800; }
+.bm-critical .bm-quick-time { color: #ef5350; }
+
+.bm-quick-count {
+  font-size: 0.8rem;
+  color: #4fc3f7;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* ─── Bookmaker Detail Grid (Bookmakers tab) ─────────────────── */
+
+.bm-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.bm-detail-card {
+  background: #1a1a2e;
+  border: 1px solid #2a2a4a;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.bm-detail-healthy { border-left: 3px solid #4caf50; }
+.bm-detail-warning { border-left: 3px solid #ff9800; }
+.bm-detail-critical { border-left: 3px solid #ef5350; }
+.bm-detail-unknown { border-left: 3px solid rgba(255, 255, 255, 0.3); }
+
+.bm-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid #2a2a4a;
+}
+
+.bm-detail-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.bm-detail-status h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.health-dot-healthy { background: #4caf50; width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.health-dot-warning { background: #ff9800; width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.health-dot-critical { background: #ef5350; width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.health-dot-unknown { background: rgba(255, 255, 255, 0.3); width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+
+.bm-detail-body {
+  padding: 0.8rem 1rem;
+}
+
+.bm-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.3rem 0;
+  font-size: 0.85rem;
+}
+
+.bm-detail-label {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.bm-detail-value {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+}
+
+.bm-detail-value.value-warn {
+  color: #ff9800;
+}
+
+.bm-detail-alert {
+  margin-top: 0.6rem;
+  padding: 0.5rem 0.7rem;
+  background: rgba(255, 152, 0, 0.08);
+  border: 1px solid rgba(255, 152, 0, 0.2);
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: #ff9800;
+  line-height: 1.4;
+}
+
+/* ─── Metrics Grid ──────────────────────────────────────────── */
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.8rem;
+}
+
+.metric-card {
+  background: #1a1a2e;
+  border: 1px solid #2a2a4a;
+  border-radius: 6px;
+  padding: 0.8rem;
+  text-align: center;
+}
+
+.metric-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #4fc3f7;
+}
+
+.metric-label {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 0.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ─── Tables ─────────────────────────────────────────────────── */
+
+.sys-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sys-table th,
+.sys-table td {
+  padding: 0.5rem 0.8rem;
+  text-align: left;
+  border-bottom: 1px solid #2a2a4a;
+  font-size: 0.85rem;
+}
+
+.sys-table th {
+  background: #16213e;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.sys-table td {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.sys-table tr:hover td {
+  background: rgba(79, 195, 247, 0.03);
+}
+
+.cell-mono {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.82rem;
+}
+
+.cell-time {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.cell-error {
+  color: #ef5350;
+  font-size: 0.82rem;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cell-output {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ─── Badges ─────────────────────────────────────────────────── */
+
+.sys-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.sys-badge-success, .sys-badge-completed {
+  background: rgba(76, 175, 80, 0.15);
+  color: #4caf50;
+}
+
+.sys-badge-error {
+  background: rgba(239, 83, 80, 0.15);
+  color: #ef5350;
+}
+
+.sys-badge-running {
+  background: rgba(79, 195, 247, 0.15);
+  color: #4fc3f7;
+}
+
+.sys-badge-warning {
+  background: rgba(255, 152, 0, 0.15);
+  color: #ff9800;
+}
+
+.sys-badge-unknown {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ─── Alerts ─────────────────────────────────────────────────── */
+
+.sys-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  padding: 0.8rem 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  border: 1px solid;
+}
+
+.sys-alert-critical {
+  background: rgba(239, 83, 80, 0.08);
+  border-color: rgba(239, 83, 80, 0.3);
+}
+
+.sys-alert-warning {
+  background: rgba(255, 152, 0, 0.08);
+  border-color: rgba(255, 152, 0, 0.3);
+}
+
+.sys-alert-icon {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.sys-alert strong {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+}
+
+.sys-alert p {
+  margin: 0.2rem 0 0;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.4;
+}
+
+/* ─── Tasks Grid ─────────────────────────────────────────────── */
+
+.tasks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 0.8rem;
+}
+
+.task-card {
+  background: #1a1a2e;
+  border: 1px solid #2a2a4a;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.task-card.task-disabled {
+  opacity: 0.5;
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.task-header h3 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.task-schedule {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+  background: #16213e;
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+}
+
+.task-description {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0.5rem 0 0;
+  line-height: 1.4;
+}
+
+/* ─── Run Rows ──────────────────────────────────────────────── */
+
+.run-zombie {
+  background: rgba(239, 83, 80, 0.05);
+}
+
+.run-zombie td {
+  color: #ef5350 !important;
+}
+
+.run-selected {
+  background: rgba(79, 195, 247, 0.05);
+}
+
+.cmd-error td {
+  background: rgba(239, 83, 80, 0.05);
+}
+
+/* ─── Commands Panel ─────────────────────────────────────────── */
+
+.commands-panel {
+  margin-top: 1rem;
+  background: #16213e;
+  border: 1px solid #2a2a4a;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.commands-panel h3 {
+  margin: 0 0 0.8rem;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ─── Runs Combined (Overview) ────────────────────────────────── */
+
+.runs-combined {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.runs-group h3 {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 0.5rem;
+}
+
+/* ─── Empty / Loading / Error ────────────────────────────────── */
+
+.sys-empty {
+  color: rgba(255, 255, 255, 0.4);
+  font-style: italic;
+  padding: 1rem 0;
+}
+
+.sys-loading {
+  padding: 2rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+  text-align: center;
+}
+
+.sys-error {
+  padding: 2rem;
+  color: #ef5350;
+  text-align: center;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .sys-header {
+    flex-direction: column;
+    gap: 0.8rem;
+    align-items: flex-start;
+  }
+
+  .health-banner {
+    flex-direction: column;
+    gap: 0.6rem;
+    align-items: flex-start;
+  }
+
+  .runs-combined {
+    grid-template-columns: 1fr;
+  }
+
+  .bm-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tasks-grid {
+    grid-template-columns: 1fr;
+  }
+}

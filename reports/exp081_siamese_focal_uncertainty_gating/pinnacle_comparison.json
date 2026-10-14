@@ -1,0 +1,203 @@
+{
+  "cohort": {
+    "n_matches": 447,
+    "date_min": "2026-05-29",
+    "date_max": "2026-09-01",
+    "pinnacle_mean_vig": 0.0641,
+    "polish_open_mean_vig": 0.0866,
+    "polish_close_mean_vig": 0.0864
+  },
+  "metrics": [
+    {
+      "predictor": "Pinnacle No-Vig Fair",
+      "log_loss": 0.535729,
+      "brier": 0.180175,
+      "roc_auc": 0.807259,
+      "accuracy": 0.729306,
+      "ece": 0.041873,
+      "coin_flip_log_loss": 0.682001
+    },
+    {
+      "predictor": "Pinnacle Normalized Implied",
+      "log_loss": 0.535729,
+      "brier": 0.180175,
+      "roc_auc": 0.807229,
+      "accuracy": 0.729306,
+      "ece": 0.041873,
+      "coin_flip_log_loss": 0.682001
+    },
+    {
+      "predictor": "Market Consensus Open (PL)",
+      "log_loss": 0.566321,
+      "brier": 0.192558,
+      "roc_auc": 0.776332,
+      "accuracy": 0.700224,
+      "ece": 0.044922,
+      "coin_flip_log_loss": 0.725704
+    },
+    {
+      "predictor": "Market Consensus Mid (PL)",
+      "log_loss": 0.566898,
+      "brier": 0.192895,
+      "roc_auc": 0.775911,
+      "accuracy": 0.702461,
+      "ece": 0.026168,
+      "coin_flip_log_loss": 0.724432
+    },
+    {
+      "predictor": "Market Consensus Close (PL)",
+      "log_loss": 0.561956,
+      "brier": 0.190817,
+      "roc_auc": 0.782679,
+      "accuracy": 0.704698,
+      "ece": 0.0275,
+      "coin_flip_log_loss": 0.716597
+    },
+    {
+      "predictor": "EXP-039 Symmetric (Pure Model)",
+      "log_loss": 0.57243,
+      "brier": 0.195069,
+      "roc_auc": 0.770965,
+      "accuracy": 0.693512,
+      "ece": 0.040916,
+      "coin_flip_log_loss": 0.718811
+    },
+    {
+      "predictor": "EXP-039 Parity v2 (Thesis Model)",
+      "log_loss": 0.574425,
+      "brier": 0.195883,
+      "roc_auc": 0.770965,
+      "accuracy": 0.693512,
+      "ece": 0.056351,
+      "coin_flip_log_loss": 0.723585
+    },
+    {
+      "predictor": "Operational Hybrid (Model + Market Open)",
+      "log_loss": 0.561609,
+      "brier": 0.190583,
+      "roc_auc": 0.78322,
+      "accuracy": 0.704698,
+      "ece": 0.04471,
+      "coin_flip_log_loss": 0.721097
+    },
+    {
+      "predictor": "Bayesian Hybrid a0.35 (Model + Market Open)",
+      "log_loss": 0.561634,
+      "brier": 0.190401,
+      "roc_auc": 0.783861,
+      "accuracy": 0.704698,
+      "ece": 0.049108,
+      "coin_flip_log_loss": 0.719305
+    },
+    {
+      "predictor": "Bayesian Hybrid a0.50 (Model + Market Open)",
+      "log_loss": 0.561915,
+      "brier": 0.19052,
+      "roc_auc": 0.783781,
+      "accuracy": 0.700224,
+      "ece": 0.047244,
+      "coin_flip_log_loss": 0.717886
+    },
+    {
+      "predictor": "Hybrid Linear (Model + Pinnacle No-Vig)",
+      "log_loss": 0.542833,
+      "brier": 0.182599,
+      "roc_auc": 0.802503,
+      "accuracy": 0.718121,
+      "ece": 0.032954,
+      "coin_flip_log_loss": 0.693472
+    },
+    {
+      "predictor": "Bayesian Hybrid a0.35 (Model + Pinnacle No-Vig)",
+      "log_loss": 0.540668,
+      "brier": 0.181575,
+      "roc_auc": 0.805447,
+      "accuracy": 0.713647,
+      "ece": 0.041483,
+      "coin_flip_log_loss": 0.692126
+    },
+    {
+      "predictor": "Bayesian Hybrid a0.50 (Model + Pinnacle No-Vig)",
+      "log_loss": 0.545195,
+      "brier": 0.1833,
+      "roc_auc": 0.801462,
+      "accuracy": 0.724832,
+      "ece": 0.049775,
+      "coin_flip_log_loss": 0.69739
+    }
+  ],
+  "disagreement_analysis": {
+    "n_disagreements": 46,
+    "disagreement_pct": 0.1029,
+    "pinnacle_accuracy_on_disagreement": 0.6739,
+    "model_accuracy_on_disagreement": 0.3261,
+    "pinnacle_log_loss_on_disagreement": 0.5941,
+    "model_log_loss_on_disagreement": 0.7701
+  },
+  "paired_bootstrap": {
+    "model_minus_pinnacle": {
+      "mean_delta_log_loss": 0.0367,
+      "ci_95_low": 0.016351,
+      "ci_95_high": 0.05738,
+      "p_value": 0.0004
+    },
+    "pl_close_minus_pinnacle": {
+      "mean_delta_log_loss": 0.026226,
+      "ci_95_low": 0.011777,
+      "ci_95_high": 0.040564,
+      "p_value": 0.0
+    }
+  },
+  "best_of_breakdown": {
+    "Bo1": {
+      "n": 79,
+      "pinnacle_log_loss": 0.5436,
+      "pinnacle_accuracy": 0.7215,
+      "model_log_loss": 0.5906,
+      "model_accuracy": 0.6582,
+      "pl_close_log_loss": 0.5917
+    },
+    "Bo3": {
+      "n": 275,
+      "pinnacle_log_loss": 0.541,
+      "pinnacle_accuracy": 0.7345,
+      "model_log_loss": 0.5722,
+      "model_accuracy": 0.7091,
+      "pl_close_log_loss": 0.5626
+    },
+    "Bo5": {
+      "n": 93,
+      "pinnacle_log_loss": 0.5134,
+      "pinnacle_accuracy": 0.7204,
+      "model_log_loss": 0.5577,
+      "model_accuracy": 0.6774,
+      "pl_close_log_loss": 0.5347
+    }
+  },
+  "betting_against_pinnacle": {
+    "ev_ge_0pct": {
+      "n_bets": 327,
+      "win_rate": 0.3761,
+      "roi": -0.1445,
+      "total_pnl": -47.25
+    },
+    "ev_ge_3pct": {
+      "n_bets": 271,
+      "win_rate": 0.3542,
+      "roi": -0.1191,
+      "total_pnl": -32.27
+    },
+    "ev_ge_5pct": {
+      "n_bets": 243,
+      "win_rate": 0.3416,
+      "roi": -0.1117,
+      "total_pnl": -27.15
+    },
+    "ev_ge_8pct": {
+      "n_bets": 212,
+      "win_rate": 0.3066,
+      "roi": -0.1475,
+      "total_pnl": -31.27
+    }
+  }
+}

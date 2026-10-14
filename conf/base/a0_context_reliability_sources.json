@@ -1,0 +1,331 @@
+{
+  "schema": "plan09_source_activation_matrix_read_only_v1",
+  "source_contracts_path": "data/05_model_input/betting_ev_reliability/forward_protocol_20260930_234022/source_contracts.json",
+  "decision_path": "data/08_reporting/betting_ev_reliability/forward_capture_20261002_033658/decision.json",
+  "approved_for_collection": false,
+  "external_requests_this_investigation": 0,
+  "authenticated_new_sources": 0,
+  "activation": "BLOCKED_EXTERNAL_PREREQUISITES",
+  "sources": [
+    {
+      "source_id": "oddspapi:v4:fixtures",
+      "purpose": "Fixture discovery and schedule candidate; not a bookmaker vote.",
+      "locally_supplied": [
+        "fixtureId",
+        "participant display names",
+        "startTime",
+        "league label",
+        "hasOdds",
+        "synthetic local parser fixture"
+      ],
+      "authorization_retention_entitlement": {
+        "status": "UNVERIFIED",
+        "required": [
+          "separate acquisition authorization",
+          "credential supplied only via approved secret mechanism",
+          "provider entitlement and retention permission"
+        ]
+      },
+      "quota": {
+        "verified_provider_limit": null,
+        "protocol_probe_cap": 2,
+        "code_default_rolling24h": 8,
+        "code_default_rolling30d": 250,
+        "note": "Code defaults are not subscription terms or remaining account allowance."
+      },
+      "locator": {
+        "configured_candidate": "https://api.oddspapi.io/v4/fixtures",
+        "approved_locator": false
+      },
+      "binding_and_capture_unmet": [
+        "complete feed/pagination coverage",
+        "exact participant/unit identities",
+        "immutable original response bytes and dual clocks",
+        "schedule revision/effective semantics",
+        "independent actual-start evidence",
+        "live authenticated sample"
+      ]
+    },
+    {
+      "source_id": "oddspapi:v4:pinnacle:match_winner",
+      "purpose": "Pinnacle market candidate via OddsPapi; one underlying bookmaker vote only.",
+      "locally_supplied": [
+        "prices",
+        "parsed source state createdAt/active",
+        "local explicit external-binding consumer and synthetic contract fixtures"
+      ],
+      "authorization_retention_entitlement": {
+        "status": "UNVERIFIED",
+        "required": [
+          "same OddsPapi access gates",
+          "Pinnacle-specific entitled market coverage",
+          "dedicated non-production request logging"
+        ]
+      },
+      "quota": {
+        "verified_provider_limit": null,
+        "shared_oddspapi_total_probe_cap": 2,
+        "actual_remaining_allowance": null
+      },
+      "locator": {
+        "configured_candidate": "https://api.oddspapi.io/v4/odds",
+        "approved_locator": false
+      },
+      "binding_and_capture_unmet": [
+        "authentic binding for both bookmaker/provider participants and outcomes",
+        "exact bytes and request/response clocks",
+        "verified provider timestamp semantics",
+        "T\u22121h orchestration (existing helper default is T\u22126h)",
+        "live execution availability",
+        "second distinct underlying bookmaker is not supplied by this source"
+      ]
+    },
+    {
+      "source_id": "bookmaker:totalbet:match_winner",
+      "purpose": "Direct bookmaker quote candidate.",
+      "locally_supplied": [
+        "event UUID",
+        "participant names",
+        "scheduled start",
+        "parsed market/outcomes/prices",
+        "synthetic parser fixture"
+      ],
+      "authorization_retention_entitlement": {
+        "status": "UNVERIFIED",
+        "required": [
+          "explicit permission and retention",
+          "geographic/account restrictions cleared",
+          "actual source rate entitlement"
+        ]
+      },
+      "quota": {
+        "verified_limit": null,
+        "protocol_probe_cap": 1,
+        "actual_remaining_allowance": null
+      },
+      "locator": {
+        "configured_candidate": "https://totalbet.pl/dealer/bdata/v1/bet/events/esport",
+        "approved_locator": false
+      },
+      "binding_and_capture_unmet": [
+        "stable participant-to-outcome ID binding (parser currently uses sort order)",
+        "exact bytes and dual clocks",
+        "source-state lifetime/publication semantics",
+        "pagination completeness",
+        "live permission/rate proof",
+        "actual start and schedule revision evidence",
+        "independence from Lebull upstream pricing"
+      ]
+    },
+    {
+      "source_id": "bookmaker:lebull:match_winner",
+      "purpose": "Direct bookmaker quote candidate.",
+      "locally_supplied": [
+        "eventId",
+        "team display names",
+        "scheduled timestamp",
+        "active stakes/prices",
+        "parser code; no focused local event fixture"
+      ],
+      "authorization_retention_entitlement": {
+        "status": "UNVERIFIED",
+        "required": [
+          "explicit permission and retention",
+          "user entitlement (public tenant ID is insufficient)",
+          "geographic/access conditions and rate budget"
+        ]
+      },
+      "quota": {
+        "verified_limit": null,
+        "protocol_probe_cap": 4,
+        "actual_remaining_allowance": null
+      },
+      "locator": {
+        "configured_candidate": "existing SSR tenant discovery and API constants/flow",
+        "approved_locator": false
+      },
+      "binding_and_capture_unmet": [
+        "stable participant-to-stake binding (parser currently uses stakeCode order)",
+        "authentic focused event evidence",
+        "exact bytes and dual clocks",
+        "source-state semantics",
+        "actual start and schedule revisions",
+        "independence from Totalbet upstream pricing"
+      ]
+    },
+    {
+      "source_id": "golgg:completed-history",
+      "purpose": "Sports history, released updates, actual prior appearances and result candidate; not pre-match roster proof.",
+      "locally_supplied": [
+        "completed match/map IDs",
+        "actual player IDs and map/team observations",
+        "displayed result/date",
+        "local HTML/parser fixtures"
+      ],
+      "authorization_retention_entitlement": {
+        "status": "UNVERIFIED",
+        "required": [
+          "separate source permission, retention and rate approval"
+        ]
+      },
+      "quota": {
+        "verified_limit": null,
+        "protocol_probe_cap": "1 per approved sports locator",
+        "actual_remaining_allowance": null
+      },
+      "locator": {
+        "configured_scraper": "betting_app/scrapers/golgg.py",
+        "approved_exact_locator": false
+      },
+      "binding_and_capture_unmet": [
+        "pre-match announced roster",
+        "actual-start provenance",
+        "precise publication/retrieval clocks",
+        "source revision ledger",
+        "competitive-unit identity",
+        "byte-identical body receipts",
+        "history coverage independent of odds coverage"
+      ]
+    },
+    {
+      "source_id": "liquipedia:context",
+      "purpose": "Context/schedule cross-check and active-roster candidate only; explicitly not authoritative announced-five or start evidence.",
+      "locally_supplied": [
+        "display names",
+        "best-of",
+        "scheduled timestamp",
+        "active roster candidate parser"
+      ],
+      "authorization_retention_entitlement": {
+        "status": "UNVERIFIED",
+        "required": [
+          "API access plus license, rate and retention permission"
+        ]
+      },
+      "quota": {
+        "verified_limit": null,
+        "protocol_probe_cap": "1 per approved sports locator",
+        "actual_remaining_allowance": null
+      },
+      "locator": {
+        "configured_client": "betting_app/services/liquipedia_service.py",
+        "approved_exact_locator": false
+      },
+      "binding_and_capture_unmet": [
+        "exact official fixture/unit/player binding",
+        "match-specific starting five",
+        "revision/capture/clock evidence",
+        "actual start",
+        "live authenticated sample"
+      ]
+    },
+    {
+      "source_id": "official:unit-and-announcement",
+      "purpose": "Official competitive-unit registration, directional identity links and announced five.",
+      "locally_supplied": [
+        "strict local consumer schema for exact IDs, clocks, five players and retractions"
+      ],
+      "authorization_retention_entitlement": {
+        "status": "UNVERIFIED",
+        "required": [
+          "source-specific official league/tournament/team document permission",
+          "immutable capture permission"
+        ]
+      },
+      "quota": {
+        "verified_limit": null,
+        "protocol_probe_cap": "1 per approved official locator",
+        "actual_remaining_allowance": null
+      },
+      "locator": {
+        "implementation": null,
+        "approved_locator": null,
+        "unregistered_locator_request_cap": 0
+      },
+      "binding_and_capture_unmet": [
+        "named authorized publisher/API/document locator and competition scope",
+        "authentic publication/capture/revision",
+        "official slot/context and player-ID crosswalk",
+        "content/source authenticity",
+        "exact IDs and as-of unit/roster evidence"
+      ]
+    },
+    {
+      "source_id": "official:actual-start-and-settlement",
+      "purpose": "Independent actual start and authoritative result/corrections.",
+      "locally_supplied": [],
+      "authorization_retention_entitlement": {
+        "status": "UNVERIFIED",
+        "required": [
+          "approved exact event/result sources and access before activation"
+        ]
+      },
+      "quota": {
+        "verified_limit": null,
+        "protocol_probe_cap": "1 per approved official locator",
+        "actual_remaining_allowance": null
+      },
+      "locator": {
+        "implementation": null,
+        "approved_locator": null,
+        "unregistered_locator_request_cap": 0
+      },
+      "binding_and_capture_unmet": [
+        "named authoritative event/result source",
+        "actual start distinct from scheduled start",
+        "result publication/receipt and revision chain",
+        "void/refund/settlement convention",
+        "independent authentic event binding"
+      ]
+    }
+  ],
+  "common_capture_prerequisites": [
+    "approved exact source locator",
+    "immutable exact response bytes or accurately typed rendered capture",
+    "SHA-256 and evidence URI",
+    "request-start, response-received, retrieval and first-observed clocks",
+    "nullable publication/effective timestamps with source semantics and revision",
+    "safe metadata without credentials",
+    "stable source/fixture/participant identity and schema confirmation",
+    "honest failure records for denied, malformed, timeout or empty attempts"
+  ],
+  "cross_source_activation_prerequisites": [
+    "at least two distinct underlying approved bookmaker identities with measured request capacity",
+    "authentic participant/outcome bindings",
+    "independent official actual-start and authoritative result/revision evidence",
+    "live release-aware native-input operation and the separately identified future-valid fixed-artifact contract",
+    "complete immutable opportunity ledger",
+    "all protocol/code/model/input hashes and gates sealed before start"
+  ],
+  "probe_limits": {
+    "oddspapi_total": 2,
+    "totalbet": 1,
+    "lebull": 4,
+    "per_approved_sports_or_official_locator": 1,
+    "unregistered_locator": 0,
+    "retry_or_pagination_beyond_cap": 0
+  },
+  "frozen_dates": {
+    "readiness_deadline": "2026-10-31T00:00:00+00:00",
+    "train_start": "2026-11-01T00:00:00+00:00",
+    "missed_deadline_state": "EXPIRED_UNSTARTED; no rolling start, retrospective inclusion or date change; a new outcome-blind protocol is required"
+  },
+  "exact_user_supplied_prerequisites": [
+    "For each source: scoped written acquisition authorization; permitted access/use and raw-evidence retention terms; actual account/provider entitlement including territory/market scope; measured quota and remaining capacity covering the frozen cadence, pagination and protocol request cap.",
+    "For OddsPapi/Pinnacle: subscribed plan evidence covering fixture and Pinnacle market access, plus actual quota consumption/remaining capacity; for TOTALbet, Lebull, GOLGG and Liquipedia: source-specific permission/retention/rate evidence; tenant IDs or unauthenticated reachability do not substitute.",
+    "For official unit/roster: exact authorized publisher/API/document URL(s), competition scope, source permission, and authentic registration/slot identity plus timestamped match-specific announced five, player-ID crosswalk, revision and capture/publication clocks.",
+    "For official actual-start/result: exact authorized event/start and result/settlement URL(s) per relevant scope; authoritative actual start distinct from schedule; result/correction publication and receipt evidence; settlement/void convention.",
+    "Authentic captured samples sufficient to verify exact source and fixture IDs, both quote sides/outcome bindings, stable schema, schedule revisions, clocks, source revision, and where relevant the distinct underlying bookmaker identity; do not send credentials or secret-bearing URLs in the evidence.",
+    "Measured capacity for two independent underlying approved bookmakers and all fixture-discovery/history/official-source calls; documented that TOTALbet and Lebull are not merely common-upstream duplicate pricing if both count as votes.",
+    "Live release-aware native inputs and opportunity ledger operated under the frozen protocol, followed by sealing required hashes/oracles and all readiness evidence before the deadline; separately authorize any later execution stage."
+  ],
+  "local_reachable_prerequisites": [
+    "E1\u2013E4 local evidence is already recorded as passing in the sealed decision; do not repeat the Plan09 proof.",
+    "The frozen protocol already defines exact-byte capture fields, probe caps, fixture selection, source roles, freshness and dates.",
+    "The named code contains local parsers/consumer schemas and an explicit native snapshot envelope path; none authenticates an external source."
+  ],
+  "external_vs_local_boundary": "Authorization, retention permission, account entitlements, real quotas, official exact locators, genuine source samples, binding evidence and live operating proof require user/provider/official-source inputs. Local parser or contract changes cannot manufacture them.",
+  "source_scope_search_result": "No later approval/locator was found in source_contracts.json or the contract-linked acquisition_requirements.json, sports_access_audit.json and quote_access_audit.json; no credentials/environment/full-filesystem search was done.",
+  "historical_note": "The decision cites an earlier collection-test attempt error, but also explicitly records final E1\u2013E4 PASS_LOCAL_SOFTWARE_ONLY and the later local proof artifacts. This investigation relies on the sealed final decision; it did not rerun checks or the completed audit.",
+  "current_contract_sha256": "e83c3dd91776d342be499d758beb383cd6838310c75137af78ad69f8ddef034f"
+}

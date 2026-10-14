@@ -1,0 +1,150 @@
+{
+  "args": {
+    "batch_size": 256,
+    "d_model": 64,
+    "device": "auto",
+    "dropout": 0.15,
+    "embedding_batch_size": 8192,
+    "embedding_cache": null,
+    "encoder_artifact": "/app/betting_app/models/ml/PlayerGameEncoder/exp-049-recovered-20260729",
+    "epochs": 4,
+    "initial_train_size": 2800,
+    "json_output": "/tmp/exp055_transformer_recent_min40.json",
+    "layers": 1,
+    "limit_matches": null,
+    "limit_player_rows": null,
+    "lr": 0.001,
+    "max_date": null,
+    "max_examples": 6000,
+    "min_date": "2025-01-01",
+    "min_prior_events": 40,
+    "nhead": 4,
+    "seq_len": 40,
+    "step_size": 1400,
+    "test_size": 1400,
+    "weight_decay": 0.0001
+  },
+  "description": "Small transformer over recent leakage-safe PlayerGameEncoder histories.",
+  "experiment_id": "EXP-055",
+  "market_comparison": {
+    "common_mapped_rows": 108,
+    "date_max": "2026-07-29 00:00:00+00:00",
+    "date_min": "2026-05-29 00:00:00+00:00",
+    "label": "transformer_embedding",
+    "metrics": {
+      "exp039": {
+        "accuracy": 0.7789473684210526,
+        "auc": 0.8144044321329639,
+        "brier": 0.17221618646020143,
+        "log_loss": 0.5263579256724544,
+        "n": 95
+      },
+      "hybrid_new_a0.05": {
+        "accuracy": 1.0,
+        "auc": 1.0,
+        "brier": 0.07132973908928501,
+        "log_loss": 0.2945144474809894,
+        "n": 2
+      },
+      "hybrid_old_a0.50": {
+        "accuracy": 0.7789473684210526,
+        "auc": 0.8411819021237303,
+        "brier": 0.16336219604384727,
+        "log_loss": 0.49561422193112126,
+        "n": 95
+      },
+      "market_no_vig": {
+        "accuracy": 0.7216494845360825,
+        "auc": 0.8340767172167707,
+        "brier": 0.1615549780942216,
+        "log_loss": 0.491270585208356,
+        "n": 97
+      },
+      "transformer_embedding_oof_calibrated": {
+        "accuracy": 0.5833333333333334,
+        "auc": 0.6622869318181818,
+        "brier": 0.2345613985307656,
+        "log_loss": 0.6681269362338093,
+        "n": 108
+      },
+      "transformer_embedding_oof_raw": {
+        "accuracy": 0.5833333333333334,
+        "auc": 0.6622869318181818,
+        "brier": 0.2345613985307656,
+        "log_loss": 0.6681269362338093,
+        "n": 108
+      }
+    }
+  },
+  "sequence_metadata": {
+    "config": {
+      "max_examples": 6000,
+      "min_prior_events": 40,
+      "seq_len": 40
+    },
+    "date_max": "2026-07-29T00:00:00+00:00",
+    "date_min": "2025-01-24T00:00:00+00:00",
+    "embedding_dim": 64,
+    "player_embedding_rows": 138260,
+    "raw_matches": 6506,
+    "rows": 4388,
+    "skipped": {
+      "min_prior_events": 2118
+    }
+  },
+  "training": {
+    "cuda_available": false,
+    "device": "cpu",
+    "fold_count": 2,
+    "folds": [
+      {
+        "date_max": "2026-05-28T00:00:00+00:00",
+        "date_min": "2025-10-06T00:00:00+00:00",
+        "epoch_losses": [
+          0.6498168490149758,
+          0.626589601690119,
+          0.6168901920318604,
+          0.6096693439917131
+        ],
+        "fold": 1,
+        "metrics": {
+          "accuracy": 0.6392857142857142,
+          "auc": 0.7009313414966656,
+          "brier": 0.21970160603084188,
+          "log_loss": 0.6281542845052859,
+          "n": 1400
+        },
+        "test_size": 1400,
+        "train_size": 2800
+      },
+      {
+        "date_max": "2026-07-29T00:00:00+00:00",
+        "date_min": "2026-05-28T00:00:00+00:00",
+        "epoch_losses": [
+          0.6467257983544293,
+          0.6241975216304555,
+          0.6154118881506079,
+          0.6044424211277681
+        ],
+        "fold": 2,
+        "metrics": {
+          "accuracy": 0.5478723404255319,
+          "auc": 0.59316949348102,
+          "brier": 0.2540194536848752,
+          "log_loss": 0.7070512066346211,
+          "n": 188
+        },
+        "test_size": 188,
+        "train_size": 4200
+      }
+    ],
+    "oof_metrics": {
+      "accuracy": 0.628463476070529,
+      "auc": 0.6875339004141433,
+      "brier": 0.2237644242669617,
+      "log_loss": 0.6374947261679528,
+      "n": 1588
+    },
+    "torch_version": "2.13.0+cu130"
+  }
+}

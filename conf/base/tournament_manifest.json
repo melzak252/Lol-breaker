@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "name": "retrospective-tournament-compatibility-and-native-research-v2",
+  "created_at": "2026-10-05T00:00:00Z",
+  "policy": "Retrospective research scenarios, not authenticated prestart forecasts. Legacy catalog profiles and mnemonic entrants below belong to proxy compatibility only; the native study binds exact edition-specific specs, prior identities and five-player raw/released-bank rosters through tournament_research_cohort. Prefer strictly prior observed team-context rosters; first-event actual rosters are an explicitly conditional unauthenticated scenario, never announcements. Opening fixtures may be a declared retrospective known-draw scenario; later actual opponents, draws and outcome-derived seeding are forbidden from inputs. Input/source snapshots and observed labels are written separately and exclusively. Archive hashes certify retrieved bytes, not historical publication.",
+  "authenticated_prestart": false,
+  "native_spec_builder": "src.models.tournament_research_cohort.build_research_event_spec",
+  "native_cohort_builder": "src.models.tournament_research_cohort.prepare_research_cohort",
+  "native_research_cases": {
+    "worlds-2023": {"edition_id": "worlds-2023", "year": 2023, "role": "compatibility", "rule_source": "data/artifacts/leaguepedia-tournament-rules-20260908/research/worlds.json", "swiss_no_rematches": false},
+    "worlds-2024": {"edition_id": "worlds-2024", "year": 2024, "role": "compatibility", "rule_source": "data/artifacts/leaguepedia-tournament-rules-20260908/research/worlds.json", "swiss_no_rematches": true, "rematch_fallback": "waive_only_if_no_feasible_draw"},
+    "msi-2023": {"edition_id": "msi-2023", "year": 2023, "role": "compatibility", "rule_source": "data/artifacts/leaguepedia-tournament-rules-20260908/research/msi.json", "regional_constraint": "same_region_forbidden_upper_round_one_only"},
+    "msi-2024": {"edition_id": "msi-2024", "year": 2024, "role": "compatibility", "rule_source": "data/artifacts/leaguepedia-tournament-rules-20260908/research/msi.json", "regional_constraint": "same_region_opposite_halves"},
+    "worlds-2025": {"edition_id": "worlds-2025", "year": 2025, "role": "cal_candidate", "rule_source": "data/artifacts/leaguepedia-tournament-rules-20260908/research/worlds.json", "opening_pool_sizes": [5, 6, 5], "opening_pairs": "1_vs_3_and_2_vs_2", "swiss_no_rematches": true, "rematch_fallback": "waive_only_if_no_feasible_draw"},
+    "msi-2025": {"edition_id": "msi-2025", "year": 2025, "role": "cal_candidate", "rule_source": "data/artifacts/leaguepedia-tournament-rules-20260908/research/msi.json", "regional_constraint": "same_region_opposite_halves"},
+    "msi-2026": {"edition_id": "msi-2026", "year": 2026, "role": "assess_candidate", "rule_source": "data/artifacts/leaguepedia-tournament-rules-20260908/research/msi.json", "regional_constraint": "at_most_one_team_per_region_per_half"},
+    "lck-2026-road-to-msi": {"edition_id": "lck-2026-road-to-msi", "year": 2026, "role": "assess_candidate", "rule_source": "data/artifacts/leaguepedia-tournament-rules-20260908/research/lck.json", "phase_source": "data/artifacts/tournament-daily-evaluation-20260909/lck-road-to-msi-source.json", "target": "two_msi_berths_not_championship"}
+  },
+  "native_rule_source_sha256": {
+    "data/artifacts/leaguepedia-tournament-rules-20260908/research/worlds.json": "8bdef84619d64282332e95477a3d3e45cd8c172f1c6b149304d61318c3cadd49",
+    "data/artifacts/leaguepedia-tournament-rules-20260908/research/msi.json": "8e0482f46b9c0e6eade63a0a47ea7675d070882cf11f9b7ab7a1bf553d033038",
+    "data/artifacts/leaguepedia-tournament-rules-20260908/research/lck.json": "c0dfe4e732946fc5d30794df6665f03c730a4bb76248a04e4051a8b866616a4d"
+  },
+  "catalogue_coverage_policy": "Preserve all 234 source-catalogue phases and their original exclusions; eight research cases do not reauthenticate or replace that history.",
+  "sources": [
+    {
+      "role": "tournament_format_catalog",
+      "path": "conf/base/tournament_formats.json",
+      "sha256": "a34314d80b3ff202d48c3f3c50ca06f1eba25c19a21910fbd2f536ac387acfe6"
+    },
+    {
+      "role": "ground_truth_series_results",
+      "path": "data/artifacts/leaguepedia-tournament-rules-20260908/series_results.csv",
+      "sha256": "69071c4b3aa34d06d12b6f29915a4a2f80240bf3bf1de94619ec518ec47e8e78"
+    }
+  ],
+  "editions": {
+    "worlds-2023": {
+      "id": "worlds-2023",
+      "name": "2023 Season World Championship",
+      "profile": "worlds-2023-swiss-knockout",
+      "native_research_binding": {"edition_id": "worlds-2023", "use_edition_spec_builder": true, "catalog_profile_is_native_edition_contract": false},
+      "format_kind": "swiss_single_elimination",
+      "team_count": 16,
+      "cutoff": "2023-10-18T00:00:00Z",
+      "event_title": "2023 Season World Championship/Main Event",
+      "entrants": [
+        "GEN",
+        "BLG",
+        "JDG",
+        "NRG",
+        "G2",
+        "T1",
+        "KT",
+        "WBG",
+        "LNG",
+        "DK",
+        "FNC",
+        "MAD",
+        "C9",
+        "TL",
+        "BDS",
+        "GAM"
+      ],
+      "family": "worlds",
+      "year": 2023
+    },
+    "worlds-2024": {
+      "id": "worlds-2024",
+      "name": "2024 Season World Championship",
+      "profile": "worlds-2023-swiss-knockout",
+      "native_research_binding": {"edition_id": "worlds-2024", "use_edition_spec_builder": true, "catalog_profile_is_native_edition_contract": false},
+      "format_kind": "swiss_single_elimination",
+      "team_count": 16,
+      "cutoff": "2024-10-02T00:00:00Z",
+      "event_title": "2024 Season World Championship/Main Event",
+      "entrants": [
+        "HLE",
+        "BLG",
+        "TES",
+        "GEN",
+        "G2",
+        "FLY",
+        "FNC",
+        "TL",
+        "T1",
+        "DK",
+        "WBG",
+        "LNG",
+        "MAD",
+        "PNG",
+        "GAM",
+        "PSG"
+      ],
+      "family": "worlds",
+      "year": 2024
+    },
+    "msi-2023": {
+      "id": "msi-2023",
+      "name": "2023 Mid-Season Invitational",
+      "profile": "msi-2023-2026-double-elimination",
+      "native_research_binding": {"edition_id": "msi-2023", "use_edition_spec_builder": true, "catalog_profile_is_native_edition_contract": false},
+      "format_kind": "double_elimination",
+      "team_count": 8,
+      "cutoff": "2023-05-08T00:00:00Z",
+      "event_title": "2023 Mid-Season Invitational",
+      "entrants": [
+        "GEN",
+        "JDG",
+        "MAD",
+        "C9",
+        "T1",
+        "BLG",
+        "G2",
+        "GG"
+      ],
+      "family": "msi",
+      "year": 2023
+    },
+    "msi-2024": {
+      "id": "msi-2024",
+      "name": "2024 Mid-Season Invitational",
+      "profile": "msi-2023-2026-double-elimination",
+      "native_research_binding": {"edition_id": "msi-2024", "use_edition_spec_builder": true, "catalog_profile_is_native_edition_contract": false},
+      "format_kind": "double_elimination",
+      "team_count": 8,
+      "cutoff": "2024-05-06T00:00:00Z",
+      "event_title": "2024 Mid-Season Invitational",
+      "entrants": [
+        "GEN",
+        "BLG",
+        "G2",
+        "TL",
+        "T1",
+        "TES",
+        "FNC",
+        "PSG"
+      ],
+      "family": "msi",
+      "year": 2024
+    }
+  },
+  "verified_at": "2026-10-05T07:55:24.552467+00:00"
+}

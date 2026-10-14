@@ -1,0 +1,506 @@
+.ce-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.ce-header {
+  padding: 1.5rem;
+  border: 1px solid rgba(79, 195, 247, 0.18);
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(15, 23, 42, 0.65));
+}
+
+.ce-header h1 {
+  margin: 0.15rem 0 0.6rem;
+}
+
+.ce-header p {
+  max-width: 820px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.ce-kicker {
+  color: #4fc3f7 !important;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.ce-controls,
+.ce-stats,
+.ce-layout {
+  display: grid;
+  gap: 1rem;
+}
+
+.ce-controls {
+  grid-template-columns: 130px 140px 120px 105px 110px 120px 130px minmax(180px, 1fr);
+  align-items: end;
+  padding: 1rem;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
+  background: rgba(15, 23, 42, 0.7);
+}
+
+.ce-controls label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.84rem;
+}
+
+.ce-controls select,
+.ce-controls input {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  border-radius: 10px;
+  background: #0f172a;
+  color: #fff;
+}
+
+.ce-apply {
+  min-height: 42px;
+  padding: 0.65rem 1rem;
+  border: 1px solid rgba(79, 195, 247, 0.45);
+  border-radius: 10px;
+  background: linear-gradient(135deg, #0284c7, #2563eb);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.ce-download {
+  min-height: 42px;
+  padding: 0.65rem 1rem;
+  border: 1px solid rgba(34, 197, 94, 0.45);
+  border-radius: 10px;
+  background: linear-gradient(135deg, #059669, #16a34a);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.ce-download:disabled {
+  border-color: rgba(148, 163, 184, 0.25);
+  background: rgba(51, 65, 85, 0.65);
+  color: rgba(255, 255, 255, 0.55);
+  cursor: default;
+}
+
+.ce-checkbox {
+  min-height: 42px;
+  justify-content: center;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.ce-checkbox input {
+  width: auto;
+  accent-color: #4fc3f7;
+}
+
+.ce-apply:disabled {
+  border-color: rgba(148, 163, 184, 0.25);
+  background: rgba(51, 65, 85, 0.65);
+  color: rgba(255, 255, 255, 0.55);
+  cursor: default;
+}
+
+.ce-stats {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.ce-stat,
+.ce-chart-card,
+.ce-side > div {
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 16px;
+  background: rgba(15, 23, 42, 0.72);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+}
+
+.ce-stat {
+  padding: 1rem;
+}
+
+.ce-stat span,
+.ce-stat small {
+  display: block;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.ce-stat strong {
+  display: block;
+  margin: 0.2rem 0;
+  color: #e0f2fe;
+  font-size: 1.4rem;
+}
+
+.ce-layout {
+  grid-template-columns: minmax(0, 1fr) 320px;
+  align-items: start;
+}
+
+.ce-chart-card {
+  padding: 1rem;
+}
+
+.ce-chart-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.8rem;
+}
+
+.ce-chart-head h2,
+.ce-chart-head p,
+.ce-table-card h3,
+.ce-empty-detail h3 {
+  margin: 0;
+}
+
+.ce-chart-head p,
+.ce-empty-detail p {
+  color: rgba(255, 255, 255, 0.64);
+}
+
+.ce-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.55rem;
+  max-width: 420px;
+}
+
+.ce-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.78rem;
+}
+
+.ce-legend i,
+.ce-role-dot {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+}
+
+.ce-scatter {
+  width: 100%;
+  height: auto;
+  min-height: 520px;
+}
+
+.ce-scatter rect {
+  fill: #08111f;
+  stroke: rgba(148, 163, 184, 0.12);
+}
+
+.ce-scatter line {
+  stroke: rgba(148, 163, 184, 0.16);
+  stroke-dasharray: 6 8;
+}
+
+.ce-scatter circle {
+  cursor: pointer;
+  opacity: 0.76;
+  stroke: rgba(255, 255, 255, 0.3);
+  stroke-width: 1.2;
+  transition: opacity 0.15s, stroke-width 0.15s, filter 0.15s;
+}
+
+.ce-scatter circle:hover,
+.ce-scatter circle.active {
+  opacity: 1;
+  stroke: #fff;
+  stroke-width: 2.2;
+  filter: drop-shadow(0 0 10px rgba(79, 195, 247, 0.65));
+}
+
+.ce-scatter text {
+  fill: #fff;
+  font-size: 13px;
+  paint-order: stroke;
+  stroke: rgba(8, 17, 31, 0.9);
+  stroke-width: 4px;
+}
+
+.ce-point-label {
+  font-size: 10px !important;
+  text-anchor: middle;
+  pointer-events: none;
+  opacity: 0.88;
+}
+
+.ce-active-label {
+  font-size: 13px !important;
+  text-anchor: start;
+  font-weight: 700;
+}
+
+.ce-label-hidden {
+  display: none;
+}
+
+.ce-side {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ce-tooltip-card,
+.ce-empty-detail,
+.ce-table-card {
+  padding: 1rem;
+}
+
+.ce-tooltip-title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  margin-bottom: 0.8rem;
+}
+
+.ce-tooltip-title strong {
+  font-size: 1.15rem;
+}
+
+.ce-tooltip-title small {
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.ce-tooltip-card dl {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.45rem 0.8rem;
+  margin: 0;
+}
+
+.ce-tooltip-card dt {
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.ce-tooltip-card dd {
+  margin: 0;
+  color: #e0f2fe;
+  font-weight: 700;
+}
+
+.ce-mini-table {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-top: 0.8rem;
+}
+
+.ce-mini-table button {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  cursor: pointer;
+}
+
+.ce-mini-table button:hover {
+  border-color: rgba(79, 195, 247, 0.5);
+  background: rgba(79, 195, 247, 0.1);
+}
+
+.ce-mini-table small {
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.ce-state {
+  padding: 1rem;
+  border: 1px solid rgba(79, 195, 247, 0.22);
+  border-radius: 14px;
+  background: rgba(79, 195, 247, 0.1);
+}
+
+.ce-state.error {
+  border-color: rgba(248, 113, 113, 0.45);
+  background: rgba(127, 29, 29, 0.35);
+}
+
+@media (max-width: 980px) {
+  .ce-controls,
+  .ce-stats,
+  .ce-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .ce-chart-head {
+    flex-direction: column;
+  }
+
+  .ce-legend {
+    justify-content: flex-start;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Visual refresh: align embedding diagnostics with app shell
+   ───────────────────────────────────────────────────────────── */
+.ce-page {
+  max-width: 1280px;
+  margin: 0 auto;
+  gap: 1.2rem;
+  padding: 1.25rem 0 3rem;
+}
+
+.ce-header {
+  position: relative;
+  overflow: hidden;
+  padding: 1.55rem;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at top left, rgba(168, 85, 247, 0.18), transparent 25rem),
+    radial-gradient(circle at 82% 0%, rgba(56, 189, 248, 0.14), transparent 22rem),
+    linear-gradient(135deg, rgba(20, 31, 50, 0.96), rgba(11, 16, 32, 0.98));
+  box-shadow: var(--shadow-card);
+}
+
+.ce-header h1 {
+  color: var(--text);
+  font-size: clamp(1.7rem, 3vw, 2.7rem);
+  letter-spacing: -0.055em;
+  line-height: 1.02;
+}
+
+.ce-header p { color: var(--text-muted); font-weight: 600; }
+
+.ce-kicker {
+  color: #c4b5fd !important;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.11em;
+}
+
+.ce-controls,
+.ce-stat,
+.ce-chart-card,
+.ce-side > div,
+.ce-state {
+  border-color: var(--border);
+  background: linear-gradient(180deg, rgba(20, 31, 50, 0.94), rgba(14, 22, 38, 0.94));
+  box-shadow: var(--shadow-soft);
+}
+
+.ce-controls {
+  border-radius: 18px;
+  padding: 1rem;
+}
+
+.ce-controls label {
+  color: var(--text-subtle);
+  font-size: 0.7rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.ce-controls select,
+.ce-controls input {
+  color: var(--text);
+  border-color: var(--border);
+  border-radius: 10px;
+  background: rgba(8, 13, 24, 0.68);
+  font-size: 0.85rem;
+  font-weight: 750;
+}
+
+.ce-controls select:focus,
+.ce-controls input:focus {
+  outline: none;
+  border-color: rgba(56, 189, 248, 0.65);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1);
+}
+
+.ce-apply,
+.ce-download {
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 900;
+  transition: transform 0.16s, filter 0.16s;
+}
+
+.ce-apply { background: linear-gradient(135deg, #0ea5e9, #2563eb); }
+.ce-download { background: linear-gradient(135deg, #10b981, #22c55e); }
+.ce-apply:hover:not(:disabled),
+.ce-download:hover:not(:disabled) { transform: translateY(-1px); filter: brightness(1.08); }
+
+.ce-checkbox {
+  border-color: var(--border);
+  background: rgba(8, 13, 24, 0.42);
+  border-radius: 12px;
+}
+
+.ce-stat { border-radius: 16px; }
+.ce-stat span,
+.ce-stat small { color: var(--text-muted); font-weight: 700; }
+.ce-stat strong { color: #e0f2fe; font-weight: 900; letter-spacing: -0.035em; }
+
+.ce-chart-card,
+.ce-side > div { border-radius: 18px; }
+
+.ce-chart-head h2,
+.ce-table-card h3,
+.ce-empty-detail h3,
+.ce-tooltip-title strong { color: var(--text); font-weight: 850; }
+
+.ce-chart-head p,
+.ce-empty-detail p,
+.ce-tooltip-card dt,
+.ce-tooltip-title small { color: var(--text-muted); }
+
+.ce-legend span {
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  background: rgba(148, 163, 184, 0.08);
+  font-weight: 750;
+}
+
+.ce-scatter rect { fill: #080e1b; stroke: var(--border); }
+.ce-scatter line { stroke: rgba(148, 163, 184, 0.14); }
+
+.ce-tooltip-card dd { color: #e0f2fe; }
+
+.ce-mini-table button {
+  color: var(--text);
+  border-color: var(--border);
+  background: rgba(8, 13, 24, 0.42);
+  font-weight: 750;
+}
+
+.ce-mini-table button:hover {
+  border-color: rgba(56, 189, 248, 0.45);
+  background: rgba(56, 189, 248, 0.08);
+}
+
+.ce-state {
+  color: var(--text-muted);
+  border-radius: 16px;
+  font-weight: 800;
+}
+
+@media (max-width: 980px) {
+  .ce-page { padding-top: 0.5rem; }
+  .ce-header { border-radius: 16px; padding: 1.1rem; }
+}

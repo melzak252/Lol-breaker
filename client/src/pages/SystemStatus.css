@@ -1,0 +1,173 @@
+.system-status {
+  padding: 1rem 0;
+}
+
+.system-status h1 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #4fc3f7;
+}
+
+.system-status h2 {
+  font-size: 1.2rem;
+  margin: 2rem 0 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  border-bottom: 1px solid #2a2a4a;
+  padding-bottom: 0.5rem;
+}
+
+/* Metrics grid */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.metric-card {
+  background: #1a1a2e;
+  border: 1px solid #2a2a4a;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.metric-card .metric-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #4fc3f7;
+}
+
+.metric-card .metric-label {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Bookmaker status */
+.bookmaker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.bookmaker-card {
+  background: #1a1a2e;
+  border: 1px solid #2a2a4a;
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bookmaker-card .bookmaker-name {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.bookmaker-card .bookmaker-count {
+  background: #16213e;
+  padding: 0.3rem 0.8rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  color: #4fc3f7;
+}
+
+/* Run history */
+.runs-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+}
+
+.runs-table th,
+.runs-table td {
+  padding: 0.6rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #2a2a4a;
+}
+
+.runs-table th {
+  background: #16213e;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.runs-table td {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.runs-table tr:hover td {
+  background: rgba(79, 195, 247, 0.05);
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-badge.success {
+  background: rgba(76, 175, 80, 0.2);
+  color: #4caf50;
+}
+
+.status-badge.error {
+  background: rgba(239, 83, 80, 0.2);
+  color: #ef5350;
+}
+
+.status-badge.running {
+  background: rgba(255, 152, 0, 0.2);
+  color: #ff9800;
+}
+
+/* Action buttons */
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.action-btn {
+  padding: 0.6rem 1.2rem;
+  border: 1px solid #2a2a4a;
+  border-radius: 6px;
+  background: #16213e;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.action-btn:hover {
+  background: #1a2744;
+  border-color: #4fc3f7;
+}
+
+.action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.action-btn.running {
+  border-color: #ff9800;
+  color: #ff9800;
+}
+
+.loading-text {
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+}
+
+.error-text {
+  color: #ef5350;
+}

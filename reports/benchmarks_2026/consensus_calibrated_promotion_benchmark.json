@@ -1,0 +1,240 @@
+{
+  "model_name": "Calibrated Consensus Rating (12-way)",
+  "model_version": "consensus_calibrated",
+  "cohort_start": "2024-01-14",
+  "cohort_end": "2026-06-14",
+  "metrics": {
+    "sample_size": 9482,
+    "log_loss": 0.5843299702378794,
+    "brier_score": 0.20004186727925008,
+    "brier_reliability": 0.0008150306994662714,
+    "brier_resolution": 0.048679224707952676,
+    "brier_uncertainty": 0.2485665287231914,
+    "auc": 0.7562221342211006,
+    "accuracy": 0.6852984602404556,
+    "ece": 0.026682047270565452,
+    "mce": 0.044105078374057416,
+    "calibration_slope": 1.0005004464083502,
+    "calibration_intercept": 0.10845942680069486
+  },
+  "comparison": {
+    "baseline_name": "EXP-039 Frozen Baseline",
+    "delta_log_loss": 0.025066621529875845,
+    "ci_lower_log_loss": 0.018783354096448695,
+    "ci_upper_log_loss": 0.03306722604363713,
+    "p_value_log_loss": 1.0,
+    "is_statistically_significant": false,
+    "delta_brier": 0.01020711234672575,
+    "delta_accuracy": -0.021725374393587904,
+    "delta_auc": -0.025743549816092504
+  },
+  "slices": {
+    "Confidence / Expected Prob": [
+      {
+        "dimension": "Confidence Level",
+        "bucket": "Heavy Underdog (P < 0.25)",
+        "sample_size": 1191,
+        "log_loss": 0.43399855045452385,
+        "brier_score": 0.13227965180098233,
+        "accuracy": 0.8421494542401343,
+        "mean_predicted_prob": 0.15509524914717562,
+        "observed_win_rate": 0.15785054575986565,
+        "calibration_gap": 0.002755296612690028
+      },
+      {
+        "dimension": "Confidence Level",
+        "bucket": "Moderate Underdog (0.25 <= P < 0.40)",
+        "sample_size": 1785,
+        "log_loss": 0.640462466327337,
+        "brier_score": 0.22432985762459848,
+        "accuracy": 0.6521008403361345,
+        "mean_predicted_prob": 0.3293192497666662,
+        "observed_win_rate": 0.34789915966386553,
+        "calibration_gap": 0.01857990989719932
+      },
+      {
+        "dimension": "Confidence Level",
+        "bucket": "Coin-Flip / Close (0.40 <= P <= 0.60)",
+        "sample_size": 3032,
+        "log_loss": 0.6863881586164873,
+        "brier_score": 0.24663337276802824,
+        "accuracy": 0.5455145118733509,
+        "mean_predicted_prob": 0.5019852525969902,
+        "observed_win_rate": 0.5323218997361477,
+        "calibration_gap": 0.030336647139157513
+      },
+      {
+        "dimension": "Confidence Level",
+        "bucket": "Moderate Favorite (0.60 < P <= 0.75)",
+        "sample_size": 1928,
+        "log_loss": 0.6069532704323903,
+        "brier_score": 0.2083388523297367,
+        "accuracy": 0.7028008298755186,
+        "mean_predicted_prob": 0.6695994116587513,
+        "observed_win_rate": 0.7028008298755186,
+        "calibration_gap": 0.033201418216767364
+      },
+      {
+        "dimension": "Confidence Level",
+        "bucket": "Heavy Favorite (P > 0.75)",
+        "sample_size": 1546,
+        "log_loss": 0.40696261286616975,
+        "brier_score": 0.12247958011809633,
+        "accuracy": 0.8551099611901681,
+        "mean_predicted_prob": 0.8458304261546569,
+        "observed_win_rate": 0.8551099611901681,
+        "calibration_gap": 0.009279535035511266
+      }
+    ],
+    "Series Format (BoN)": [
+      {
+        "dimension": "Series Format (BoN)",
+        "bucket": "Bo1",
+        "sample_size": 4586,
+        "log_loss": 0.6041267453033763,
+        "brier_score": 0.208519956473471,
+        "accuracy": 0.6661578717836895,
+        "mean_predicted_prob": 0.5031295212666317,
+        "observed_win_rate": 0.5296554731792412,
+        "calibration_gap": 0.026525951912609536
+      },
+      {
+        "dimension": "Series Format (BoN)",
+        "bucket": "Bo3",
+        "sample_size": 3693,
+        "log_loss": 0.5534571194235769,
+        "brier_score": 0.18695673575941288,
+        "accuracy": 0.7148659626320065,
+        "mean_predicted_prob": 0.5140242128416789,
+        "observed_win_rate": 0.5301922556187382,
+        "calibration_gap": 0.0161680427770593
+      },
+      {
+        "dimension": "Series Format (BoN)",
+        "bucket": "Bo5",
+        "sample_size": 1203,
+        "log_loss": 0.6036362276001811,
+        "brier_score": 0.20789130506649997,
+        "accuracy": 0.6674979218620116,
+        "mean_predicted_prob": 0.5715467085635401,
+        "observed_win_rate": 0.5926849542809642,
+        "calibration_gap": 0.021138245717424176
+      }
+    ],
+    "Competition Tier": [
+      {
+        "dimension": "Competition Tier",
+        "bucket": "development",
+        "sample_size": 2041,
+        "log_loss": 0.6094177423603008,
+        "brier_score": 0.21010800583655387,
+        "accuracy": 0.6712395884370407,
+        "mean_predicted_prob": 0.5112938901374108,
+        "observed_win_rate": 0.5271925526702597,
+        "calibration_gap": 0.015898662532848884
+      },
+      {
+        "dimension": "Competition Tier",
+        "bucket": "international",
+        "sample_size": 197,
+        "log_loss": 0.6329250317238335,
+        "brier_score": 0.2214420856239423,
+        "accuracy": 0.649746192893401,
+        "mean_predicted_prob": 0.5477056413881437,
+        "observed_win_rate": 0.5736040609137056,
+        "calibration_gap": 0.025898419525561933
+      },
+      {
+        "dimension": "Competition Tier",
+        "bucket": "major",
+        "sample_size": 1772,
+        "log_loss": 0.5844581883776214,
+        "brier_score": 0.19917705897370003,
+        "accuracy": 0.6918735891647856,
+        "mean_predicted_prob": 0.5170874941593684,
+        "observed_win_rate": 0.5282167042889391,
+        "calibration_gap": 0.011129210129570688
+      },
+      {
+        "dimension": "Competition Tier",
+        "bucket": "minor_top_level",
+        "sample_size": 1080,
+        "log_loss": 0.5233968049730182,
+        "brier_score": 0.17575153964193083,
+        "accuracy": 0.7240740740740741,
+        "mean_predicted_prob": 0.5196437009692941,
+        "observed_win_rate": 0.5259259259259259,
+        "calibration_gap": 0.006282224956631777
+      },
+      {
+        "dimension": "Competition Tier",
+        "bucket": "regional",
+        "sample_size": 4392,
+        "log_loss": 0.5854236054673492,
+        "brier_score": 0.20072610278844363,
+        "accuracy": 0.6812386156648452,
+        "mean_predicted_prob": 0.5155444023528856,
+        "observed_win_rate": 0.5480418943533698,
+        "calibration_gap": 0.03249749200048424
+      }
+    ],
+    "Player-Team Disagreement": [
+      {
+        "dimension": "Player-Team Disagreement",
+        "bucket": "High Agreement (Delta <= 0.05)",
+        "sample_size": 4086,
+        "log_loss": 0.5593743557117131,
+        "brier_score": 0.18919463581458973,
+        "accuracy": 0.7099853157121879,
+        "mean_predicted_prob": 0.5250005919908579,
+        "observed_win_rate": 0.5406265296133137,
+        "calibration_gap": 0.015625937622455788
+      },
+      {
+        "dimension": "Player-Team Disagreement",
+        "bucket": "Moderate Agreement (0.05 < Delta <= 0.12)",
+        "sample_size": 2983,
+        "log_loss": 0.5890561521319011,
+        "brier_score": 0.20230409396976212,
+        "accuracy": 0.6832048273550118,
+        "mean_predicted_prob": 0.511328907265148,
+        "observed_win_rate": 0.5300033523298693,
+        "calibration_gap": 0.018674445064721268
+      },
+      {
+        "dimension": "Player-Team Disagreement",
+        "bucket": "High Disagreement (Delta > 0.12)",
+        "sample_size": 2413,
+        "log_loss": 0.6207454034596149,
+        "brier_score": 0.215613175006894,
+        "accuracy": 0.646083713220058,
+        "mean_predicted_prob": 0.5067416260706382,
+        "observed_win_rate": 0.5428926647326979,
+        "calibration_gap": 0.03615103866205971
+      },
+      {
+        "dimension": "Player-Team Disagreement",
+        "bucket": "Severe Disagreement (Delta > 0.20)",
+        "sample_size": 952,
+        "log_loss": 0.6193667590722197,
+        "brier_score": 0.21501025124504022,
+        "accuracy": 0.657563025210084,
+        "mean_predicted_prob": 0.5139013657386399,
+        "observed_win_rate": 0.5504201680672269,
+        "calibration_gap": 0.03651880232858706
+      }
+    ]
+  },
+  "promotion_gate": {
+    "passed": false,
+    "checklist": {
+      "Calibration slope within [0.85, 1.15]": true,
+      "ECE within threshold (<= baseline ECE)": true,
+      "Statistically superior (95% Bootstrap CI upper bound < 0)": false,
+      "Underdog quarantine safety (no false favorites on odds > 3.50)": true
+    },
+    "reasons": [
+      "95% bootstrap CI [+0.018783, +0.033067] does not prove significant superiority"
+    ]
+  }
+}

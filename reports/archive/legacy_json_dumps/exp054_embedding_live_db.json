@@ -1,0 +1,487 @@
+{
+  "args": {
+    "device": "cpu",
+    "embedding_batch_size": 8192,
+    "encoder_artifact": "betting_app/models/ml/PlayerGameEncoder/exp-049-recovered-20260729",
+    "history_size": 250,
+    "initial_train_size": 8000,
+    "json_output": "/tmp/exp054_embedding_live.json",
+    "l1_ratio": 0.5,
+    "limit_matches": null,
+    "limit_player_rows": null,
+    "logistic_c": 0.05,
+    "max_date": null,
+    "max_iter": 1500,
+    "min_date": "2020-01-01",
+    "min_fold_train_size": 3000,
+    "min_prior_player_games": 50,
+    "step_size": 3000,
+    "test_size": 3000,
+    "tol": 0.001
+  },
+  "description": "Recovered-DB evaluation of player embedding model and DB-native embedding+strength hybrid.",
+  "embedding_match_dataset_metadata": {
+    "config": {
+      "experiment_id": "EXP-050",
+      "history_size": 250,
+      "include_std_features": true,
+      "min_prior_player_games": 50
+    },
+    "date_max": "2026-07-29T00:00:00+00:00",
+    "date_min": "2020-02-15T00:00:00+00:00",
+    "embedding_dim": 64,
+    "experiment_id": "EXP-050",
+    "feature_count": 387,
+    "leakage_note": "For match date T, histories are updated only after all matches at T are emitted; features use date < T only.",
+    "player_embedding_rows": 506240,
+    "purpose": "Leakage-safe match-level aggregation of EXP-049 player-game embeddings.",
+    "raw_matches": 30943,
+    "rows": 21848,
+    "skipped": {
+      "min_prior_player_games": 9095
+    }
+  },
+  "embedding_model": {
+    "config": {
+      "calibrate": true,
+      "collect_oof": true,
+      "initial_train_size": 8000,
+      "l1_ratio": 0.5,
+      "logistic_c": 0.05,
+      "max_iter": 1500,
+      "min_fold_train_size": 3000,
+      "model_name": "PlayerEmbedding-Match-LR",
+      "model_version": "live-db-oof",
+      "random_state": 42,
+      "step_size": 3000,
+      "test_size": 3000,
+      "tol": 0.001,
+      "use_order_augmentation": true
+    },
+    "folds": [
+      {
+        "accuracy": 0.678,
+        "auc": 0.7400351388080848,
+        "brier": 0.20674627900199247,
+        "fold": 1,
+        "log_loss": 0.6006933902009082,
+        "test_end_at": "2023-03-01T00:00:00+00:00",
+        "test_size": 3000,
+        "test_start_at": "2022-05-31T00:00:00+00:00",
+        "train_size": 8000
+      },
+      {
+        "accuracy": 0.673,
+        "auc": 0.733352475071225,
+        "brier": 0.20932208302861008,
+        "fold": 2,
+        "log_loss": 0.6062668397714189,
+        "test_end_at": "2023-08-09T00:00:00+00:00",
+        "test_size": 3000,
+        "test_start_at": "2023-03-01T00:00:00+00:00",
+        "train_size": 11000
+      },
+      {
+        "accuracy": 0.6866666666666666,
+        "auc": 0.7514954945464998,
+        "brier": 0.20243221281341914,
+        "fold": 3,
+        "log_loss": 0.5895022591601414,
+        "test_end_at": "2024-07-16T00:00:00+00:00",
+        "test_size": 3000,
+        "test_start_at": "2023-08-09T00:00:00+00:00",
+        "train_size": 14000
+      },
+      {
+        "accuracy": 0.6856666666666666,
+        "auc": 0.7512650591277391,
+        "brier": 0.2009176411185649,
+        "fold": 4,
+        "log_loss": 0.5861519372191432,
+        "test_end_at": "2025-08-23T00:00:00+00:00",
+        "test_size": 3000,
+        "test_start_at": "2024-07-16T00:00:00+00:00",
+        "train_size": 17000
+      },
+      {
+        "accuracy": 0.6666666666666666,
+        "auc": 0.7171568621679126,
+        "brier": 0.21538735239364037,
+        "fold": 5,
+        "log_loss": 0.6219749685341261,
+        "test_end_at": "2026-07-29T00:00:00+00:00",
+        "test_size": 1848,
+        "test_start_at": "2025-08-23T00:00:00+00:00",
+        "train_size": 20000
+      }
+    ],
+    "market_comparison": {
+      "common_mapped_rows": 180,
+      "date_max": "2026-07-29 00:00:00+00:00",
+      "date_min": "2026-05-29 00:00:00+00:00",
+      "label": "embedding",
+      "metrics": {
+        "embedding_oof_calibrated": {
+          "accuracy": 0.65,
+          "auc": 0.7008049535603715,
+          "brier": 0.2218758514706141,
+          "log_loss": 0.6413411426600885,
+          "n": 180
+        },
+        "embedding_oof_raw": {
+          "accuracy": 0.6722222222222223,
+          "auc": 0.7008049535603715,
+          "brier": 0.22252627191691343,
+          "log_loss": 0.6413072448857728,
+          "n": 180
+        },
+        "exp039": {
+          "accuracy": 0.7197452229299363,
+          "auc": 0.7428104575163399,
+          "brier": 0.20371179332744396,
+          "log_loss": 0.6043054613011685,
+          "n": 157
+        },
+        "hybrid_old_a0.50": {
+          "accuracy": 0.7197452229299363,
+          "auc": 0.8019607843137255,
+          "brier": 0.1858499395435797,
+          "log_loss": 0.5478508140061497,
+          "n": 157
+        },
+        "market_no_vig": {
+          "accuracy": 0.7142857142857143,
+          "auc": 0.8107053682896379,
+          "brier": 0.17829784156295594,
+          "log_loss": 0.5317857876026428,
+          "n": 161
+        }
+      }
+    },
+    "metrics": {
+      "calibrated": true,
+      "config": {
+        "calibrate": true,
+        "collect_oof": true,
+        "initial_train_size": 8000,
+        "l1_ratio": 0.5,
+        "logistic_c": 0.05,
+        "max_iter": 1500,
+        "min_fold_train_size": 3000,
+        "model_name": "PlayerEmbedding-Match-LR",
+        "model_version": "live-db-oof",
+        "random_state": 42,
+        "step_size": 3000,
+        "test_size": 3000,
+        "tol": 0.001,
+        "use_order_augmentation": true
+      },
+      "elo_baseline_accuracy": null,
+      "elo_baseline_auc": null,
+      "elo_baseline_brier": null,
+      "elo_baseline_log_loss": null,
+      "elo_baseline_oof_count": 0,
+      "feature_count": 387,
+      "fold_count": 5,
+      "mean_accuracy": 0.6779999999999999,
+      "mean_auc": 0.7386610059442924,
+      "mean_brier": 0.2069611136712454,
+      "mean_log_loss": 0.6009178789771475,
+      "model_name": "PlayerEmbedding-Match-LR",
+      "model_version": "live-db-oof",
+      "oof_accuracy_calibrated": 0.6815424610051993,
+      "oof_accuracy_raw": 0.67894280762565,
+      "oof_auc_calibrated": 0.7407684134185627,
+      "oof_auc_raw": 0.7407684134185627,
+      "oof_brier_calibrated": 0.20557460174120773,
+      "oof_brier_raw": 0.20626014407215534,
+      "oof_count": 13848,
+      "oof_log_loss_calibrated": 0.5975943194858749,
+      "oof_log_loss_raw": 0.5991661626881788,
+      "rows": 21848
+    }
+  },
+  "embedding_strength_hybrid": {
+    "folds": [
+      {
+        "accuracy": 0.6833333333333333,
+        "auc": 0.7494532652517072,
+        "brier": 0.20318279524965582,
+        "fold": 1,
+        "log_loss": 0.5921458177498441,
+        "test_end_at": "2023-03-01T00:00:00+00:00",
+        "test_size": 3000,
+        "test_start_at": "2022-05-31T00:00:00+00:00",
+        "train_size": 8000
+      },
+      {
+        "accuracy": 0.678,
+        "auc": 0.7426811787749288,
+        "brier": 0.20605890186170556,
+        "fold": 2,
+        "log_loss": 0.5988300739538023,
+        "test_end_at": "2023-08-09T00:00:00+00:00",
+        "test_size": 3000,
+        "test_start_at": "2023-03-01T00:00:00+00:00",
+        "train_size": 11000
+      },
+      {
+        "accuracy": 0.6956666666666667,
+        "auc": 0.765520470488253,
+        "brier": 0.1972020113947375,
+        "fold": 3,
+        "log_loss": 0.5770848827841605,
+        "test_end_at": "2024-07-16T00:00:00+00:00",
+        "test_size": 3000,
+        "test_start_at": "2023-08-09T00:00:00+00:00",
+        "train_size": 14000
+      },
+      {
+        "accuracy": 0.695,
+        "auc": 0.7592689497451401,
+        "brier": 0.19754108184393582,
+        "fold": 4,
+        "log_loss": 0.5778582162137155,
+        "test_end_at": "2025-08-23T00:00:00+00:00",
+        "test_size": 3000,
+        "test_start_at": "2024-07-16T00:00:00+00:00",
+        "train_size": 17000
+      },
+      {
+        "accuracy": 0.6758658008658008,
+        "auc": 0.7435837355334534,
+        "brier": 0.20508257686139056,
+        "fold": 5,
+        "log_loss": 0.5971727643406577,
+        "test_end_at": "2026-07-29T00:00:00+00:00",
+        "test_size": 1848,
+        "test_start_at": "2025-08-23T00:00:00+00:00",
+        "train_size": 20000
+      }
+    ],
+    "market_comparison": {
+      "common_mapped_rows": 180,
+      "date_max": "2026-07-29 00:00:00+00:00",
+      "date_min": "2026-05-29 00:00:00+00:00",
+      "label": "embedding_strength_hybrid",
+      "metrics": {
+        "embedding_strength_hybrid_oof_calibrated": {
+          "accuracy": 0.6388888888888888,
+          "auc": 0.7095975232198143,
+          "brier": 0.21635967621256497,
+          "log_loss": 0.625051980946555,
+          "n": 180
+        },
+        "embedding_strength_hybrid_oof_raw": {
+          "accuracy": 0.6444444444444445,
+          "auc": 0.7095975232198143,
+          "brier": 0.21644514473064358,
+          "log_loss": 0.623951281521176,
+          "n": 180
+        },
+        "exp039": {
+          "accuracy": 0.7197452229299363,
+          "auc": 0.7428104575163399,
+          "brier": 0.20371179332744396,
+          "log_loss": 0.6043054613011685,
+          "n": 157
+        },
+        "hybrid_old_a0.50": {
+          "accuracy": 0.7197452229299363,
+          "auc": 0.8019607843137255,
+          "brier": 0.1858499395435797,
+          "log_loss": 0.5478508140061497,
+          "n": 157
+        },
+        "market_no_vig": {
+          "accuracy": 0.7142857142857143,
+          "auc": 0.8107053682896379,
+          "brier": 0.17829784156295594,
+          "log_loss": 0.5317857876026428,
+          "n": 161
+        }
+      }
+    },
+    "metrics": {
+      "calibrated": true,
+      "config": {
+        "calibrate": true,
+        "collect_oof": true,
+        "initial_train_size": 8000,
+        "l1_ratio": 0.5,
+        "logistic_c": 0.05,
+        "max_iter": 1500,
+        "min_fold_train_size": 3000,
+        "model_name": "Embedding-Strength-Hybrid-LR",
+        "model_version": "live-db-oof",
+        "random_state": 42,
+        "step_size": 3000,
+        "test_size": 3000,
+        "tol": 0.001,
+        "use_order_augmentation": true
+      },
+      "elo_baseline_accuracy": 0.6728047371461583,
+      "elo_baseline_auc": 0.7361150304985904,
+      "elo_baseline_brier": 0.20743071900129362,
+      "elo_baseline_log_loss": 0.6011626521448334,
+      "elo_baseline_oof_count": 13848,
+      "feature_count": 434,
+      "fold_count": 5,
+      "mean_accuracy": 0.6855731601731602,
+      "mean_auc": 0.7521015199586965,
+      "mean_brier": 0.20181347344228504,
+      "mean_log_loss": 0.588618351008436,
+      "model_name": "Embedding-Strength-Hybrid-LR",
+      "model_version": "live-db-oof",
+      "oof_accuracy_calibrated": 0.6867417677642981,
+      "oof_accuracy_raw": 0.6863807047949162,
+      "oof_auc_calibrated": 0.753058663915873,
+      "oof_auc_raw": 0.753058663915873,
+      "oof_brier_calibrated": 0.20093119530016476,
+      "oof_brier_raw": 0.20154152029823466,
+      "oof_count": 13848,
+      "oof_log_loss_calibrated": 0.58653048537486,
+      "oof_log_loss_raw": 0.5879067187035025,
+      "rows": 21848
+    }
+  },
+  "encoder_artifact": "betting_app/models/ml/PlayerGameEncoder/exp-049-recovered-20260729",
+  "experiment_id": "EXP-054",
+  "hybrid_dataset_metadata": {
+    "date_max": "2026-07-29T00:00:00+00:00",
+    "date_min": "2020-02-15T00:00:00+00:00",
+    "embedding_metadata": {
+      "config": {
+        "experiment_id": "EXP-050",
+        "history_size": 250,
+        "include_std_features": true,
+        "min_prior_player_games": 50
+      },
+      "date_max": "2026-07-29T00:00:00+00:00",
+      "date_min": "2020-02-15T00:00:00+00:00",
+      "embedding_dim": 64,
+      "experiment_id": "EXP-050",
+      "feature_count": 387,
+      "leakage_note": "For match date T, histories are updated only after all matches at T are emitted; features use date < T only.",
+      "player_embedding_rows": 506240,
+      "purpose": "Leakage-safe match-level aggregation of EXP-049 player-game embeddings.",
+      "raw_matches": 30943,
+      "rows": 21848,
+      "skipped": {
+        "min_prior_player_games": 9095
+      }
+    },
+    "experiment_id": "EXP-051-live-db-native",
+    "feature_count": 434,
+    "note": "This is not byte-identical to historical EXP-051 because legacy golgg_y_predicts.csv W20/rating features are not available for current July rows.",
+    "purpose": "PlayerGameEncoder embedding features plus DB-native leakage-safe strength features.",
+    "rows": 21848,
+    "strength_metadata": {
+      "anti_leakage": "Features are computed before updating each team's state with the current match.",
+      "config": {
+        "elo_k": 32.0,
+        "include_draws": false,
+        "initial_elo": 1500.0,
+        "limit_rows": null,
+        "max_date": null,
+        "min_date": "2020-01-01",
+        "min_prior_matches": 0,
+        "rolling_windows": [
+          5,
+          10,
+          20
+        ]
+      },
+      "date_max": "2026-07-29T00:00:00+00:00",
+      "date_min": "2020-01-03T00:00:00+00:00",
+      "description": "Leakage-safe chronological GOL.GG strength dataset",
+      "experiment_id": "EXP-046",
+      "feature_count": 47,
+      "raw_rows": 30943,
+      "rows": 30943,
+      "skipped": {},
+      "target": "team1 series win -> 1, team2 series win -> 0"
+    }
+  },
+  "player_dataset_metadata": {
+    "categorical_count": 5,
+    "config": {
+      "limit_rows": null,
+      "max_date": null,
+      "min_date": "2020-01-01",
+      "require_core_stats": true,
+      "stat_keys": [
+        "kills",
+        "deaths",
+        "assists",
+        "cs",
+        "csm",
+        "golds",
+        "gpm",
+        "gold%",
+        "total_damage_to_champion",
+        "dpm",
+        "dmg%",
+        "kp%",
+        "wards_placed",
+        "wards_destroyed",
+        "control_wards_purchased",
+        "vision_score",
+        "vspm",
+        "gd@15",
+        "csd@15",
+        "xpd@15",
+        "lvld@15",
+        "damage_dealt_to_turrets",
+        "total_heal",
+        "damage_self_mitigated",
+        "double_kills",
+        "triple_kills",
+        "quadra_kills",
+        "penta_kills"
+      ]
+    },
+    "date_max": "2026-07-29T00:00:00",
+    "date_min": "2020-01-03T00:00:00",
+    "distinct_champions": 173,
+    "distinct_games": 50624,
+    "distinct_matches": 31200,
+    "distinct_players": 5842,
+    "experiment_id": "EXP-048",
+    "feature_count": 46,
+    "leakage_note": "Rows describe completed games; pre-match aggregation must filter to date < predicted match date.",
+    "purpose": "Audit/build one-row-per-player-game data for supervised/autoencoder PlayerGameEncoder.",
+    "raw_rows": 506480,
+    "rows": 506240,
+    "skipped": {
+      "missing_core_stats": 240
+    },
+    "target_count": 9
+  },
+  "strength_dataset_metadata": {
+    "anti_leakage": "Features are computed before updating each team's state with the current match.",
+    "config": {
+      "elo_k": 32.0,
+      "include_draws": false,
+      "initial_elo": 1500.0,
+      "limit_rows": null,
+      "max_date": null,
+      "min_date": "2020-01-01",
+      "min_prior_matches": 0,
+      "rolling_windows": [
+        5,
+        10,
+        20
+      ]
+    },
+    "date_max": "2026-07-29T00:00:00+00:00",
+    "date_min": "2020-01-03T00:00:00+00:00",
+    "description": "Leakage-safe chronological GOL.GG strength dataset",
+    "experiment_id": "EXP-046",
+    "feature_count": 47,
+    "raw_rows": 30943,
+    "rows": 30943,
+    "skipped": {},
+    "target": "team1 series win -> 1, team2 series win -> 0"
+  }
+}

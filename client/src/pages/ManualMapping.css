@@ -1,0 +1,524 @@
+.manual-mapping-page {
+  padding: 24px;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.mapping-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 18px;
+}
+
+.mapping-page-header h1 {
+  margin: 0 0 6px;
+}
+
+.mapping-subtitle {
+  margin: 0;
+  color: #aaa;
+  max-width: 900px;
+}
+
+.mapping-alert {
+  padding: 12px 14px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  border: 1px solid transparent;
+}
+
+.mapping-alert.error {
+  background: #f443361f;
+  border-color: #f44336;
+  color: #ffcdd2;
+}
+
+.mapping-alert.success {
+  background: #4caf501f;
+  border-color: #4caf50;
+  color: #c8e6c9;
+}
+
+.mapping-toolbar {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.status-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.status-tabs button,
+.side-picker button,
+.secondary-btn,
+.primary-btn,
+.danger-btn,
+.team-attention-toggle,
+.candidate-item button,
+.input-group button,
+.map-manual-btn,
+.alias-results button {
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #fff;
+  transition: background 0.15s, transform 0.15s, opacity 0.15s;
+}
+
+.status-tabs button:hover,
+.side-picker button:hover,
+.secondary-btn:hover,
+.primary-btn:hover,
+.danger-btn:hover,
+.team-attention-toggle:hover,
+.candidate-item button:hover,
+.input-group button:hover,
+.map-manual-btn:hover,
+.alias-results button:hover {
+  transform: translateY(-1px);
+}
+
+.status-tabs button {
+  background: #2a2a2a;
+  padding: 9px 14px;
+}
+
+.status-tabs button.active,
+.side-picker button.active,
+.team-attention-toggle.active,
+.alias-results button.active {
+  background: #4caf50;
+}
+
+.team-attention-toggle {
+  background: #2a2a2a;
+  border: 1px solid #444;
+  padding: 10px 14px;
+  white-space: nowrap;
+}
+
+.mapping-search {
+  flex: 1;
+  min-width: 260px;
+}
+
+.mapping-search,
+.field-label input,
+.input-group input {
+  background: #171717;
+  border: 1px solid #444;
+  color: #fff;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.mapping-container {
+  display: grid;
+  grid-template-columns: minmax(360px, 0.8fr) minmax(520px, 1.2fr);
+  gap: 22px;
+  min-height: calc(100vh - 230px);
+}
+
+.unmapped-list-section,
+.mapping-workspace,
+.mapping-card {
+  background: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 12px;
+}
+
+.unmapped-list-section,
+.mapping-workspace {
+  padding: 18px;
+  overflow: hidden;
+}
+
+.mapping-workspace {
+  overflow-y: auto;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.section-header h2 {
+  margin: 0 0 3px;
+}
+
+.section-header span {
+  color: #888;
+  font-size: 0.9em;
+}
+
+.scroll-list {
+  overflow-y: auto;
+  max-height: calc(100vh - 330px);
+  padding-right: 4px;
+}
+
+.match-item {
+  width: 100%;
+  display: block;
+  text-align: left;
+  background: #252525;
+  border: 1px solid #343434;
+  color: #fff;
+  padding: 13px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.match-item:hover {
+  background: #2d2d2d;
+  border-color: #555;
+}
+
+.match-item.selected {
+  background: #283829;
+  border-color: #4caf50;
+}
+
+.match-row-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.match-id {
+  color: #81c784;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.9em;
+}
+
+.match-time,
+.candidate-date {
+  font-size: 0.85em;
+  color: #888;
+}
+
+.match-teams,
+.candidate-teams {
+  font-weight: 700;
+  margin: 4px 0;
+}
+
+.match-diagnosis,
+.selected-diagnosis {
+  color: #ffd54f;
+  font-size: 0.9em;
+  margin: 6px 0;
+}
+
+.team-map-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0 6px;
+}
+
+.team-map-badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  border-radius: 999px;
+  border: 1px solid #555;
+  padding: 3px 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.team-map-badge.mapped {
+  background: #1b3b24;
+  border-color: #4caf50;
+  color: #a5d6a7;
+}
+
+.team-map-badge.missing {
+  background: #3b2f16;
+  border-color: #ffb300;
+  color: #ffe082;
+}
+
+.team-map-badge.blocked {
+  background: #3b1f1f;
+  border-color: #ef5350;
+  color: #ffcdd2;
+}
+
+.match-league,
+.candidate-result {
+  font-size: 0.92em;
+  color: #aaa;
+}
+
+.match-sources {
+  font-size: 0.82em;
+  color: #64b5f6;
+  margin-top: 6px;
+}
+
+.selected-match-info {
+  background: #252525;
+  border: 1px solid #3a3a3a;
+  padding: 16px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.selected-match-info h2 {
+  margin: 4px 0 6px;
+}
+
+.selected-match-info p {
+  margin: 0;
+  color: #aaa;
+}
+
+.selected-match-info .selected-diagnosis {
+  margin-top: 8px;
+  color: #ffd54f;
+}
+
+.detail-link {
+  color: #90caf9;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.detail-link:hover {
+  text-decoration: underline;
+}
+
+.mapping-card {
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.mapping-card.priority-card {
+  border-color: #4caf50;
+  box-shadow: 0 0 0 1px #4caf5030 inset;
+}
+
+.mapping-card h3,
+.mapping-card h4 {
+  margin: 0 0 8px;
+}
+
+.mapping-card p {
+  color: #aaa;
+  margin: 0 0 14px;
+}
+
+.side-picker {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.side-picker button {
+  background: #2c2c2c;
+  padding: 10px 12px;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.field-label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  color: #ccc;
+  font-size: 0.9em;
+  margin-bottom: 12px;
+}
+
+.field-label input[readonly] {
+  color: #bbb;
+  background: #111;
+}
+
+.alias-results {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 38px;
+  align-items: center;
+  margin: 8px 0 14px;
+}
+
+.alias-results span {
+  color: #777;
+  font-style: italic;
+}
+
+.alias-results button {
+  background: #303030;
+  border: 1px solid #454545;
+  padding: 7px 10px;
+}
+
+.action-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.primary-btn,
+.secondary-btn,
+.danger-btn,
+.input-group button,
+.candidate-item button,
+.map-manual-btn {
+  padding: 9px 13px;
+  font-weight: 700;
+}
+
+.primary-btn,
+.candidate-item button,
+.map-manual-btn {
+  background: #4caf50;
+}
+
+.secondary-btn,
+.input-group button {
+  background: #2196f3;
+}
+
+.danger-btn {
+  background: #b45309;
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.manual-id-entry {
+  background: #252525;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #3a3a3a;
+  margin-bottom: 16px;
+}
+
+.input-group {
+  display: flex;
+  gap: 10px;
+}
+
+.input-group input {
+  flex: 1;
+}
+
+.check-result {
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.check-result.warning {
+  background: #f4433620;
+  border: 1px solid #f44336;
+  color: #ffcdd2;
+}
+
+.check-result.success {
+  background: #4caf5020;
+  border: 1px solid #4caf50;
+  color: #c8e6c9;
+}
+
+.candidates-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.candidate-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #252525;
+  border: 1px solid #3a3a3a;
+  border-radius: 10px;
+}
+
+.candidate-info {
+  min-width: 0;
+}
+
+.empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  color: #777;
+  font-style: italic;
+  text-align: center;
+  padding: 20px;
+}
+
+.empty-state.compact {
+  min-height: 80px;
+  background: #252525;
+  border-radius: 10px;
+}
+
+@media (max-width: 1000px) {
+  .mapping-container {
+    grid-template-columns: 1fr;
+  }
+
+  .scroll-list {
+    max-height: 420px;
+  }
+
+  .mapping-toolbar,
+  .mapping-page-header,
+  .selected-match-info,
+  .check-result {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 640px) {
+  .manual-mapping-page {
+    padding: 14px;
+  }
+
+  .side-picker,
+  .input-group {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+}

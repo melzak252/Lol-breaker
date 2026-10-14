@@ -1,0 +1,48 @@
+{
+  "success": true,
+  "apply": true,
+  "started_at": "2026-07-30T15:03:04.551573+00:00",
+  "input_path": "reports/exp039_db_market_backtest_v2/exp039_market_common.csv",
+  "model_name": "Sym-Cal LR-ElasticNet-W20-Binomial",
+  "model_version": "exp-039",
+  "features_version": "exp060-db-backfill-v1",
+  "ratings_version": "latest-full",
+  "candidate_rows": 408,
+  "candidate_matches": 408,
+  "before": {
+    "rows_n": 14120,
+    "matches_n": 371,
+    "min_predicted_at": "2026-06-03 07:53:04+00:00",
+    "max_predicted_at": "2026-07-29 22:11:00+00:00"
+  },
+  "backup_table": "canonical_predictions_exp039_backup_20260730_150304",
+  "deleted_rows": 14120,
+  "inserted_rows": 408,
+  "after": {
+    "rows_n": 408,
+    "matches_n": 408,
+    "min_predicted_at": "2026-05-29 04:59:00+00:00",
+    "max_predicted_at": "2026-07-29 23:59:00+00:00"
+  },
+  "model_analysis_after_refresh": {
+    "model_reference_logloss": 0.5819,
+    "model_reference_auc": 0.7633,
+    "model_reference_n_matches": 412,
+    "per_horizon_logloss": {
+      "0-2h": 0.5816,
+      "2-6h": 0.5815,
+      "6-12h": 0.5793,
+      "12-24h": 0.5764,
+      "24-48h": 0.5554,
+      "48h+": 0.5346
+    },
+    "per_horizon_auc": {
+      "0-2h": 0.7664,
+      "2-6h": 0.7638,
+      "6-12h": 0.7659,
+      "12-24h": 0.7699,
+      "24-48h": 0.7886,
+      "48h+": 0.8061
+    }
+  }
+}

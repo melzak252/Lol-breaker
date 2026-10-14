@@ -1,0 +1,277 @@
+{
+  "created_at": "2026-09-02T14:53:44+00:00",
+  "model": "Sym-Cal LR-ElasticNet-W20-Binomial/exp-039-parity-v2 historical proxy",
+  "prediction_note": "Features are rebuilt chronologically from stored GOL.GG data. All matches on a calendar date are predicted before any result from that date is applied. Series labels use GOL.GG winner-name identity, not incomplete game-row majorities. This is not an OOF retraining backtest.",
+  "mapping_note": "Canonical A/B is aligned from independent display-name evidence. Results validate the mapping but never determine orientation.",
+  "market_note": "Opening/mid/close use non-live odds strictly before a known canonical start time; per-bookmaker no-vig probabilities are averaged.",
+  "roster_limitation": "Historical first-game rosters are observed after kickoff and therefore remain an oracle input, not an executable live-prediction claim.",
+  "exp039_all_golgg": {
+    "n_predictions": 41653,
+    "n_resolved_outcomes": 41641,
+    "n_incomplete_game_histories": 62,
+    "imputed_rating_games": 92,
+    "date_min": "2013-09-16",
+    "date_max": "2026-09-01",
+    "metrics_team1": {
+      "n": 41641,
+      "logloss": 0.5890290127770519,
+      "brier": 0.2020402196342444,
+      "accuracy": 0.6851420475012607,
+      "mean_prob": 0.5132142149497217,
+      "target_rate": 0.5352657236857904,
+      "auc": 0.7536168007469097
+    }
+  },
+  "exp039_segments": {
+    "since_2020": {
+      "date_min": "2020-01-03",
+      "date_max": "2026-09-01",
+      "metrics_team1": {
+        "n": 31559,
+        "logloss": 0.5831308731909056,
+        "brier": 0.19982002430204385,
+        "accuracy": 0.6873158211603663,
+        "mean_prob": 0.5147359233400675,
+        "target_rate": 0.5339205931746887,
+        "auc": 0.7583731331450314
+      }
+    },
+    "since_2021": {
+      "date_min": "2021-01-02",
+      "date_max": "2026-09-01",
+      "metrics_team1": {
+        "n": 27432,
+        "logloss": 0.5797004996686607,
+        "brier": 0.19840718110033984,
+        "accuracy": 0.69054389034704,
+        "mean_prob": 0.5154065202856319,
+        "target_rate": 0.5344852726742491,
+        "auc": 0.7616997395875338
+      }
+    },
+    "since_2024": {
+      "date_min": "2024-01-01",
+      "date_max": "2026-09-01",
+      "metrics_team1": {
+        "n": 11850,
+        "logloss": 0.5576658887033321,
+        "brier": 0.18933840279393416,
+        "accuracy": 0.7055696202531646,
+        "mean_prob": 0.5173916733059458,
+        "target_rate": 0.5375527426160338,
+        "auc": 0.7834322611694875
+      }
+    },
+    "since_2026": {
+      "date_min": "2026-01-08",
+      "date_max": "2026-09-01",
+      "metrics_team1": {
+        "n": 3278,
+        "logloss": 0.5510230826320198,
+        "brier": 0.1867365261142767,
+        "accuracy": 0.7074435631482612,
+        "mean_prob": 0.5053891746081748,
+        "target_rate": 0.5283709579011593,
+        "auc": 0.791344122805183
+      }
+    }
+  },
+  "mapping_audit": {
+    "n_joined": 746,
+    "mapping_nonunique": 0,
+    "mapping_source_disagreement": 0,
+    "identity_unresolved": 82,
+    "mapping_date_ineligible": 13,
+    "market_quote_not_prestart": 0,
+    "source_outcome_unresolved": 0,
+    "source_outcome_incomplete": 0,
+    "canonical_outcome_conflict": 0,
+    "mapping_eligible": 655,
+    "historical_proxy_eligible": 622,
+    "orientation_inferred_from_results": false
+  },
+  "market_common_mapping_clean": {
+    "n": 655,
+    "date_min": "2026-05-29",
+    "date_max": "2026-09-01",
+    "exp039_symmetric_prob_team_a": {
+      "n": 655,
+      "logloss": 0.5627377197515038,
+      "brier": 0.19101954347132377,
+      "accuracy": 0.7007633587786259,
+      "mean_prob": 0.5295700277908193,
+      "target_rate": 0.5389312977099237,
+      "auc": 0.778220738044763
+    },
+    "exp039_legacy_prob_team_a": {
+      "n": 655,
+      "logloss": 0.5615006244460868,
+      "brier": 0.19058389417622926,
+      "accuracy": 0.6961832061068702,
+      "mean_prob": 0.5313053836108587,
+      "target_rate": 0.5389312977099237,
+      "auc": 0.7811474025852203
+    },
+    "exp039_parity_v2_prob_team_a": {
+      "n": 655,
+      "logloss": 0.564470896100046,
+      "brier": 0.19174612839303795,
+      "accuracy": 0.7007633587786259,
+      "mean_prob": 0.5320713116311616,
+      "target_rate": 0.5389312977099237,
+      "auc": 0.778220738044763
+    },
+    "market_open_p_a_novig": {
+      "n": 655,
+      "logloss": 0.5631062559089195,
+      "brier": 0.19125550342026507,
+      "accuracy": 0.7007633587786259,
+      "mean_prob": 0.527250352461806,
+      "target_rate": 0.5389312977099237,
+      "auc": 0.7779815395005909,
+      "avg_books": 4.225954198473282,
+      "avg_margin": 0.08718843396355196
+    },
+    "hybrid_open_prob_team_a": {
+      "n": 655,
+      "logloss": 0.55364857400381,
+      "brier": 0.1874510608426336,
+      "accuracy": 0.7099236641221374,
+      "mean_prob": 0.5306746751034764,
+      "target_rate": 0.5389312977099237,
+      "auc": 0.7868787873102827
+    },
+    "market_mid_p_a_novig": {
+      "n": 655,
+      "logloss": 0.5631644834570237,
+      "brier": 0.19136024717991656,
+      "accuracy": 0.7053435114503817,
+      "mean_prob": 0.5279167541458066,
+      "target_rate": 0.5389312977099237,
+      "auc": 0.7768793501303866,
+      "avg_books": 4.225954198473282,
+      "avg_margin": 0.08701996908781555
+    },
+    "hybrid_mid_prob_team_a": {
+      "n": 655,
+      "logloss": 0.5542961530202299,
+      "brier": 0.18778782257931342,
+      "accuracy": 0.7083969465648855,
+      "mean_prob": 0.5311078361980769,
+      "target_rate": 0.5389312977099237,
+      "auc": 0.7858844717933324
+    },
+    "market_close_p_a_novig": {
+      "n": 655,
+      "logloss": 0.5570499260762851,
+      "brier": 0.18896084509455954,
+      "accuracy": 0.7083969465648855,
+      "mean_prob": 0.5290040990371724,
+      "target_rate": 0.5389312977099237,
+      "auc": 0.7834408945087518,
+      "avg_books": 4.225954198473282,
+      "avg_margin": 0.08708716726894508
+    },
+    "hybrid_close_prob_team_a": {
+      "n": 655,
+      "logloss": 0.5512341505645526,
+      "brier": 0.18671255066448603,
+      "accuracy": 0.7145038167938931,
+      "mean_prob": 0.5318146103774646,
+      "target_rate": 0.5389312977099237,
+      "auc": 0.7887923756636588
+    }
+  },
+  "market_common_historical_proxy": {
+    "n": 622,
+    "date_min": "2026-05-29",
+    "date_max": "2026-09-01",
+    "exp039_symmetric_prob_team_a": {
+      "n": 622,
+      "logloss": 0.5694821218820069,
+      "brier": 0.1939937176428681,
+      "accuracy": 0.6929260450160771,
+      "mean_prob": 0.529780540925705,
+      "target_rate": 0.5385852090032154,
+      "auc": 0.7707525092308493
+    },
+    "exp039_legacy_prob_team_a": {
+      "n": 622,
+      "logloss": 0.5689988388115601,
+      "brier": 0.19384167400102442,
+      "accuracy": 0.6881028938906752,
+      "mean_prob": 0.5316179005927368,
+      "target_rate": 0.5385852090032154,
+      "auc": 0.7734879608924021
+    },
+    "exp039_parity_v2_prob_team_a": {
+      "n": 622,
+      "logloss": 0.5717328095321287,
+      "brier": 0.1949094788416508,
+      "accuracy": 0.6929260450160771,
+      "mean_prob": 0.5322667957334377,
+      "target_rate": 0.5385852090032154,
+      "auc": 0.7707525092308493
+    },
+    "market_open_p_a_novig": {
+      "n": 622,
+      "logloss": 0.568736739611854,
+      "brier": 0.19371709462701892,
+      "accuracy": 0.6945337620578779,
+      "mean_prob": 0.5291985503721786,
+      "target_rate": 0.5385852090032154,
+      "auc": 0.7713817671225753,
+      "avg_books": 4.30064308681672,
+      "avg_margin": 0.08703737895538588
+    },
+    "hybrid_open_prob_team_a": {
+      "n": 622,
+      "logloss": 0.5604977837185573,
+      "brier": 0.1903758846515084,
+      "accuracy": 0.702572347266881,
+      "mean_prob": 0.5319856288800405,
+      "target_rate": 0.5385852090032154,
+      "auc": 0.7795309168443497
+    },
+    "market_mid_p_a_novig": {
+      "n": 622,
+      "logloss": 0.5690550071499403,
+      "brier": 0.19393589955146423,
+      "accuracy": 0.6977491961414791,
+      "mean_prob": 0.5299317286987129,
+      "target_rate": 0.5385852090032154,
+      "auc": 0.7700764470331272,
+      "avg_books": 4.30064308681672,
+      "avg_margin": 0.08686432860030621
+    },
+    "hybrid_mid_prob_team_a": {
+      "n": 622,
+      "logloss": 0.5613590881086462,
+      "brier": 0.19080421017664861,
+      "accuracy": 0.7009646302250804,
+      "mean_prob": 0.5324621947922878,
+      "target_rate": 0.5385852090032154,
+      "auc": 0.778376410629778
+    },
+    "market_close_p_a_novig": {
+      "n": 622,
+      "logloss": 0.5623741491375941,
+      "brier": 0.19131460069560838,
+      "accuracy": 0.6993569131832797,
+      "mean_prob": 0.5308499102043157,
+      "target_rate": 0.5385852090032154,
+      "auc": 0.7772063029798741,
+      "avg_books": 4.30064308681672,
+      "avg_margin": 0.08693772510198605
+    },
+    "hybrid_close_prob_team_a": {
+      "n": 622,
+      "logloss": 0.5579590818774169,
+      "brier": 0.18960656607169452,
+      "accuracy": 0.707395498392283,
+      "mean_prob": 0.5330590127709295,
+      "target_rate": 0.5385852090032154,
+      "auc": 0.7817463206615008
+    }
+  }
+}

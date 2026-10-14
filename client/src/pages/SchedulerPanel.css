@@ -1,0 +1,203 @@
+.scheduler-panel {
+  padding: 1rem 0;
+}
+
+.scheduler-panel h1 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #4fc3f7;
+}
+
+.scheduler-panel h2 {
+  font-size: 1.2rem;
+  margin: 2rem 0 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  border-bottom: 1px solid #2a2a4a;
+  padding-bottom: 0.5rem;
+}
+
+/* Tasks grid */
+.tasks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.task-card {
+  background: #1a1a2e;
+  border: 1px solid #2a2a4a;
+  border-radius: 8px;
+  padding: 1.2rem;
+}
+
+.task-card .task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+
+.task-card .task-name {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+}
+
+.task-card .task-schedule {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+  background: #16213e;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+}
+
+.task-card .task-description {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 0.8rem;
+  line-height: 1.4;
+}
+
+.task-card .task-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.trigger-btn {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #4fc3f7;
+  border-radius: 4px;
+  background: transparent;
+  color: #4fc3f7;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.trigger-btn:hover {
+  background: rgba(79, 195, 247, 0.15);
+}
+
+.trigger-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.trigger-btn.running {
+  border-color: #ff9800;
+  color: #ff9800;
+}
+
+/* Jobs table */
+.jobs-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+}
+
+.jobs-table th,
+.jobs-table td {
+  padding: 0.6rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #2a2a4a;
+}
+
+.jobs-table th {
+  background: #16213e;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.jobs-table td {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.jobs-table tr:hover td {
+  background: rgba(79, 195, 247, 0.05);
+}
+
+/* Runs list */
+.runs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.run-item {
+  background: #1a1a2e;
+  border: 1px solid #2a2a4a;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.run-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.run-item-header:hover {
+  background: rgba(79, 195, 247, 0.05);
+}
+
+.run-item-header .run-task {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.run-item-header .run-time {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.run-commands {
+  border-top: 1px solid #2a2a4a;
+  padding: 0.8rem 1rem;
+  background: #16213e;
+}
+
+.run-commands h4 {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 0.5rem;
+}
+
+.command-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0;
+  font-size: 0.85rem;
+  border-bottom: 1px solid rgba(42, 42, 74, 0.5);
+}
+
+.command-item:last-child {
+  border-bottom: none;
+}
+
+.command-item .cmd-name {
+  color: rgba(255, 255, 255, 0.8);
+  font-family: monospace;
+}
+
+.command-item .cmd-status {
+  font-size: 0.8rem;
+}
+
+.loading-text {
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+}
+
+.error-text {
+  color: #ef5350;
+}

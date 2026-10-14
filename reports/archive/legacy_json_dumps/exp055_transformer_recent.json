@@ -1,0 +1,150 @@
+{
+  "args": {
+    "batch_size": 256,
+    "d_model": 64,
+    "device": "auto",
+    "dropout": 0.15,
+    "embedding_batch_size": 8192,
+    "embedding_cache": null,
+    "encoder_artifact": "/app/betting_app/models/ml/PlayerGameEncoder/exp-049-recovered-20260729",
+    "epochs": 4,
+    "initial_train_size": 3000,
+    "json_output": "/tmp/exp055_transformer_recent.json",
+    "layers": 1,
+    "limit_matches": null,
+    "limit_player_rows": null,
+    "lr": 0.001,
+    "max_date": null,
+    "max_examples": 6000,
+    "min_date": "2025-01-01",
+    "min_prior_events": 20,
+    "nhead": 4,
+    "seq_len": 40,
+    "step_size": 1500,
+    "test_size": 1500,
+    "weight_decay": 0.0001
+  },
+  "description": "Small transformer over recent leakage-safe PlayerGameEncoder histories.",
+  "experiment_id": "EXP-055",
+  "market_comparison": {
+    "common_mapped_rows": 110,
+    "date_max": "2026-07-29 00:00:00+00:00",
+    "date_min": "2026-05-29 00:00:00+00:00",
+    "label": "transformer_embedding",
+    "metrics": {
+      "exp039": {
+        "accuracy": 0.78125,
+        "auc": 0.8135208711433758,
+        "brier": 0.1725690151846624,
+        "log_loss": 0.5271779400771629,
+        "n": 96
+      },
+      "hybrid_new_a0.05": {
+        "accuracy": 1.0,
+        "auc": 1.0,
+        "brier": 0.07132973908928501,
+        "log_loss": 0.2945144474809894,
+        "n": 2
+      },
+      "hybrid_old_a0.50": {
+        "accuracy": 0.78125,
+        "auc": 0.8380217785843922,
+        "brier": 0.16406156721889806,
+        "log_loss": 0.49726543263754824,
+        "n": 96
+      },
+      "market_no_vig": {
+        "accuracy": 0.7142857142857143,
+        "auc": 0.8302631578947368,
+        "brier": 0.16251671450420788,
+        "log_loss": 0.493449028117876,
+        "n": 98
+      },
+      "transformer_embedding_oof_calibrated": {
+        "accuracy": 0.6181818181818182,
+        "auc": 0.6451282051282051,
+        "brier": 0.23254037551966056,
+        "log_loss": 0.6588876378173457,
+        "n": 110
+      },
+      "transformer_embedding_oof_raw": {
+        "accuracy": 0.6181818181818182,
+        "auc": 0.6451282051282051,
+        "brier": 0.23254037551966056,
+        "log_loss": 0.6588876378173457,
+        "n": 110
+      }
+    }
+  },
+  "sequence_metadata": {
+    "config": {
+      "max_examples": 6000,
+      "min_prior_events": 20,
+      "seq_len": 40
+    },
+    "date_max": "2026-07-29T00:00:00+00:00",
+    "date_min": "2025-01-20T00:00:00+00:00",
+    "embedding_dim": 64,
+    "player_embedding_rows": 138260,
+    "raw_matches": 6506,
+    "rows": 5144,
+    "skipped": {
+      "min_prior_events": 1362
+    }
+  },
+  "training": {
+    "cuda_available": false,
+    "device": "cpu",
+    "fold_count": 2,
+    "folds": [
+      {
+        "date_max": "2026-05-01T00:00:00+00:00",
+        "date_min": "2025-09-03T00:00:00+00:00",
+        "epoch_losses": [
+          0.6440225044886271,
+          0.6200948506593704,
+          0.6071614225705465,
+          0.6040088832378387
+        ],
+        "fold": 1,
+        "metrics": {
+          "accuracy": 0.6266666666666667,
+          "auc": 0.6800751476113794,
+          "brier": 0.2281644497120432,
+          "log_loss": 0.6489545574462517,
+          "n": 1500
+        },
+        "test_size": 1500,
+        "train_size": 3000
+      },
+      {
+        "date_max": "2026-07-29T00:00:00+00:00",
+        "date_min": "2026-05-01T00:00:00+00:00",
+        "epoch_losses": [
+          0.6426558229658339,
+          0.6276309192180634,
+          0.6144330004851023,
+          0.6073491374651591
+        ],
+        "fold": 2,
+        "metrics": {
+          "accuracy": 0.65527950310559,
+          "auc": 0.7032329988851729,
+          "brier": 0.2181845026393009,
+          "log_loss": 0.6249170211379023,
+          "n": 644
+        },
+        "test_size": 644,
+        "train_size": 4500
+      }
+    ],
+    "oof_metrics": {
+      "accuracy": 0.6352611940298507,
+      "auc": 0.6869626497533474,
+      "brier": 0.22516674172937248,
+      "log_loss": 0.6417343273237811,
+      "n": 2144
+    },
+    "torch_version": "2.13.0+cu130"
+  }
+}

@@ -1,0 +1,36 @@
+# Weekly retraining pipeline parameters
+weekly_retrain:
+  model_name: "Operational-Retrained-Tabular"
+  min_features: 5
+  min_train_size: 80
+  test_size: 20
+  step_size: null
+  train_window_days: null
+  register_model: true
+  status_on_success: "candidate"
+  min_shadow_dataset_size: 500
+  max_shadow_log_loss: 0.70
+  min_shadow_accuracy: 0.52
+  run_type: "weekly_retrain"
+
+# Historical evaluation pipeline parameters
+evaluation:
+  model_name: "Sym-Cal LR-ElasticNet-W20-Binomial"
+  model_version: "exp-039"
+  days_back: 90
+  include_stale: true
+  latest_per_match: true
+  register_candidate: false
+  run_type: "historical_backtest"
+  backtest:
+    bankroll_start: 1000.0
+    min_ev: 0.0
+    staking:
+      strategy: "fractional_kelly"
+      fixed_stake: 10.0
+      kelly_fraction: 0.25
+    max_bets_per_match: 1
+  promotion_gate:
+    min_bets: 50
+    min_comparison_observations: 50
+    min_roi: null

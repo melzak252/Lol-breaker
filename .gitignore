@@ -1,0 +1,76 @@
+# Local deployment configuration and secrets
+.env
+.env.*
+!.env.betting.example
+
+# Python runtime/cache
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Virtual environments
+.venv
+.venv/
+venv/
+env/
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# Local experiment/training outputs
+data
+data/
+models/*.pt
+client/node_modules/
+client/dist/
+client/*.tsbuildinfo
+artifacts/catboost_info/
+artifacts/tmp/
+temp_*.csv
+experiments/
+reports/*.json
+secrets/
+betting_app/models/ml/
+
+# Local thesis/report materials not tracked in code repo
+docs/*
+!docs/RESEARCH.md
+!docs/MODEL_CATALOG.md
+!docs/PROJECT_ARCHITECTURE.md
+docs_backup/
+
+# Local scratch notes / diagnostics not intended for the thesis commit
+todo.txt
+scripts/08_symulacje_finansowe/08g_random_start_window_simulation.py
+scripts/08_symulacje_finansowe/08h_close_market_hybrid_simulation.py
+
+# LaTeX build artefacts
+thesis/*.aux
+thesis/*.bbl
+thesis/*.bcf
+thesis/*.blg
+thesis/*.fdb_latexmk
+thesis/*.fls
+thesis/*.lof
+thesis/*.log
+thesis/*.lot
+thesis/*.out
+thesis/*.run.xml
+thesis/*.synctex.gz
+thesis/*.toc
+thesis/main.pdf
+thesis/*-SAVE-ERROR
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.agents/
+backups/
+issues/
+plans/
+client/Caddyfile

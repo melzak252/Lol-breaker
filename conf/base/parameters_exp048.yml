@@ -1,0 +1,26 @@
+exp048_player_encoder:
+  artifact_root: betting_app/models/ml
+  audit:
+    # Set to null for a full completeness scan. For quick smoke: 5000.
+    limit_rows: 5000
+    json_output: reports/exp048_player_game_audit.json
+  dataset:
+    min_date: "2013-01-01"
+    max_date: null
+    # Keep small for Kedro smoke. Use null on CUDA server for full training.
+    limit_rows: 50000
+    require_core_stats: true
+  training:
+    model_version: exp-049-smoke
+    embedding_dim: 16
+    hidden_dim: 128
+    latent_dim: 64
+    dropout: 0.15
+    batch_size: 2048
+    epochs: 3
+    learning_rate: 0.001
+    weight_decay: 0.0001
+    validation_fraction: 0.15
+    random_state: 42
+    device: auto
+    num_workers: 0

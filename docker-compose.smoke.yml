@@ -1,0 +1,87 @@
+# Compose >= 2.24.4 (!override support). Select explicitly alongside root Compose.
+# Use a unique -p name, installed images only, and `up --no-build --pull never`.
+services:
+  timescaledb:
+    container_name: "${COMPOSE_PROJECT_NAME:?Set a unique COMPOSE_PROJECT_NAME}-timescaledb"
+    restart: "no"
+    ports: !reset []
+    networks: !override
+      - default
+    environment: !override
+      POSTGRES_DB: betting_smoke
+      POSTGRES_USER: betting_smoke
+      POSTGRES_PASSWORD: "${SMOKE_POSTGRES_PASSWORD:?Set a disposable SMOKE_POSTGRES_PASSWORD}"
+    volumes: !override
+      - ./docker/timescale/init.sql:/docker-entrypoint-initdb.d/001_timescale.sql:ro
+    tmpfs: !override
+      - /var/lib/postgresql/data:size=512m,mode=0700
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U betting_smoke -d betting_smoke"]
+
+  betting-scheduler: !reset null
+
+  betting-api:
+    container_name: "${COMPOSE_PROJECT_NAME:?Set a unique COMPOSE_PROJECT_NAME}-betting-api"
+    restart: "no"
+    build: !reset null
+    pull_policy: never
+    ports: !reset []
+    secrets: !reset []
+    networks: !override
+      - default
+    environment: !override
+      BETTING_API_ALLOWED_ORIGINS: "${SMOKE_ALLOWED_ORIGINS:-http://localhost:${SMOKE_CLIENT_PORT:-3000},http://127.0.0.1:${SMOKE_CLIENT_PORT:-3000}}"
+      BETTING_APP_TAX_RATE: "${BETTING_APP_TAX_RATE:-0.12}"
+      BETTING_APP_MIN_EV: "${BETTING_APP_MIN_EV:-0.05}"
+      PYTHONPATH: /app:/app/src
+      DATABASE_URL: "postgresql+psycopg2://betting_smoke:${SMOKE_POSTGRES_PASSWORD:?Set a disposable SMOKE_POSTGRES_PASSWORD}@timescaledb:5432/betting_smoke"
+      C0_SERVING_CONFIG: /app/conf/base/c0_serving.json
+      C0_MODEL_ROOT: /app/data/06_models/a0_data_focus/a0_data_focus_20260929_192443
+      C0_RESEARCH_ROOT: /research-root
+      C0_RELEASE_MAP_PATH: /research-root/a0-phase-walkforward-20260914/data/04_feature/release_corrected_bank/release_days.json
+    volumes: !override
+      # Installed images may contain an old .env; never read its credentials.
+      - /dev/null:/app/.env:ro
+      - ${C0_MODEL_HOST_ROOT:-./data/06_models/a0_data_focus/a0_data_focus_20260929_192443}:/app/data/06_models/a0_data_focus/a0_data_focus_20260929_192443:ro
+      - ${C0_RESEARCH_HOST_ROOT:?Set C0_RESEARCH_HOST_ROOT to the local C0 research root}:/research-root:ro
+      - ./data/artifacts/golgg-database-recovery-20260909:/app/data/artifacts/golgg-database-recovery-20260909:ro
+      - ./data/08_reporting/a0_data_focus/a0_data_focus_20260929_192443/completed.json:/app/data/08_reporting/a0_data_focus/a0_data_focus_20260929_192443/completed.json:ro
+      - ./betting_app:/app/betting_app:ro
+      - ./conf:/app/conf:ro
+      - ./src:/app/src:ro
+      - ./pyproject.toml:/app/pyproject.toml:ro
+    tmpfs: !override
+      - /tmp:size=512m,mode=1777
+      - /app/data:size=512m,mode=1777
+
+  client:
+    container_name: "${COMPOSE_PROJECT_NAME:?Set a unique COMPOSE_PROJECT_NAME}-client"
+    restart: "no"
+    pull_policy: never
+    ports: !override
+      - "127.0.0.1:${SMOKE_CLIENT_PORT:-3000}:80"
+    # Docker needs a non-internal bridge to publish this loopback listener.
+    # Only Caddy joins it; API and DB stay on the no-egress default network.
+    networks: !override
+      - default
+      - smoke-ingress
+    environment: !override
+      CADDY_APP_HOSTNAME: "http://:80"
+      CADDY_OPERATOR_USERNAME: "${CADDY_OPERATOR_USERNAME:?Set CADDY_OPERATOR_USERNAME outside Git}"
+      CADDY_OPERATOR_PASSWORD_HASH: "${CADDY_OPERATOR_PASSWORD_HASH:?Set CADDY_OPERATOR_PASSWORD_HASH outside Git}"
+    volumes: !override
+      - ./client/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./client/dist:/srv:ro
+    tmpfs: !override
+      - /data:size=16m,mode=0700
+      - /config:size=16m,mode=0700
+
+networks:
+  default:
+    internal: true
+  smoke-ingress:
+    driver: bridge
+    internal: false
+
+volumes: !reset {}
+secrets: !reset {}

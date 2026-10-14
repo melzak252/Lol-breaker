@@ -1,0 +1,194 @@
+{
+  "created_at": "2026-07-30T14:04:02+00:00",
+  "model": "Sym-Cal LR-ElasticNet-W20-Binomial/exp-039 final artifacts",
+  "prediction_note": "Point-in-time DB features are recomputed chronologically, then final serialized EXP-039 pipeline/calibrator is applied. This is not an OOF retraining backtest.",
+  "market_note": "Opening/mid/close use non-live odds_snapshots before canonical start time; per-bookmaker no-vig probabilities are averaged. Mid is the middle available pre-match snapshot per bookmaker.",
+  "exp039_all_golgg": {
+    "n_predictions": 41067,
+    "date_min": "2013-09-16",
+    "date_max": "2026-07-29",
+    "metrics_team1": {
+      "n": 41067,
+      "logloss": 0.5880479789657094,
+      "brier": 0.20163184616089974,
+      "accuracy": 0.687121046095405,
+      "mean_prob": 0.5280741026621878,
+      "target_rate": 0.5346628679962013,
+      "auc": 0.7534521436420605
+    }
+  },
+  "exp039_segments": {
+    "since_2020": {
+      "date_min": "2020-01-03",
+      "date_max": "2026-07-29",
+      "metrics_team1": {
+        "n": 30970,
+        "logloss": 0.5826004603426588,
+        "brier": 0.19956181780569798,
+        "accuracy": 0.6890539231514369,
+        "mean_prob": 0.52965453342268,
+        "target_rate": 0.5330965450435906,
+        "auc": 0.7580768099806228
+      }
+    },
+    "since_2021": {
+      "date_min": "2021-01-02",
+      "date_max": "2026-07-29",
+      "metrics_team1": {
+        "n": 26843,
+        "logloss": 0.5792609112044573,
+        "brier": 0.19818532011561377,
+        "accuracy": 0.6915769474350855,
+        "mean_prob": 0.530315391307503,
+        "target_rate": 0.5335469209849868,
+        "auc": 0.7613685422399041
+      }
+    },
+    "since_2024": {
+      "date_min": "2024-01-01",
+      "date_max": "2026-07-29",
+      "metrics_team1": {
+        "n": 11260,
+        "logloss": 0.5570333462843421,
+        "brier": 0.1890520410024118,
+        "accuracy": 0.7062166962699823,
+        "mean_prob": 0.5319634697866075,
+        "target_rate": 0.5354351687388987,
+        "auc": 0.7833325126224333
+      }
+    },
+    "since_2026": {
+      "date_min": "2026-01-08",
+      "date_max": "2026-07-29",
+      "metrics_team1": {
+        "n": 2688,
+        "logloss": 0.5491877585922345,
+        "brier": 0.18592168988793129,
+        "accuracy": 0.7064732142857143,
+        "mean_prob": 0.5175976580907106,
+        "target_rate": 0.5178571428571429,
+        "auc": 0.7926062287143466
+      }
+    }
+  },
+  "market_common": {
+    "n_joined_model_market": 408,
+    "date_min": "2026-05-29",
+    "date_max": "2026-07-29",
+    "orientation_inferred_from_results": true,
+    "exp039_on_market_common": {
+      "n": 408,
+      "logloss": 0.5792153974123299,
+      "brier": 0.19706700020416043,
+      "accuracy": 0.6887254901960784,
+      "mean_prob": 0.5158411215546215,
+      "target_rate": 0.5147058823529411,
+      "auc": 0.7653679653679653
+    },
+    "market_open_novig": {
+      "n": 408,
+      "logloss": 0.5829955856413583,
+      "brier": 0.19940563696296468,
+      "accuracy": 0.696078431372549,
+      "mean_prob": 0.5199680787856201,
+      "target_rate": 0.5147058823529411,
+      "auc": 0.758958633958634,
+      "avg_books": 3.715686274509804,
+      "avg_margin": 0.08741350516991309
+    },
+    "market_open_raw": {
+      "n": 408,
+      "logloss": 0.5895610785427168,
+      "brier": 0.20206625396142294,
+      "accuracy": 0.7083333333333334,
+      "mean_prob": 0.5654611011949762,
+      "target_rate": 0.5147058823529411,
+      "auc": 0.7596320346320347,
+      "avg_books": 3.715686274509804,
+      "avg_margin": 0.08741350516991309
+    },
+    "market_mid_novig": {
+      "n": 408,
+      "logloss": 0.5767583839863148,
+      "brier": 0.1968308909722414,
+      "accuracy": 0.6911764705882353,
+      "mean_prob": 0.5179348389303646,
+      "target_rate": 0.5147058823529411,
+      "auc": 0.7652958152958153,
+      "avg_books": 3.715686274509804,
+      "avg_margin": 0.08743570606073213
+    },
+    "market_mid_raw": {
+      "n": 408,
+      "logloss": 0.5823954817866865,
+      "brier": 0.19915188056118616,
+      "accuracy": 0.7107843137254902,
+      "mean_prob": 0.5632447986482774,
+      "target_rate": 0.5147058823529411,
+      "auc": 0.7656565656565656,
+      "avg_books": 3.715686274509804,
+      "avg_margin": 0.08743570606073213
+    },
+    "market_close_novig": {
+      "n": 408,
+      "logloss": 0.5658962516856435,
+      "brier": 0.1920470284584282,
+      "accuracy": 0.7132352941176471,
+      "mean_prob": 0.5168050689400588,
+      "target_rate": 0.5147058823529411,
+      "auc": 0.777056277056277,
+      "avg_books": 3.715686274509804,
+      "avg_margin": 0.0872733258851421
+    },
+    "market_close_raw": {
+      "n": 408,
+      "logloss": 0.5707958193551735,
+      "brier": 0.19413325220718824,
+      "accuracy": 0.7107843137254902,
+      "mean_prob": 0.561966799077749,
+      "target_rate": 0.5147058823529411,
+      "auc": 0.7772727272727273,
+      "avg_books": 3.715686274509804,
+      "avg_margin": 0.0872733258851421
+    }
+  },
+  "strict_common_open_mid_close": {
+    "n": 408,
+    "market_open_p_a_novig": {
+      "n": 408,
+      "logloss": 0.5829955856413583,
+      "brier": 0.19940563696296468,
+      "accuracy": 0.696078431372549,
+      "mean_prob": 0.5199680787856201,
+      "target_rate": 0.5147058823529411,
+      "auc": 0.758958633958634
+    },
+    "market_mid_p_a_novig": {
+      "n": 408,
+      "logloss": 0.5767583839863148,
+      "brier": 0.1968308909722414,
+      "accuracy": 0.6911764705882353,
+      "mean_prob": 0.5179348389303646,
+      "target_rate": 0.5147058823529411,
+      "auc": 0.7652958152958153
+    },
+    "market_close_p_a_novig": {
+      "n": 408,
+      "logloss": 0.5658962516856435,
+      "brier": 0.1920470284584282,
+      "accuracy": 0.7132352941176471,
+      "mean_prob": 0.5168050689400588,
+      "target_rate": 0.5147058823529411,
+      "auc": 0.777056277056277
+    },
+    "exp039_prob_team_a": {
+      "n": 408,
+      "logloss": 0.5792153974123299,
+      "brier": 0.19706700020416043,
+      "accuracy": 0.6887254901960784,
+      "mean_prob": 0.5158411215546215,
+      "target_rate": 0.5147058823529411,
+      "auc": 0.7653679653679653
+    }
+  }
+}
