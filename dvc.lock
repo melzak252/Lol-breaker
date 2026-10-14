@@ -1,0 +1,325 @@
+schema: '2.0'
+stages:
+  verify_inputs:
+    cmd: .venv/bin/python scripts/run_simulation_pipeline.py --stage 
+      verify_inputs
+    deps:
+    - path: conf/base/catalog.yml
+      hash: md5
+      md5: 1f207d9a662459a38052febec47c5c57
+      size: 2876
+    - path: conf/base/parameters.yml
+      hash: md5
+      md5: 67c22baa168516e87cf0d1ab8ddf969d
+      size: 829
+    - path: data/04_feature/production_2h_odds_trajectory.parquet
+      hash: md5
+      md5: 9b3434d66829539530d84c976f9cc4f0
+      size: 184601
+    - path: 
+        data/05_model_input/canonical_benchmark/rating-foundation-20260915/data/08_reporting/paired.parquet
+      hash: md5
+      md5: c2e05685a1a878a2cd345bbd8d39b0b8
+      size: 1870440
+    - path: data/06_models/model_preservation/prop_distribution_20261007_01.zip
+      hash: md5
+      md5: f50fd2e86bc7b4cf60ea9255a48ab5f7
+      size: 63386728
+    - path: 
+        data/07_model_output/model_bookmaker_competitiveness/plan12_model_bookmaker_20261009_175136Z/paired_probability_panel.parquet
+      hash: md5
+      md5: 234d5d91caeadc7d486cc0d1fef7b855
+      size: 219184
+    - path: 
+        data/07_model_output/oddsportal/c0_thesis_books_joint_20261009_115922Z/joint_scoring_cohorts.parquet
+      hash: md5
+      md5: dbb4b91dc81a38d8877d7136f56a0ad0
+      size: 171098
+    - path: 
+        data/08_reporting/a0_data_focus/a0_data_focus_20260929_192443/all_2026_joined.parquet
+      hash: md5
+      md5: 6cccb5dc86343e1ace9eadb6d2d6b930
+      size: 1872365
+    - path: 
+        data/08_reporting/a0_data_focus/a0_data_focus_20260929_192443/market_T1_joined.parquet
+      hash: md5
+      md5: 24758358f2951ce230305cd69d35d45d
+      size: 1069638
+    - path: data/08_reporting/optimal_strategy_simulation_ledger.csv
+      hash: md5
+      md5: 08cbf67aab594d1914694620eda53f73
+      size: 11736
+    - path: 
+        data/08_reporting/prop_distribution/prop_distribution_20261007_01/metrics.json
+      hash: md5
+      md5: 799d0f110228cf2e6f71c77acc18995b
+      size: 8955
+    - path: data/model_predictions_2020_2026.parquet
+      hash: md5
+      md5: dfe271fdf4fc5afa368fa3a588628fa9
+      size: 1723450
+    - path: data/odds.csv
+      hash: md5
+      md5: ee4c903f9f3f669bbdc70f448011c31d
+      size: 5773751
+    - path: scripts/run_simulation_pipeline.py
+      hash: md5
+      md5: cb73eb07ddfebd2418f643a8bcf7b0e0
+      size: 8317
+      isexec: true
+    - path: src/analysis/simulation_pipeline.py
+      hash: md5
+      md5: 9b2641b24303b50b9ff39c52b0eadb2b
+      size: 52570
+    outs:
+    - path: data/08_reporting/simulation_pipeline/stage1_input_manifest.json
+      hash: md5
+      md5: 6763b599faf8695012c7d3ff33bcba27
+      size: 5762
+  model_benchmark:
+    cmd: .venv/bin/python scripts/run_simulation_pipeline.py --stage 
+      model_benchmark
+    deps:
+    - path: conf/base/catalog.yml
+      hash: md5
+      md5: 1f207d9a662459a38052febec47c5c57
+      size: 2876
+    - path: conf/base/parameters.yml
+      hash: md5
+      md5: 67c22baa168516e87cf0d1ab8ddf969d
+      size: 829
+    - path: 
+        data/05_model_input/canonical_benchmark/rating-foundation-20260915/data/08_reporting/paired.parquet
+      hash: md5
+      md5: c2e05685a1a878a2cd345bbd8d39b0b8
+      size: 1870440
+    - path: 
+        data/07_model_output/oddsportal/c0_thesis_books_joint_20261009_115922Z/joint_scoring_cohorts.parquet
+      hash: md5
+      md5: dbb4b91dc81a38d8877d7136f56a0ad0
+      size: 171098
+    - path: 
+        data/08_reporting/a0_data_focus/a0_data_focus_20260929_192443/all_2026_joined.parquet
+      hash: md5
+      md5: 6cccb5dc86343e1ace9eadb6d2d6b930
+      size: 1872365
+    - path: 
+        data/08_reporting/a0_data_focus/a0_data_focus_20260929_192443/market_T1_joined.parquet
+      hash: md5
+      md5: 24758358f2951ce230305cd69d35d45d
+      size: 1069638
+    - path: data/08_reporting/simulation_pipeline/stage1_input_manifest.json
+      hash: md5
+      md5: 6763b599faf8695012c7d3ff33bcba27
+      size: 5762
+    - path: scripts/run_simulation_pipeline.py
+      hash: md5
+      md5: cb73eb07ddfebd2418f643a8bcf7b0e0
+      size: 8317
+      isexec: true
+    - path: src/analysis/simulation_pipeline.py
+      hash: md5
+      md5: 9b2641b24303b50b9ff39c52b0eadb2b
+      size: 52570
+    params:
+      conf/base/parameters.yml:
+        simulation.benchmark:
+          bootstrap_draws: 5000
+          random_seed: 20260915
+          tail_loss_threshold: 2.5
+          ece_bins: 10
+        simulation.shrinkage:
+          alphas:
+          - 0.0
+          - 0.25
+          - 0.35
+          - 0.5
+          - 0.75
+          - 1.0
+          devig_method: shin
+    outs:
+    - path: data/08_reporting/simulation_pipeline/stage2_model_benchmark.json
+      hash: md5
+      md5: 925a6247d86ba00db9249d6ac53e66d3
+      size: 13428
+    - path: data/08_reporting/simulation_pipeline/stage2_shrinkage_grid.csv
+      hash: md5
+      md5: bed6d21fcc34713ec29c3860f005a88a
+      size: 2784
+  betting_simulation:
+    cmd: .venv/bin/python scripts/run_simulation_pipeline.py --stage 
+      betting_simulation
+    deps:
+    - path: conf/base/catalog.yml
+      hash: md5
+      md5: 1f207d9a662459a38052febec47c5c57
+      size: 2876
+    - path: conf/base/parameters.yml
+      hash: md5
+      md5: 67c22baa168516e87cf0d1ab8ddf969d
+      size: 829
+    - path: data/04_feature/production_2h_odds_trajectory.parquet
+      hash: md5
+      md5: 9b3434d66829539530d84c976f9cc4f0
+      size: 184601
+    - path: data/08_reporting/optimal_strategy_simulation_ledger.csv
+      hash: md5
+      md5: 08cbf67aab594d1914694620eda53f73
+      size: 11736
+    - path: data/08_reporting/simulation_pipeline/stage2_model_benchmark.json
+      hash: md5
+      md5: 925a6247d86ba00db9249d6ac53e66d3
+      size: 13428
+    - path: scripts/run_simulation_pipeline.py
+      hash: md5
+      md5: cb73eb07ddfebd2418f643a8bcf7b0e0
+      size: 8317
+      isexec: true
+    - path: src/analysis/simulation_pipeline.py
+      hash: md5
+      md5: 9b2641b24303b50b9ff39c52b0eadb2b
+      size: 52570
+    params:
+      conf/base/parameters.yml:
+        simulation.betting:
+          initial_bankroll: 10000.0
+          tax_rate_pl: 0.12
+          tax_rate_intl: 0.0
+          alpha: 0.5
+          guard_b_logit_threshold: 0.85
+          thesis_veto_threshold: 0.1
+          guard_w_epsilon: 0.025
+          min_ev: 0.05
+          max_ev: 0.25
+          max_odds: 4.0
+          kelly_fraction: 0.25
+          max_stake_pln: 150.0
+          min_stake_pln: 20.0
+          flat_stake_pln: 100.0
+    outs:
+    - path: data/08_reporting/simulation_pipeline/stage3_betting_simulation.json
+      hash: md5
+      md5: 746e5d638f574c3f88e1ecc804d9e9fc
+      size: 4960
+    - path: data/08_reporting/simulation_pipeline/stage3_strategy_comparison.csv
+      hash: md5
+      md5: 0a78502d9a17e8322aaafeb0f056a79c
+      size: 725
+  econometric_audit:
+    cmd: .venv/bin/python scripts/run_simulation_pipeline.py --stage 
+      econometric_audit
+    deps:
+    - path: conf/base/catalog.yml
+      hash: md5
+      md5: 1f207d9a662459a38052febec47c5c57
+      size: 2876
+    - path: conf/base/parameters.yml
+      hash: md5
+      md5: 67c22baa168516e87cf0d1ab8ddf969d
+      size: 829
+    - path: data/06_models/model_preservation/prop_distribution_20261007_01.zip
+      hash: md5
+      md5: f50fd2e86bc7b4cf60ea9255a48ab5f7
+      size: 63386728
+    - path: data/08_reporting/optimal_strategy_simulation_ledger.csv
+      hash: md5
+      md5: 08cbf67aab594d1914694620eda53f73
+      size: 11736
+    - path: 
+        data/08_reporting/prop_distribution/prop_distribution_20261007_01/metrics.json
+      hash: md5
+      md5: 799d0f110228cf2e6f71c77acc18995b
+      size: 8955
+    - path: data/08_reporting/simulation_pipeline/stage3_betting_simulation.json
+      hash: md5
+      md5: 746e5d638f574c3f88e1ecc804d9e9fc
+      size: 4960
+    - path: scripts/run_simulation_pipeline.py
+      hash: md5
+      md5: cb73eb07ddfebd2418f643a8bcf7b0e0
+      size: 8317
+      isexec: true
+    - path: src/analysis/simulation_pipeline.py
+      hash: md5
+      md5: 9b2641b24303b50b9ff39c52b0eadb2b
+      size: 52570
+    params:
+      conf/base/parameters.yml:
+        simulation.econometrics:
+          bootstrap_draws: 10000
+          random_seed: 20261014
+          noise_decay_sample_sizes:
+          - 10
+          - 20
+          - 50
+          - 100
+          - 250
+          - 500
+          - 1000
+          - 1396
+          - 2000
+          - 2792
+          confidence_z_95_one_sided: 1.6448536269514722
+    outs:
+    - path: data/08_reporting/simulation_pipeline/stage4_econometric_audit.json
+      hash: md5
+      md5: f7d0c57790f9e2bf8b9009da99347da2
+      size: 3811
+    - path: data/08_reporting/simulation_pipeline/stage4_noise_decay_table.csv
+      hash: md5
+      md5: 87b70a3465b9b49ffdae76125b3b86eb
+      size: 332
+  generate_report:
+    cmd: .venv/bin/python scripts/run_simulation_pipeline.py --stage 
+      generate_report
+    deps:
+    - path: conf/base/catalog.yml
+      hash: md5
+      md5: 1f207d9a662459a38052febec47c5c57
+      size: 2876
+    - path: data/08_reporting/simulation_pipeline/stage1_input_manifest.json
+      hash: md5
+      md5: 6763b599faf8695012c7d3ff33bcba27
+      size: 5762
+    - path: data/08_reporting/simulation_pipeline/stage2_model_benchmark.json
+      hash: md5
+      md5: 925a6247d86ba00db9249d6ac53e66d3
+      size: 13428
+    - path: data/08_reporting/simulation_pipeline/stage2_shrinkage_grid.csv
+      hash: md5
+      md5: bed6d21fcc34713ec29c3860f005a88a
+      size: 2784
+    - path: data/08_reporting/simulation_pipeline/stage3_betting_simulation.json
+      hash: md5
+      md5: 746e5d638f574c3f88e1ecc804d9e9fc
+      size: 4960
+    - path: data/08_reporting/simulation_pipeline/stage3_strategy_comparison.csv
+      hash: md5
+      md5: 0a78502d9a17e8322aaafeb0f056a79c
+      size: 725
+    - path: data/08_reporting/simulation_pipeline/stage4_econometric_audit.json
+      hash: md5
+      md5: f7d0c57790f9e2bf8b9009da99347da2
+      size: 3811
+    - path: data/08_reporting/simulation_pipeline/stage4_noise_decay_table.csv
+      hash: md5
+      md5: 87b70a3465b9b49ffdae76125b3b86eb
+      size: 332
+    - path: scripts/run_simulation_pipeline.py
+      hash: md5
+      md5: cb73eb07ddfebd2418f643a8bcf7b0e0
+      size: 8317
+      isexec: true
+    - path: src/analysis/simulation_pipeline.py
+      hash: md5
+      md5: 9b2641b24303b50b9ff39c52b0eadb2b
+      size: 52570
+    outs:
+    - path: data/08_reporting/simulation_pipeline/SIMULATION_REPORT.md
+      hash: md5
+      md5: 190baf4a00a5d345bdea8fe3e4fadea9
+      size: 7002
+    - path: data/08_reporting/simulation_pipeline/summary_metrics.json
+      hash: md5
+      md5: 8577ef7ec1a34ed1be8053570ce9675e
+      size: 947

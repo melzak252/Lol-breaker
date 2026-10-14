@@ -1,0 +1,5 @@
+outs:
+- md5: 24758358f2951ce230305cd69d35d45d
+  size: 1069638
+  hash: md5
+  path: market_T1_joined.parquet

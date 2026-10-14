@@ -1,0 +1,5 @@
+outs:
+- md5: ee4c903f9f3f669bbdc70f448011c31d
+  size: 5773751
+  hash: md5
+  path: odds.csv

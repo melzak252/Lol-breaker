@@ -1,0 +1,6 @@
+outs:
+- md5: 2ead4bcdac3566b2f8ca293f1ce521cc.dir
+  size: 45631403
+  nfiles: 382
+  hash: md5
+  path: canonical_benchmark

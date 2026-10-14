@@ -1,0 +1,5 @@
+outs:
+- md5: dbb4b91dc81a38d8877d7136f56a0ad0
+  size: 171098
+  hash: md5
+  path: joint_scoring_cohorts.parquet

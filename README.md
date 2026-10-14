@@ -8,7 +8,7 @@ Standalone application and quantitative modeling system for League of Legends ma
 
 ## 1. System Architecture & Folder Layout (Kedro 8-Layer + DVC)
 
-The repository follows the **Kedro 8-Layer Data Engineering Hierarchy** (`data/01_raw` through `data/08_reporting`) orchestrated by **DVC (`dvc.yaml`)** and configured via declarative catalogs (`conf/base/{catalog.yml,parameters.yml}`):
+The repository follows the **Kedro 8-Layer Data Engineering Hierarchy** (`data/01_raw` through `data/08_reporting`) orchestrated by **DVC (`dvc.yaml`)** and configured via declarative catalogs (`conf/base/{catalog.yml,parameters.yml}`). Detailed dataset provenance, schema specifications, and cutoff guarantees are documented in the **[Data Catalog (`docs/DATA_CATALOG.md`)](docs/DATA_CATALOG.md)**.
 
 ```text
 lol-breaker/
