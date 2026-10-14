@@ -16,12 +16,13 @@ Use the **[model/study catalog](../docs/MODEL_CATALOG.md)** to choose a retained
 
 | Purpose | Interface | Boundary |
 |---|---|---|
+| End-to-End 5-stage simulation pipeline | `run_simulation_pipeline.py --stage all` / `dvc repro` | Kedro 8-layer data catalog, proper-score benchmarks, shrinkage grid, Polish 12% tax & multi-year simulations, econometric audit |
 | Canonical saved-prediction benchmark | `run_model_benchmark.py --suite --doctor` / an authorized new output directory | Annual A0/rating/039 controls; no training or deployment |
 | Existing standalone prop inference | `train_prop_distribution.py predict --run-id prop_distribution_20261007_01 --match-id ID` | Frozen historical feature rows; Map1 kills/duration and series length, not a live adapter |
 | Prop preservation/recovery | `preserve_prop_model.py create|verify|restore|replay` | Checksummed separate archive; never overwrite outputs, fit or activate models |
 | Closed challenger experiments below | Their exact study runners and saved protocols | Archive/reproducibility tools; NOT_ADOPTED and gated NOT_RUN studies do not resume automatically |
 
-The original prop run and its selected bundle stay in place. [Recovery ZIP, digest and proof](../docs/MODEL_CATALOG.md#2-preserved-standalone-prop-model) include all five study stages plus source dependencies and environment metadata. Actual create/verify and restored-source inference completed; old scientific receipts and retained failures are unchanged.
+The original prop run and its selected bundle stay in place. [Recovery ZIP, digest and proof](../docs/MODEL_CATALOG.md#3-preserved-standalone-prop-model-recovery-bundle) include all five study stages plus source dependencies and environment metadata. Actual create/verify and restored-source inference completed; old scientific receipts and retained failures are unchanged.
 
 ```bash
 .venv/bin/python scripts/preserve_prop_model.py verify \
@@ -664,7 +665,7 @@ go na primary2024–25; nie promować tej receptury.
 
 ### Plan08: reliability-first comparison of native6 and native12
 
-The completed [Plan08](../TODO/08_reliability_first_model_tradeoff.md) compares six versus twelve native epochs in run `reliability_tradeoff_20261001_092401_integrity_v2`. Primary LL and fixed-A0 quarter-cell RMS gates both fail; retain annual A0. [Full result and limitations, §13](../reports/noisy_data_reliability_research_20260929.md#13-reliability-versus-log-loss-plan08-2026-10-01), [sealed decision](../data/08_reporting/reliability_tradeoff/reliability_tradeoff_20261001_092401_integrity_v2/decision.json).
+The completed Plan08 compares six versus twelve native epochs in run `reliability_tradeoff_20261001_092401_integrity_v2`. Primary LL and fixed-A0 quarter-cell RMS gates both fail; retain annual A0. [Full result and limitations, §13](../reports/noisy_data_reliability_research_20260929.md#13-reliability-versus-log-loss-plan08-2026-10-01), [sealed decision](../data/08_reporting/reliability_tradeoff/reliability_tradeoff_20261001_092401_integrity_v2/decision.json).
 
 - `train_a0_reliability_tradeoff.py --protocol PATH` runs the nine-fit frozen recipe; `--smoke` is a separate short preflight, not an assessed candidate.
 - `run_model_benchmark.py --reliability-tradeoff PATH --output-dir NEW_PATH` evaluates saved tradeoff forecasts through the existing assessment CLI. The completed assessment is write-once; use a new nonexistent output directory only for an intentional replay.
@@ -673,8 +674,7 @@ The completed [Plan08](../TODO/08_reliability_first_model_tradeoff.md) compares 
 
 ### Plan07: wejścia, replikacja roczna i komponent rodzin
 
-Program jest zakończony: [plan i decyzje](../TODO/07_model_prediction_reliability.md),
-[raport i dowody §11](../reports/noisy_data_reliability_research_20260929.md#11-executed-model-reliability-program--2026-10-01).
+Program jest zakończony: [raport i dowody §11](../reports/noisy_data_reliability_research_20260929.md#11-executed-model-reliability-program--2026-10-01).
 Nie uruchamiać kolejnego treningu automatycznie. Roczne A0 i manifest kanoniczny
 pozostają bez zmian; żaden nowy ogólny kandydat nie przeszedł promocji.
 

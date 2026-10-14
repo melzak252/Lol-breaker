@@ -1,49 +1,273 @@
-# LoL-Breaker — League of Legends Quantitative Modeling & Betting Intelligence
+# LoL-Breaker — Quantitative League of Legends Modeling & Betting Intelligence
 
-Standalone application and modeling repository for League of Legends quantitative modeling and betting intelligence.
+Standalone application and quantitative modeling system for League of Legends match outcome prediction, tournament simulation, and betting analytics.
 
-**LoL-Breaker** combines pre-match causal match-winner and prop-distribution models (`src/`, `conf/`) with a full-stack manual betting analytics & EV intelligence manager (`betting_app/`, `client/`). The application does **not** place bets automatically.
-
----
-
-## 1. Repository Architecture (App + Models Together)
-
-| Path | Responsibility |
-|---|---|
-| `src/` | Core modeling, rating engines (Glicko-2, Elo, FamilyMapBridge), tournament simulators (Exact DP + Swiss MC), Shin de-vigging, and Risk Guards A–D + Guard W (Wasserstein DRO). |
-| `betting_app/` | FastAPI backend (`LoL-Breaker Betting API`), isolated Native C0 inference worker (`c0_worker.py`), SQLAlchemy/TimescaleDB models, bookmaker scrapers, scheduler, and EV/staking services. |
-| `client/` | React 18 + TypeScript + Vite frontend (`LoL-Breaker — Betting Intelligence`). |
-| `conf/base/` | Serving contract (`c0_serving.json`) and canonical benchmark manifest (`research_benchmark.json`). |
-| `scripts/` | Benchmark runners (`run_model_benchmark.py`, `run_unified_betting_evaluation.py`), shadow forward ledger (`run_shadow_forward_ledger.py`), and prop preservation utilities. |
-| `docs/`, `reports/` | Model catalog ([`docs/MODEL_CATALOG.md`](docs/MODEL_CATALOG.md)), research journal ([`docs/RESEARCH.md`](docs/RESEARCH.md)), architecture map ([`docs/PROJECT_ARCHITECTURE.md`](docs/PROJECT_ARCHITECTURE.md)), and econometric audit reports ([`reports/README.md`](reports/README.md)). |
-| `data/` | Local datasets, model checkpoints, and reporting receipts (standalone local directory in `/home/melzak/dev/lol-breaker/data`). |
-
-> **Standalone Environment**: `data/` and `.venv/` are standalone local directories in `/home/melzak/dev/lol-breaker` with no external repository dependencies or symlinks.
+**LoL-Breaker** integrates pre-match causal match-winner models, tournament distribution simulators, and standalone map prop estimators (`src/`, `conf/`) with a complete decision-time betting intelligence platform (`betting_app/`, `client/`). The application does **not** place bets automatically.
 
 ---
 
-## 2. Active Production Model & Optimal Synergy + Wasserstein DRO Stack
+## 1. System Architecture & Folder Layout (Kedro 8-Layer + DVC)
 
-| Layer | Configuration | Source |
-|---|---|---|
-| **Base Sports Model** | `Causal-C0` (`c0-native-2026-w32-e12-v1`, W32/E12 3-seed neural history attention + rating/MLP experts) | `conf/base/c0_serving.json`, `betting_app/core/models/registry.py` |
-| **Market Hybrid** | `Hybrid-Operational-Market` (`c0-native-2026-w32-e12-v1-a0.50-t1.00`, 50/50 logit shrinkage with 2-way closed-form Shin de-vigging) | `betting_app/core/models/registry.py`, `betting_app/core/ev.py` |
-| **Guard B (Logit Gate)** | $|\operatorname{logit}(p_{\text{C0}}) - \operatorname{logit}(q_{\text{shin}})| \le 0.85$ | `src/analysis/betting_guards_a_to_d.py`, `betting_app/services/bet_qualification_service.py` |
-| **Thesis Model Veto** | $|p_{\text{C0}} - p_{\text{EXP-039}}| \le 0.10$ | `betting_app/core/ev.py`, `betting_app/services/upcoming_inference_service.py` |
-| **Guard W (Wasserstein DRO)** | $\varepsilon = 0.025$ ($(\hat{p}_{\text{hybrid}} - 0.025)(1 - \tau)O - 1 > 0 \iff \text{EV}_{\text{net}} > \max(0.05, (1-\tau)O \cdot 0.025)$) | `src/analysis/betting_guards_a_to_d.py`, `betting_app/services/bet_qualification_service.py` |
-| **Caps & Staking** | $\text{EV}_{\text{net}} \in [5\%, 25\%]$, $\text{Odds} \le 4.00$, whole-integer PLN step-compounded unit stake (`3%` of bankroll, capped at `150 PLN`) | `betting_app/core/staking.py` |
+The repository follows the **Kedro 8-Layer Data Engineering Hierarchy** (`data/01_raw` through `data/08_reporting`) orchestrated by **DVC (`dvc.yaml`)** and configured via declarative catalogs (`conf/base/{catalog.yml,parameters.yml}`):
+
+```text
+lol-breaker/
+├── dvc.yaml                          # 5-stage DVC DAG pipeline (dvc repro / dvc metrics show)
+├── conf/
+│   └── base/
+│       ├── catalog.yml               # Declarative Kedro Data Catalog (dataset paths & SHA-256 pins)
+│       ├── parameters.yml            # Hyperparameter registry (shrinkage α, risk guards, Kelly)
+│       ├── c0_serving.json           # Active C0 local serving contract
+│       └── research_benchmark.json   # Canonical 11,550-match research benchmark manifest
+├── data/                             # Kedro 8-Layer Data Engineering Hierarchy (DVC-tracked)
+│   ├── 01_raw/                       # Immutable raw odds & match sources
+│   ├── 02_intermediate/              # Parsed & typed quote snapshots
+│   ├── 03_primary/                   # Canonical match identities & aligned bookmaker quotes
+│   ├── 04_feature/                   # Pre-match feature tensors & 2h quote trajectories
+│   │   └── production_2h_odds_trajectory.parquet
+│   ├── 05_model_input/               # Consolidated canonical benchmark cohorts (11,550 series)
+│   │   └── canonical_benchmark/      # Self-contained paired.parquet + C0 archive backend
+│   ├── 06_models/                    # Frozen C0 neural checkpoints & standalone prop bundle
+│   │   ├── a0_data_focus/a0_data_focus_20260929_192443/
+│   │   └── model_preservation/prop_distribution_20261007_01.zip
+│   ├── 07_model_output/              # Out-of-time model probability panels
+│   │   ├── a0_data_focus/a0_data_focus_20260929_192443/control.parquet
+│   │   └── oddsportal/c0_thesis_books_joint_20261009_115922Z/joint_scoring_cohorts.parquet
+│   └── 08_reporting/                 # Pipeline evaluation outputs, ledgers, & reports
+│       ├── optimal_strategy_simulation_ledger.csv
+│       └── simulation_pipeline/      # Generated by dvc repro / run_simulation_pipeline.py
+│           ├── stage1_input_manifest.json
+│           ├── stage2_model_benchmark.json
+│           ├── stage2_shrinkage_grid.csv
+│           ├── stage3_betting_simulation.json
+│           ├── stage3_strategy_comparison.csv
+│           ├── stage4_econometric_audit.json
+│           ├── stage4_noise_decay_table.csv
+│           ├── summary_metrics.json
+│           └── SIMULATION_REPORT.md
+├── src/
+│   └── analysis/
+│       ├── simulation_pipeline.py    # 5-stage simulation pipeline & econometric engine
+│       ├── betting_guards_a_to_d.py  # Guard B (logit gate), Shin devigging, Guard W (DRO)
+│       └── model_benchmark.py        # LogLoss, Brier, ECE, calibration slope, bootstrap CI
+└── scripts/
+    ├── run_simulation_pipeline.py    # Unified pipeline CLI runner (--stage and --all)
+    └── run_model_benchmark.py        # Canonical research benchmark CLI
+```
 
 ---
 
-## 3. Quick Verification & Local Commands
+## 2. Active Model & Decision-Time Strategy Stack
+
+| Domain / Layer | Model Identity & Version | Formulation & Details | Source of Truth |
+|---|---|---|---|
+| **Leading Pure Sports Model** | **`Causal-C0`** (`c0-native-2026-w32-e12-v1`) | 3-seed Width-32 / Epoch-12 history-attention neural net (16 maps/player, Beta terminal score + 0.1 SmoothL1 aux loss) + shared rating (Glicko-2/Elo) + MLP experts | `conf/base/c0_serving.json`, `betting_app/core/models/registry.py` |
+| **Operational Market Hybrid** | **`Hybrid-Operational-Market`** | 50/50 logit-space shrinkage between Native C0 and 2-way closed-form Shin de-vigged market consensus: $\operatorname{logit}(p_{\text{hybrid}}) = 0.50 \operatorname{logit}(p_{\text{C0}}) + 0.50 \operatorname{logit}(q_{\text{shin}})$ | `betting_app/core/models/registry.py`, `betting_app/core/ev.py` |
+| **Guard B (Market Divergence Gate)** | $|\operatorname{logit}(p_{\text{C0}}) - \operatorname{logit}(q_{\text{shin}})| \le 0.85$ | Dynamic logit bound; rejects severe bookmaker divergences where model overconfidence occurs | `src/analysis/betting_guards_a_to_d.py` |
+| **Thesis Model Veto** | $|p_{\text{C0}} - p_{\text{EXP-039}}| \le 0.10$ | Cross-architecture consensus veto; suppresses false edges when modern neural C0 disagrees with legacy logistic baseline | `betting_app/core/ev.py` |
+| **Guard W (Wasserstein DRO)** | $\varepsilon = 0.025$ | Distributionally robust optimization; ensures non-negative EV under distribution shifts: $(p_{\text{hybrid}} - 0.025)(1 - \tau)O - 1 > 0$ | `src/analysis/betting_guards_a_to_d.py` |
+| **Adopted Production Staking** | **Optimal Synergy Strategy** | 1/4 Kelly under 12% Polish tax, bounded by $\text{EV}_{\text{net}} \in [5\%, 25\%]$, $\text{Odds} \le 4.00$, and a strict 150 PLN cap per bet | `data/08_reporting/optimal_strategy_simulation_ledger.csv` |
+
+---
+
+## 3. Data Setup: DVC & Google Drive
+
+The simulation pipeline tracks a curated ~115 MB historical bundle spanning canonical walk-forward paired matrices, 2h odds trajectories, out-of-time probability panels, and model preservation archives.
+
+### Connecting Remote Storage (Google Drive)
 
 ```bash
-# 1. Verify canonical research benchmark manifest & hashes:
-.venv/bin/python scripts/run_model_benchmark.py --suite conf/base/research_benchmark.json --doctor
+# 1. Initialize DVC in the repository (if not already initialized)
+dvc init
 
-# 2. Run qualification, guards, and benchmark regression tests:
-.venv/bin/python -m pytest -q betting_app/tests/test_bet_qualification.py betting_app/tests/test_betting_guards_a_to_d.py betting_app/tests/test_research_benchmark_suite.py
+# 2. Add Google Drive remote storage
+dvc remote add -d storage gdrive://<GDRIVE_FOLDER_ID>
+dvc remote modify storage gdrive_acknowledge_abuse true
 
-# 3. Frontend lint and production build:
-cd client && npm run lint && npm run build
+# 3. Pull datasets on a fresh clone / new machine
+dvc pull
 ```
+
+### Pushing Curated Artifacts to Remote
+
+```bash
+# Track curated large inputs with DVC
+dvc add data/05_model_input/canonical_benchmark
+dvc add data/06_models/model_preservation/prop_distribution_20261007_01.zip
+dvc add data/odds.csv
+dvc add data/model_predictions_2020_2026.parquet
+
+# Commit DVC pointers to Git and upload data to Google Drive
+git add data/*.dvc .dvc/config
+git commit -m "chore: track simulation bundle with DVC"
+dvc push
+```
+
+---
+
+## 4. Running the Simulation Pipeline
+
+### Method A: Direct Execution via CLI Runner (Zero Extra Dependencies)
+
+```bash
+# Run all 5 stages end-to-end
+.venv/bin/python scripts/run_simulation_pipeline.py --stage all
+
+# Or run individual stages granularly:
+.venv/bin/python scripts/run_simulation_pipeline.py --stage consolidate
+.venv/bin/python scripts/run_simulation_pipeline.py --stage verify_inputs
+.venv/bin/python scripts/run_simulation_pipeline.py --stage model_benchmark
+.venv/bin/python scripts/run_simulation_pipeline.py --stage betting_simulation
+.venv/bin/python scripts/run_simulation_pipeline.py --stage econometric_audit
+.venv/bin/python scripts/run_simulation_pipeline.py --stage generate_report
+```
+
+### Method B: DVC DAG Reproduction & Metrics Tracking
+
+```bash
+# Execute DAG pipeline with automatic dependency and hash caching
+dvc repro
+
+# Inspect tracked key-value metrics summary
+dvc metrics show
+```
+
+### Method C: Automated Regression & Invariant Tests
+
+```bash
+.venv/bin/python -m pytest -q \
+  betting_app/tests/test_simulation_pipeline.py \
+  betting_app/tests/test_bet_qualification.py \
+  betting_app/tests/test_betting_guards_a_to_d.py \
+  betting_app/tests/test_research_benchmark_suite.py
+```
+
+---
+
+## 5. Empirical Results & Mathematical Audit
+
+### 5.1 Sports Model Predictive Quality
+
+#### A. 2026 Canonical Assessment Cohort ($N=3,103$ series: Jan–Sep 2026)
+
+Evaluated unclipped against realized match winners ($Y \in \{0, 1\}$):
+
+| Model | LogLoss | Brier Score | Accuracy | AUC | Extreme Tails ($\text{LL} \ge 2.5$) | Status |
+|---|---:|---:|---:|---:|---:|---|
+| **Causal-C0 (W32/E12)** | **0.535449** | **0.181034** | **72.03%** | **0.7993** | **12** | **Leading Pure Sports Baseline** |
+| **Annual Causal A0** | 0.536757 | 0.181573 | 71.83% | 0.7981 | 10 | Canonical Annual Benchmark |
+| **EXP-039 Research Derivative** | 0.559245 | 0.189822 | 70.06% | 0.7806 | 8 | Thesis Baseline ($N=2,699$ supported) |
+| **Calibrated Glicko-2** | 0.570519 | 0.193954 | 69.06% | 0.7691 | 20 | Rating Baseline |
+| **Calibrated Elo** | 0.580481 | 0.198066 | 68.87% | 0.7595 | 16 | Rating Baseline |
+
+*Paired monthly-block bootstrap:* $\Delta\text{LL}(\text{C0} - \text{A0}) = -0.001308$ ($95\%\text{ CI: } [-0.003209, +0.000106]$).
+
+#### B. Full 2024–2026 Walk-Forward Cohort ($N=11,550$ series & $N=9,907$ common support)
+
+| Model | 11,550 Full LogLoss | 11,550 Full Brier | 9,907 Common LogLoss | 9,907 Common Brier | 9,907 Tails ($\text{LL} \ge 2.5$) |
+|---|---:|---:|---:|---:|---:|
+| **Annual Causal A0** | **0.551246** | **0.187103** | **0.559920** | **0.190439** | 30 |
+| **EXP-039 Research Derivative** | *Missing 1,643* | *Missing 1,643* | 0.567337 | 0.193112 | **16** |
+| **Calibrated Glicko-2** | 0.575888 | 0.196548 | 0.577998 | 0.197460 | 36 |
+| **Calibrated Elo** | 0.588946 | 0.201930 | 0.591198 | 0.202851 | 29 |
+
+---
+
+### 5.2 Bayesian Market Shrinkage Proper-Score Grid
+
+Proper-score evaluation of Bayesian logit shrinkage $\operatorname{logit}(p_{\text{hybrid}}) = \alpha \operatorname{logit}(p_{\text{model}}) + (1 - \alpha) \operatorname{logit}(q_{\text{market}})$ across decision windows:
+
+| Cohort & Window | Metric | $\alpha = 0.00$ (Market) | $\alpha = 0.25$ | $\alpha = 0.35$ | $\alpha = 0.50$ (Adopted) | $\alpha = 0.75$ | $\alpha = 1.00$ (Model) |
+|---|---|---:|---:|---:|---:|---:|---:|
+| **Joint Consensus ($N=2,023$)** | **LogLoss** | 0.581530 | 0.576587 | 0.575473 | **0.574693** | 0.575680 | 0.579373 |
+| | **Brier Score** | 0.198350 | 0.196305 | 0.195868 | **0.195593** | 0.196073 | 0.197590 |
+| **Pinnacle T-1h ($N=1,668$)** | **LogLoss** | 0.568604 | 0.563798 | **0.563176** | 0.563571 | 0.567576 | 0.575423 |
+| | **Brier Score** | 0.192872 | 0.191250 | **0.191119** | 0.191449 | 0.193303 | 0.196552 |
+| **Canonical Open ($N=2,275$)** | **LogLoss** | 0.593258 | 0.587843 | 0.586628 | **0.585823** | 0.587179 | 0.591839 |
+| | **Brier Score** | 0.203727 | 0.201456 | 0.200941 | **0.200605** | 0.201218 | 0.203266 |
+
+*Verdict:* $\alpha \in [0.35, 0.50]$ shrinkage strictly dominates both pure sports models and raw market prices across every historical cohort.
+
+---
+
+### 5.3 Real-World Betting Simulations & Risk-Guard Ablation
+
+Evaluating betting operations across Polish bookmakers (12% turnover tax) and international benchmarks (0% tax):
+
+| Operating Regime | Strategy Stack | Bets | Win Rate | Expected EV | Realized Yield | EV Overstatement Gap | Max Drawdown | Verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---|
+| **Polish Books (12% Tax)** | Unconstrained Pure C0 | 454 | 43.8% | +31.93% | -4.54% | **+36.47 pp** | 67.0% | **UNTRUSTED (Optimizer's Curse)** |
+| **Polish Books (12% Tax)** | Shrunk Hybrid C0 (α=0.50, Guard B) | 147 | 51.0% | +13.41% | +11.50% | +1.91 pp | 15.0% | Effective Risk Reduction |
+| **Polish Books (12% Tax)** | **Optimal Synergy Strategy (Adopted)** | **50** | **58.0%** | **+13.41%** | **+23.91%** | **-10.50 pp** | **6.10%** | **ADOPTED PRODUCTION STRATEGY** |
+| **Multi-Year (0% Tax)** | Shrunk Hybrid (2021–2026) | 3,002 | 57.6% | +4.68% | +7.60% | -2.92 pp | 9.40% | Validated Historical Edge |
+
+#### Monthly Breakdown for Adopted Production Strategy ($N=50$, 10,000 PLN Capital)
+
+| Month | Bets | Wins | Win Rate | Turnover | Net Profit | Realized Yield | Mean Net CLV |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| **2026-05** | 2 | 2 | 100.0% | 300.00 PLN | +525.00 PLN | +175.00% | +7.08% |
+| **2026-06** | 6 | 4 | 66.7% | 884.81 PLN | +260.95 PLN | +29.49% | +9.62% |
+| **2026-07** | 20 | 12 | 60.0% | 2,818.94 PLN | +541.00 PLN | +19.19% | +3.88% |
+| **2026-08** | 18 | 8 | 44.4% | 2,569.40 PLN | -17.38 PLN | -0.68% | +2.56% |
+| **2026-09** | 4 | 3 | 75.0% | 600.00 PLN | +405.84 PLN | +67.64% | +11.54% |
+| **Total** | **50** | **29** | **58.0%** | **7,173.15 PLN** | **+1,715.41 PLN** | **+23.91%** | **+4.83%** |
+
+---
+
+### 5.4 Econometric Audit: True Profit ($\text{Net CLV}$) vs. Noise
+
+#### A. The Exact Three-Part Bet Decomposition
+
+For any placed bet $i$ with tax multiplier $c = 1 - \tau = 0.88$, decimal odds $O_i$, model probability $\hat{p}_i$, fair closing probability $p_{\text{close},i}$, and match outcome $Y_i \in \{0, 1\}$:
+
+$$\underbrace{c O_i Y_i - 1}_{\substack{\text{Realized Yield} \\ (+24.26\%)}} = \underbrace{c O_i \hat{p}_i - 1}_{\substack{\text{Claimed EV} \\ (+13.41\%)}} - \underbrace{c O_i (\hat{p}_i - p_{\text{close},i})}_{\substack{\text{Optimizer's Curse } B_i \\ (+8.57\%)}} + \underbrace{c O_i (Y_i - p_{\text{close},i})}_{\substack{\text{Match Outcome Noise } \eta_i \\ (+19.42\%)}}$$
+
+- **Pure C0 Claimed EV:** `+22.05%`
+- **Shrunk Hybrid Claimed EV:** `+13.41%`
+- **Optimizer's Curse Removed by Shrinkage:** `8.64 pp` (plus 97 toxic bets vetoed by Guard B & Thesis Veto)
+- **True Long-Term Mathematical Profit ($\text{Net CLV}$):** `+4.83%` per bet ($p_{\text{close}}$ expected wins: $25.67 / 50$)
+- **Identity Mathematical Residual:** $< 10^{-15}$ (Exact equality across all 50 bets)
+
+#### B. Hypothesis Testing & Variance Ratio ($N=50$ Production Bets)
+
+| Metric | Point Estimate | Sample Std ($s$) | Std Error (SE) | $t$-Statistic | Two-Sided $p$-Value | 95% Bootstrap CI |
+|---|---:|---:|---:|---:|---:|---|
+| **Realized Yield** | **+24.26%** | 116.50% | 16.48% | 1.472 | 0.1473 (Not sig.) | $[-7.55\%, +54.83\%]$ |
+| **Raw CLV (Price Edge)** | **+19.13%** | 12.95% | 1.83% | 10.446 | $< 10^{-13}$ | $[+15.55\%, +22.71\%]$ |
+| **Net CLV (True Edge)** | **+4.83%** | 11.39% | 1.61% | **3.000** | **0.0042 (Significant)** | **$[+1.68\%, +7.98\%]$** |
+
+$$\text{Variance Ratio} = \frac{\operatorname{Var}(\text{Realized Yield})}{\operatorname{Var}(\text{Net CLV})} = \frac{1.1650^2}{0.1139^2} = \mathbf{104.5\times}$$
+
+*Finding:* Realized wallet PnL has $104.5\times$ higher variance than Net CLV. Proving edge via Net CLV requires only 15–30 bets, whereas proving edge via wallet PnL requires $>1,000$ bets.
+
+#### C. Time-to-Profit ($N_{\min}$) & Noise Decay Schedule
+
+At average odds $\bar{O} = 2.53$ under 12% tax, per-bet binomial noise is $\sigma_{\text{bet}} = 109.79\%$. After $N$ bets, $\text{Realized Yield}(N) = +4.83\% \pm \frac{109.79\%}{\sqrt{N}}$:
+
+| Bets $N$ | Noise SE ($\pm$) | 95% Realized Yield Range | Probability of Profit $P(\text{Yield} > 0)$ | Wallet Behavior |
+|---:|---:|---|---:|---|
+| **10 bets** | ±34.72% | $[-63.22\%, +72.88\%]$ | 55.5% | Pure coinflip; noise is $7.2\times$ larger than $+4.83\%$ edge |
+| **20 bets** | ±24.55% | $[-43.29\%, +52.95\%]$ | 57.8% | Wide swings (e.g. Aug 2026 had $-0.68\%$ over 18 bets) |
+| **50 bets** | ±15.53% | $[-25.60\%, +35.26\%]$ | 62.2% | Net CLV proven ($p=0.004$), but wallet PnL is still $75\%$ luck |
+| **100 bets** | ±10.98% | $[-16.69\%, +26.35\%]$ | 67.0% | 2-in-3 chance of profit; negative runs still plausible |
+| **250 bets** | ±6.94% | $[-8.78\%, +18.44\%]$ | 75.7% | 3-in-4 chance of profit; edge pulls bankroll visibly |
+| **500 bets** | ±4.91% | $[-4.79\%, +14.45\%]$ | 83.7% | Noise SE drops below true profit ($4.83\%$) |
+| **1,000 bets** | ±3.47% | $[-1.97\%, +11.63\%]$ | 91.8% | $>9$ in 10 chance of profit |
+| **1,396 bets** | **±2.94%** | **$[-0.93\%, +10.59\%]$** | **95.0%** | 🏆 **"Almost Only Profit" Threshold ($z = 1.645$ one-sided 95%)** |
+| **2,000 bets** | ±2.45% | $[+0.02\%, +9.64\%]$ | 97.5% | Two-sided 95% CI is strictly positive ($>0\%$) |
+| **2,792 bets** | ±2.08% | $[+0.76\%, +8.90\%]$ | 99.0% | 99% Guaranteed Profit certainty |
+
+*Tax Regime Comparison:*
+- **Under 12% Polish Tax ($\mu = +4.83\%$):** $N_{\min} = \mathbf{1,396\text{ bets}}$ ($\sim 3.8$ years at 30 bets/mo).
+- **Under 0% Tax ($\mu = +7.60\%$):** $N_{\min} = \mathbf{478\text{ bets}}$ ($\sim 8\text{--}10$ months at 50 bets/mo).
+
+---
+
+### 5.5 Preserved Standalone Prop Models
+
+Preserved package: `data/06_models/model_preservation/prop_distribution_20261007_01.zip`  
+SHA-256 Digest: `a115b26576b90b32997536aa9e1ee7eb1228dd6864bfa53e16e671b72982a232`
+
+- **Map 1 Total Kills:** Ridge-1 Poisson-Mean / Negative Binomial — **NLL `3.590488`**, MAE `7.05` kills
+- **Map 1 In-Game Duration:** 15-leaf LightGBM / LogNormal — **NLL `3.076194`**, MAE `4.24` minutes
+- **Series Length (BO3/5):** Width-128 / Epoch-12 3-seed mixture — **NLL `0.714580`**, RPS `0.261305`

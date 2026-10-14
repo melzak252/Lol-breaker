@@ -1,36 +1,34 @@
-# Weekly retraining pipeline parameters
-weekly_retrain:
-  model_name: "Operational-Retrained-Tabular"
-  min_features: 5
-  min_train_size: 80
-  test_size: 20
-  step_size: null
-  train_window_days: null
-  register_model: true
-  status_on_success: "candidate"
-  min_shadow_dataset_size: 500
-  max_shadow_log_loss: 0.70
-  min_shadow_accuracy: 0.52
-  run_type: "weekly_retrain"
+# Simulation Pipeline Parameters (Kedro-Style Parameters Registry)
 
-# Historical evaluation pipeline parameters
-evaluation:
-  model_name: "Sym-Cal LR-ElasticNet-W20-Binomial"
-  model_version: "exp-039"
-  days_back: 90
-  include_stale: true
-  latest_per_match: true
-  register_candidate: false
-  run_type: "historical_backtest"
-  backtest:
-    bankroll_start: 1000.0
-    min_ev: 0.0
-    staking:
-      strategy: "fractional_kelly"
-      fixed_stake: 10.0
-      kelly_fraction: 0.25
-    max_bets_per_match: 1
-  promotion_gate:
-    min_bets: 50
-    min_comparison_observations: 50
-    min_roi: null
+simulation:
+  benchmark:
+    bootstrap_draws: 5000
+    random_seed: 20260915
+    tail_loss_threshold: 2.5
+    ece_bins: 10
+
+  shrinkage:
+    alphas: [0.0, 0.25, 0.35, 0.50, 0.75, 1.0]
+    devig_method: "shin"
+
+  betting:
+    initial_bankroll: 10000.0
+    tax_rate_pl: 0.12
+    tax_rate_intl: 0.00
+    alpha: 0.50
+    guard_b_logit_threshold: 0.85
+    thesis_veto_threshold: 0.10
+    guard_w_epsilon: 0.025
+    min_ev: 0.05
+    max_ev: 0.25
+    max_odds: 4.00
+    kelly_fraction: 0.25
+    max_stake_pln: 150.0
+    min_stake_pln: 20.0
+    flat_stake_pln: 100.0
+
+  econometrics:
+    bootstrap_draws: 10000
+    random_seed: 20261014
+    noise_decay_sample_sizes: [10, 20, 50, 100, 250, 500, 1000, 1396, 2000, 2792]
+    confidence_z_95_one_sided: 1.6448536269514722

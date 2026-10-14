@@ -33,7 +33,7 @@ REFERENCE_CANONICAL = (
     "data/08_reporting/model_reliability/model_reliability_20261001_055321/"
     "assessment_v2/joined.parquet"
 )
-GOAL_RELATIVE = "TODO/08_reliability_first_model_tradeoff.md"
+GOAL_RELATIVE = "data/05_model_input/reliability_tradeoff/reliability_tradeoff_20261001_092401_integrity_v2/initial_goal.md"
 FAMILY_PROTOCOL_RELATIVE = "data/05_model_input/model_reliability/model_reliability_20261001_055321/evaluation_protocol_v2.json"
 EXPECTED_A0_MANIFEST_SHA256 = "dd1c60bbc85329a21018e8f044dad50fef02e1095964c0a39462635dc925be6e"
 VARIANTS = ("native12", "native6")

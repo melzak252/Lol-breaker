@@ -1,2 +1,66 @@
-# Outputs are kept in memory by default. The audit/training nodes also write
-# explicit JSON/artifact files configured in parameters_exp048.yml.
+# Kedro-Style Declarative Data Catalog for LoL-Breaker 5-Stage Simulation Pipeline
+# Hierarchy: data/01_raw through data/08_reporting
+
+# Layer 05: Model Input (Consolidated Canonical Benchmark)
+canonical_benchmark_paired:
+  path: data/05_model_input/canonical_benchmark/rating-foundation-20260915/data/08_reporting/paired.parquet
+  expected_rows: 11550
+  sha256: 8041b6c7ffd4a99e4c67d55c3665c22c8cd653c8dffe4f153b10dfd9b264dfaf
+
+# Layer 08: Model Reporting (C0 2026 Assessment & Market Join)
+c0_2026_assessment_joined:
+  path: data/08_reporting/a0_data_focus/a0_data_focus_20260929_192443/all_2026_joined.parquet
+  expected_rows: 3103
+  sha256: 5fbcd5e2ac213ab9dadbc425e68edb33d84943e1006b9b903d1b6bc57e5479a8
+
+c0_2026_market_t1_joined:
+  path: data/08_reporting/a0_data_focus/a0_data_focus_20260929_192443/market_T1_joined.parquet
+  expected_rows: 1668
+  sha256: 91b7c364b5900363fe5d1e383752cfb3a5f2592aeb3cd85615bf88115e400491
+
+# Layer 07: Model Output (Bookmaker Panels & Joint Cohorts)
+polish_bookmaker_panel:
+  path: data/07_model_output/model_bookmaker_competitiveness/plan12_model_bookmaker_20261009_175136Z/paired_probability_panel.parquet
+  expected_rows: 2752
+  sha256: 6c8334fcd207997003c3ab6e97b5b987dab5cd3950ca8f23adecbe4cc3cbc5f4
+
+oddsportal_joint_cohorts:
+  path: data/07_model_output/oddsportal/c0_thesis_books_joint_20261009_115922Z/joint_scoring_cohorts.parquet
+  expected_rows: 2023
+  sha256: b99e32cce63157a802bb3913363cfc40b467a02a3ab94390ecd26f837afac321
+
+# Multiyear Datasets
+multiyear_oddsportal_odds:
+  path: data/odds.csv
+  expected_rows: 16375
+  sha256: 33504cb7f6b6e6af16ccae4c266b5ceebc2b3a9f821a1cd9a63860c510e20ed4
+
+multiyear_model_predictions:
+  path: data/model_predictions_2020_2026.parquet
+  expected_rows: 26503
+  sha256: f23d50467a0bf2236b13bd7b3c01cfb065f49d4d51a1160f418a763cb995e917
+
+# Layer 04: Features (Production 2h Odds Trajectory)
+production_2h_trajectory:
+  path: data/04_feature/production_2h_odds_trajectory.parquet
+  expected_rows: 7505
+  sha256: bde52975de0331a7d1238bdbfcd735190f964b27b0e74c2bf8d75d1e83a821c5
+
+# Layer 08: Model Reporting (Production Synergy Ledger)
+optimal_synergy_ledger:
+  path: data/08_reporting/optimal_strategy_simulation_ledger.csv
+  expected_rows: 50
+  sha256: d4b960e204b99ae7288cfbb3912eac0b3296a9b08666a1d2d0dff9b8dc9cd434
+
+# Layer 06: Frozen Models (Prop Distribution Preservation Bundle)
+prop_distribution_bundle:
+  path: data/06_models/model_preservation/prop_distribution_20261007_01.zip
+  sha256: a115b26576b90b32997536aa9e1ee7eb1228dd6864bfa53e16e671b72982a232
+
+# Layer 08: Model Reporting (Preserved Prop Model Metrics)
+prop_distribution_metrics:
+  path: data/08_reporting/prop_distribution/prop_distribution_20261007_01/metrics.json
+  sha256: cde886218dd5c22fe6093fc3c670897927ac2b61d95fd0c442c568f43e5e438b
+
+# Pipeline Output Directory
+output_dir: data/08_reporting/simulation_pipeline

@@ -1,10 +1,13 @@
-[tool.kedro]
-package_name = "kedro_project"
-project_name = "betting_app_kedro"
-kedro_init_version = "1.5.0"
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lol-breaker"
+version = "0.1.0"
+description = "League of Legends match outcome prediction and tournament simulation system"
+readme = "README.md"
+requires-python = ">=3.11"
 
 [tool.setuptools]
-packages = ["kedro_project"]
-
-[tool.setuptools.package-dir]
-kedro_project = "src/kedro_project"
+packages = ["src", "betting_app"]

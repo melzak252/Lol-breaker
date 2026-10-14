@@ -1,0 +1,99 @@
+# DVC Pipeline Specification for LoL-Breaker Kedro 8-Layer Simulation Pipeline
+# Run end-to-end via: dvc repro
+# View metrics via:   dvc metrics show
+
+stages:
+  verify_inputs:
+    cmd: .venv/bin/python scripts/run_simulation_pipeline.py --stage verify_inputs
+    deps:
+      - src/analysis/simulation_pipeline.py
+      - scripts/run_simulation_pipeline.py
+      - conf/base/catalog.yml
+      - conf/base/parameters.yml
+      - data/05_model_input/canonical_benchmark/rating-foundation-20260915/data/08_reporting/paired.parquet
+      - data/08_reporting/a0_data_focus/a0_data_focus_20260929_192443/all_2026_joined.parquet
+      - data/08_reporting/a0_data_focus/a0_data_focus_20260929_192443/market_T1_joined.parquet
+      - data/07_model_output/model_bookmaker_competitiveness/plan12_model_bookmaker_20261009_175136Z/paired_probability_panel.parquet
+      - data/07_model_output/oddsportal/c0_thesis_books_joint_20261009_115922Z/joint_scoring_cohorts.parquet
+      - data/odds.csv
+      - data/model_predictions_2020_2026.parquet
+      - data/04_feature/production_2h_odds_trajectory.parquet
+      - data/08_reporting/optimal_strategy_simulation_ledger.csv
+      - data/06_models/model_preservation/prop_distribution_20261007_01.zip
+      - data/08_reporting/prop_distribution/prop_distribution_20261007_01/metrics.json
+    outs:
+      - data/08_reporting/simulation_pipeline/stage1_input_manifest.json
+
+  model_benchmark:
+    cmd: .venv/bin/python scripts/run_simulation_pipeline.py --stage model_benchmark
+    deps:
+      - src/analysis/simulation_pipeline.py
+      - scripts/run_simulation_pipeline.py
+      - conf/base/catalog.yml
+      - conf/base/parameters.yml
+      - data/08_reporting/simulation_pipeline/stage1_input_manifest.json
+      - data/05_model_input/canonical_benchmark/rating-foundation-20260915/data/08_reporting/paired.parquet
+      - data/08_reporting/a0_data_focus/a0_data_focus_20260929_192443/all_2026_joined.parquet
+      - data/08_reporting/a0_data_focus/a0_data_focus_20260929_192443/market_T1_joined.parquet
+      - data/07_model_output/oddsportal/c0_thesis_books_joint_20261009_115922Z/joint_scoring_cohorts.parquet
+    params:
+      - conf/base/parameters.yml:
+          - simulation.benchmark
+          - simulation.shrinkage
+    outs:
+      - data/08_reporting/simulation_pipeline/stage2_model_benchmark.json
+      - data/08_reporting/simulation_pipeline/stage2_shrinkage_grid.csv
+
+  betting_simulation:
+    cmd: .venv/bin/python scripts/run_simulation_pipeline.py --stage betting_simulation
+    deps:
+      - src/analysis/simulation_pipeline.py
+      - scripts/run_simulation_pipeline.py
+      - conf/base/catalog.yml
+      - conf/base/parameters.yml
+      - data/08_reporting/simulation_pipeline/stage2_model_benchmark.json
+      - data/04_feature/production_2h_odds_trajectory.parquet
+      - data/08_reporting/optimal_strategy_simulation_ledger.csv
+    params:
+      - conf/base/parameters.yml:
+          - simulation.betting
+    outs:
+      - data/08_reporting/simulation_pipeline/stage3_betting_simulation.json
+      - data/08_reporting/simulation_pipeline/stage3_strategy_comparison.csv
+
+  econometric_audit:
+    cmd: .venv/bin/python scripts/run_simulation_pipeline.py --stage econometric_audit
+    deps:
+      - src/analysis/simulation_pipeline.py
+      - scripts/run_simulation_pipeline.py
+      - conf/base/catalog.yml
+      - conf/base/parameters.yml
+      - data/08_reporting/simulation_pipeline/stage3_betting_simulation.json
+      - data/08_reporting/optimal_strategy_simulation_ledger.csv
+      - data/06_models/model_preservation/prop_distribution_20261007_01.zip
+      - data/08_reporting/prop_distribution/prop_distribution_20261007_01/metrics.json
+    params:
+      - conf/base/parameters.yml:
+          - simulation.econometrics
+    outs:
+      - data/08_reporting/simulation_pipeline/stage4_econometric_audit.json
+      - data/08_reporting/simulation_pipeline/stage4_noise_decay_table.csv
+
+  generate_report:
+    cmd: .venv/bin/python scripts/run_simulation_pipeline.py --stage generate_report
+    deps:
+      - src/analysis/simulation_pipeline.py
+      - scripts/run_simulation_pipeline.py
+      - conf/base/catalog.yml
+      - data/08_reporting/simulation_pipeline/stage1_input_manifest.json
+      - data/08_reporting/simulation_pipeline/stage2_model_benchmark.json
+      - data/08_reporting/simulation_pipeline/stage2_shrinkage_grid.csv
+      - data/08_reporting/simulation_pipeline/stage3_betting_simulation.json
+      - data/08_reporting/simulation_pipeline/stage3_strategy_comparison.csv
+      - data/08_reporting/simulation_pipeline/stage4_econometric_audit.json
+      - data/08_reporting/simulation_pipeline/stage4_noise_decay_table.csv
+    outs:
+      - data/08_reporting/simulation_pipeline/SIMULATION_REPORT.md
+    metrics:
+      - data/08_reporting/simulation_pipeline/summary_metrics.json:
+          cache: false
