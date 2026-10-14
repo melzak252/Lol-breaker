@@ -32,6 +32,11 @@ artifacts/tmp/
 temp_*.csv
 experiments/
 reports/*.json
+reports/**/*.csv
+reports/**/*.parquet
+reports/archive/
+reports/exp*/
+reports/benchmarks_2026/
 secrets/
 betting_app/models/ml/
 
