@@ -26,6 +26,7 @@ data/
 models/*.pt
 client/node_modules/
 client/dist/
+google_drive_upload/
 client/*.tsbuildinfo
 artifacts/catboost_info/
 artifacts/tmp/
