@@ -1303,21 +1303,21 @@ export default function MatchDetail() {
                 {match.recommendation.logit_disagreement !== null &&
                   match.recommendation.logit_disagreement !== undefined && (
                     <div className="kpi-box logit-kpi">
-                      <div className="kpi-label">Rozbieżność Logit (Guard B)</div>
+                      <div className="kpi-label">Market-Divergence-Gate (Guard B)</div>
                       <div className="kpi-val">
                         Δ = {match.recommendation.logit_disagreement.toFixed(3)}
                       </div>
-                      <div className="kpi-note">limit bezpieczeństwa ≤ 0.85</div>
+                      <div className="kpi-note">limit bezpieczeństwa: Δ ≤ 0.85</div>
                     </div>
                   )}
                 {match.recommendation.thesis_disagreement !== null &&
                   match.recommendation.thesis_disagreement !== undefined && (
                     <div className="kpi-box thesis-kpi">
-                      <div className="kpi-label">Thesis Model Guard</div>
+                      <div className="kpi-label">Model-Consensus-Veto (Thesis Guard)</div>
                       <div className={`kpi-val ${match.recommendation.thesis_guard_passed ? 'positive' : ''}`}>
                         {match.recommendation.thesis_guard_passed ? '🟢 ZGODA' : '🔴 WETO'} (Δ = {(match.recommendation.thesis_disagreement * 100).toFixed(1)}%)
                       </div>
-                      <div className="kpi-note">próg weta: rozbieżność ≤ 10.0%</div>
+                      <div className="kpi-note">próg weta: rozbieżność architektur ≤ 10.0%</div>
                     </div>
                   )}
                 {match.recommendation.raw_clv !== null &&

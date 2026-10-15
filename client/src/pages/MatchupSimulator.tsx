@@ -207,9 +207,9 @@ export default function MatchupSimulator() {
 
           <div className="quick-info">
             {loading ? (
-              <span className="status-loading">⏳ Obliczanie predykcji C0...</span>
+              <span className="status-loading">⏳ Obliczanie predykcji PlayerHistory-Attention-Ensemble...</span>
             ) : (
-              <span className="status-ready">Model: {result ? `${result.model_name} (${result.model_version})` : 'Causal-C0 (c0-native-2026-w32-e12-v1)'}</span>
+              <span className="status-ready">Model: {result ? `${result.model_name} (${result.model_version})` : 'PlayerHistory-Attention-Ensemble (C0: c0-native-2026-w32-e12-v1)'}</span>
             )}
           </div>
         </div>
@@ -225,7 +225,7 @@ export default function MatchupSimulator() {
               <span className="side-indicator">Drużyna A</span>
               <h2>{result.team_a_name}</h2>
               <div className="prob-big">{(result.series_prob_a * 100).toFixed(1)}%</div>
-              <div className="prob-sub">Prawdopodobieństwo całej serii C0</div>
+              <div className="prob-sub">Prawdopodobieństwo serii (PlayerHistory-Attention-Ensemble)</div>
             </div>
 
             <div className="vs-center-col">
@@ -243,16 +243,16 @@ export default function MatchupSimulator() {
               <span className="side-indicator">Drużyna B</span>
               <h2>{result.team_b_name}</h2>
               <div className="prob-big">{(result.series_prob_b * 100).toFixed(1)}%</div>
-              <div className="prob-sub">Prawdopodobieństwo całej serii C0</div>
+              <div className="prob-sub">Prawdopodobieństwo serii (PlayerHistory-Attention-Ensemble)</div>
             </div>
           </div>
 
           <div className="breakdown-cards-row">
             <div className="breakdown-card">
-              <span className="bd-title">Predykcja natywnego C0</span>
+              <span className="bd-title">Predykcja PlayerHistory-Attention-Ensemble (C0)</span>
               <small className="bd-desc">
-                Prawdopodobieństwo serii wyliczono bezpośrednio z natywnego snapshotu historii i składu.
-                Model nie zwraca prawdopodobieństwa pojedynczej mapy ani rozkładu niepewności.
+                Prawdopodobieństwo serii wyliczono z 3-seedowej sieci uwagi historii graczy (16 gier/gracz) i ekspertów Glicko-2/Elo/MLP.
+                Model prognozuje bezpośrednio wygraną całej serii meczowej.
               </small>
             </div>
           </div>

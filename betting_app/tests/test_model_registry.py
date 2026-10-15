@@ -15,12 +15,29 @@ from betting_app.core.models import (
     get_active_hybrid,
     get_active_model,
     get_model,
+    list_registered_models,
     set_active_hybrid,
     set_active_model,
 )
 
 
-def test_registry_lookups_keep_legacy_models_distinct():
+def test_registry_lookups_keep_legacy_and_semantic_models_distinct():
+    # Semantic architecture-first lookups
+    assert get_model("PlayerHistory-Attention-Ensemble") is C0_NATIVE
+    assert get_model("playerhistory_attention_ensemble") is C0_NATIVE
+    assert get_model("MarketShrunk-Hybrid-50") is BAYESIAN_SHRUNK_HYBRID
+    assert get_model("marketshrunk_hybrid_50") is BAYESIAN_SHRUNK_HYBRID
+    assert get_model("ElasticNet-TeamForm-Baseline") is EXP039_THESIS
+    assert get_model("Linear-Ratings-TeamForm-Baseline") is EXP078_LINEAR
+    assert get_model("Residual-Tier-Calibration-Challenger") is A1_CONSOLIDATED
+
+    # Contract properties
+    assert C0_NATIVE.effective_display_name == "PlayerHistory-Attention-Ensemble"
+    assert C0_NATIVE.effective_short_code == "C0"
+    assert BAYESIAN_SHRUNK_HYBRID.effective_display_name == "MarketShrunk-Hybrid-50"
+    assert BAYESIAN_SHRUNK_HYBRID.effective_short_code == "Hybrid-50"
+
+    # Legacy lookups
     assert get_model(ACTIVE_MODEL_NAME) is C0_NATIVE
     assert get_model("Causal-C0") is C0_NATIVE
     assert get_model("native_c0") is C0_NATIVE
@@ -36,6 +53,12 @@ def test_registry_lookups_keep_legacy_models_distinct():
     assert get_model("exp039") is EXP039_THESIS
     assert get_model("non_existent") is None
 
+    # Serialization check
+    registered = list_registered_models()
+    assert all("display_name" in m and "short_code" in m for m in registered)
+    c0_reg = next(m for m in registered if m["name"] == C0_NATIVE.name)
+    assert c0_reg["display_name"] == "PlayerHistory-Attention-Ensemble"
+    assert c0_reg["short_code"] == "C0"
 def test_registry_switching_keeps_shrinkage_on_selected_base():
     try:
         assert get_active_model() is C0_NATIVE

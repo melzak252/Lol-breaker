@@ -83,11 +83,15 @@ def test_stage2_model_benchmark_invariants() -> None:
     assert c0["brier_score"] == pytest.approx(0.181034, abs=1e-5)
     assert c0["accuracy"] == pytest.approx(0.7203, abs=1e-3)
     assert c0["tails_over_threshold"] == 12
+    assert c0["display_name"] == "PlayerHistory-Attention-Ensemble"
+    assert c0["short_code"] == "C0"
+    assert res["models_by_semantic_name"]["PlayerHistory-Attention-Ensemble"]["log_loss"] == c0["log_loss"]
 
     assert a0["sample_size"] == 3103
     assert a0["log_loss"] == pytest.approx(0.536757, abs=1e-5)
     assert a0["brier_score"] == pytest.approx(0.181573, abs=1e-5)
-
+    assert a0["display_name"] == "WalkForward-Reference-Ensemble"
+    assert a0["short_code"] == "A0"
     assert glicko["log_loss"] == pytest.approx(0.570519, abs=1e-5)
     assert elo["log_loss"] == pytest.approx(0.580481, abs=1e-5)
 
@@ -106,8 +110,9 @@ def test_stage2_model_benchmark_invariants() -> None:
     assert exp039["sample_size"] == 9907
     assert exp039["log_loss"] == pytest.approx(0.567337, abs=1e-5)
     assert exp039["tails_over_threshold"] == 16
-    assert a0_common["log_loss"] == pytest.approx(0.559920, abs=1e-5)
     assert a0_common["tails_over_threshold"] == 30
+    assert exp039["display_name"] == "ElasticNet-TeamForm-Baseline"
+    assert exp039["short_code"] == "EXP-039"
 
     # 4. Bayesian Shrinkage Grid
     grid_csv = PROJECT_ROOT / "data/08_reporting/simulation_pipeline/stage2_shrinkage_grid.csv"

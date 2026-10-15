@@ -7,16 +7,16 @@ import './MatchResults.css'
 const DAYS_OPTIONS = [7, 14, 30, 60, 90]
 const MODEL_OPTIONS = [
   {
-    label: 'Hybryda operacyjna (C0 + rynek)',
+    label: 'MarketShrunk-Hybrid-50 (Attention + Market)',
     name: 'Hybrid-Operational-Market',
     version: 'c0-native-2026-w32-e12-v1-a0.50-t1.00',
-    description: 'Fixed50: średnia logitów natywnego C0 i konsensusu rynku',
+    description: '50/50 logit shrinkage: PlayerHistory-Attention-Ensemble (C0) + konsensus rynku (Shin)',
   },
   {
-    label: 'C0 natywny',
+    label: 'PlayerHistory-Attention-Ensemble (C0)',
     name: 'Causal-C0',
     version: 'c0-native-2026-w32-e12-v1',
-    description: 'Natywne, zamrożone C0; bez projekcji BO i bez rating fallback',
+    description: '3-seed sieć uwagi historii graczy (16 map) + eksperci Glicko-2/Elo/MLP',
   },
 ]
 const ODDS_MODE_OPTIONS = [

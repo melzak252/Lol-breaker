@@ -22,7 +22,18 @@ class ModelSpec:
     family: str = "native_c0"  # "native_c0", "linear_symmetric", "elastic_net", etc.
     artifact_path: Path | None = None
     description: str = ""
+    display_name: str = ""
+    short_code: str = ""
     metadata: dict[str, Any] = field(default_factory=dict)
+
+    @property
+    def effective_display_name(self) -> str:
+        return self.display_name or self.name
+
+    @property
+    def effective_short_code(self) -> str:
+        return self.short_code or self.name
+
     @property
     def target(self) -> str:
         return self.prediction_target
@@ -37,6 +48,8 @@ class ModelSpec:
     def as_dict(self) -> dict[str, Any]:
         return {
             "name": self.name,
+            "display_name": self.effective_display_name,
+            "short_code": self.effective_short_code,
             "version": self.version,
             "feature_version": self.feature_version,
             "ratings_version": self.ratings_version,
@@ -48,7 +61,6 @@ class ModelSpec:
             "family": self.family,
             "description": self.description,
         }
-
 @dataclass(frozen=True)
 class HybridSpec:
     """Specification for blending a base prediction model with market odds."""
@@ -59,7 +71,8 @@ class HybridSpec:
     temperature: float = 1.0
     blending_mode: str = "logit_shrinkage"  # "logit_shrinkage" or "linear"
     custom_version: str | None = None
-
+    display_name: str = "MarketShrunk-Hybrid-50"
+    short_code: str = "Hybrid-50"
     @property
     def hybrid_model_version(self) -> str:
         if self.custom_version is not None:

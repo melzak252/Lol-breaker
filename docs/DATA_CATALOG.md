@@ -71,9 +71,9 @@ The table below lists all 11 curated datasets managed by DVC and consumed by the
   - `golgg_match_id` (int64): Unique GOL.GG series identifier.
   - `date` (str): Series scheduled match date (`YYYY-MM-DD`).
   - `y` (int64): Binary series outcome ($1$ = Team 1 won, $0$ = Team 2 won).
-  - `p_full` (float64): Annual Causal A0 ensemble walk-forward prediction.
-  - `p_039` (float64): Frozen Thesis Baseline (`EXP-039`) prediction ($9,907$ non-null rows).
-  - `p_glicko`, `p_elo` (float64): Calibrated rating baseline predictions.
+  - `p_full` (float64): `WalkForward-Reference-Ensemble` (`A0` / Annual Causal A0) walk-forward prediction.
+  - `p_039` (float64): `ElasticNet-TeamForm-Baseline` (`EXP-039` thesis reference) prediction ($9,907$ non-null rows).
+  - `p_glicko`, `p_elo` (float64): `Player-Glicko2-Rating-Baseline` and `Player-Elo-Rating-Baseline` predictions.
   - `market_open`, `market_close` (float64): Archival OddsPortal opening and closing implied probabilities ($2,673$ non-null rows; $2,275$ with non-null `p_039`).
 - **Temporal Scope:** 2024-01-01 to 2026-09-08 (covers all major and secondary professional LoL leagues).
 - **Cutoff Guarantees:** Features and ratings strictly respect `effective_release_day < prediction_day`. Roster lineups are validated historical records.
@@ -88,10 +88,10 @@ The table below lists all 11 curated datasets managed by DVC and consumed by the
 - **Key Columns:**
   - `golgg_match_id` (int64): Match identifier.
   - `y` (int64): Realized binary match winner.
-  - `control__full__full` (float64): **Active Native Causal-C0** baseline forecast (W32/E12 3-seed history attention).
-  - `p_a0_full` (float64): Annual Causal A0 reference forecast.
-  - `p_039` (float64): EXP-039 thesis forecast ($N=2,699$ supported).
-  - `p_glicko`, `p_elo` (float64): Glicko-2 and Elo rating forecasts.
+  - `control__full__full` (float64): **`PlayerHistory-Attention-Ensemble` (`C0` / Causal-C0)** baseline forecast (3-seed W32/E12 history attention).
+  - `p_a0_full` (float64): `WalkForward-Reference-Ensemble` (`A0`) reference forecast.
+  - `p_039` (float64): `ElasticNet-TeamForm-Baseline` (`EXP-039`) forecast ($N=2,699$ supported).
+  - `p_glicko`, `p_elo` (float64): `Player-Glicko2-Rating-Baseline` and `Player-Elo-Rating-Baseline` rating forecasts.
 - **Role in Simulation:** Stage 2 Cohort A evaluation (computes unclipped LogLoss, Brier, Accuracy, and bootstrap $\Delta\text{LL}$).
 
 ---

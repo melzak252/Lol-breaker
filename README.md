@@ -59,15 +59,26 @@ lol-breaker/
 
 ## 2. Active Model & Decision-Time Strategy Stack
 
-| Domain / Layer | Model Identity & Version | Formulation & Details | Source of Truth |
-|---|---|---|---|
-| **Leading Pure Sports Model** | **`Causal-C0`** (`c0-native-2026-w32-e12-v1`) | 3-seed Width-32 / Epoch-12 history-attention neural net (16 maps/player, Beta terminal score + 0.1 SmoothL1 aux loss) + shared rating (Glicko-2/Elo) + MLP experts | `conf/base/c0_serving.json`, `betting_app/core/models/registry.py` |
-| **Operational Market Hybrid** | **`Hybrid-Operational-Market`** | 50/50 logit-space shrinkage: `logit(p_hybrid) = 0.50 · logit(p_C0) + 0.50 · logit(q_shin)` | `betting_app/core/models/registry.py`, `betting_app/core/ev.py` |
-| **Guard B (Market Divergence Gate)** | `\|logit(p_C0) - logit(q_shin)\| ≤ 0.85` | Dynamic logit bound; rejects severe bookmaker divergences where model overconfidence occurs | `src/analysis/betting_guards_a_to_d.py` |
-| **Thesis Model Veto** | `\|p_C0 - p_039\| ≤ 0.10` | Cross-architecture consensus veto; suppresses false edges when modern neural C0 disagrees with legacy logistic baseline | `betting_app/core/ev.py` |
-| **Guard W (Wasserstein DRO)** | `ε = 0.025` | Distributionally robust optimization; ensures non-negative EV under distribution shifts: `(p_hybrid - 0.025) · (1 - τ) · O - 1 > 0` | `src/analysis/betting_guards_a_to_d.py` |
-| **Adopted Production Staking** | **Optimal Synergy Strategy** | 1/4 Kelly under 12% Polish tax, bounded by `EV_net ∈ [5%, 25%]`, `Odds ≤ 4.00`, and a strict 150 PLN cap per bet | `data/08_reporting/optimal_strategy_simulation_ledger.csv` |
+### 2.1 Authoritative Nomenclature & Architecture Mapping
 
+| Canonical Architecture-First Name | Short Code | Legacy / Wire Identifier | Model Architecture & Domain Role |
+|---|---|---|---|
+| **`PlayerHistory-Attention-Ensemble`** | **`C0`** | `Causal-C0` (`c0-native-2026-w32-e12-v1`) | 3-seed Width-32 / Epoch-12 player history-attention neural net (16 maps/player, Beta terminal score + 0.1 SmoothL1 aux loss) + shared rating (Glicko-2/Elo) + MLP experts |
+| **`MarketShrunk-Hybrid-50`** | **`Hybrid-50`** | `Hybrid-Operational-Market` | 50/50 logit-space shrinkage combining `PlayerHistory-Attention-Ensemble` with 2-way closed-form Shin de-vigged market consensus: `logit(p_hybrid) = 0.50 · logit(p_C0) + 0.50 · logit(q_shin)` |
+| **`WalkForward-Reference-Ensemble`** | **`A0`** | `Annual Causal A0` (`p_full`) | Annual walk-forward causal ensemble (7 base checkpoints across 3 experts; quarterly cross-fitted calibration) |
+| **`ElasticNet-TeamForm-Baseline`** | **`EXP-039`** | `Sym-Cal LR-ElasticNet-W20-Binomial` (`exp-039`) | Map-level symmetric calibrated ElasticNet with 20-match organization form (`W20`) and binomial series projection |
+| **`Linear-Ratings-TeamForm-Baseline`** | **`EXP-078`** | `Operational-PlayerTeamRatings-W20` (`exp078`) | Symmetric series-level linear regression on player/team ratings and `W20` organization form |
+| **`Player-Glicko2-Rating-Baseline`** | **`Glicko-2`** | `Calibrated Glicko-2` (`p_glicko`) | Match-level player Glicko-2 rating engine with rating deviation (RD), volatility tracking, and logistic calibration |
+| **`Player-Elo-Rating-Baseline`** | **`Elo`** | `Calibrated Elo` (`p_elo`) | Match-level calibrated player Elo rating control |
+
+### 2.2 Decision-Time Safety Gates & Risk Parameters
+
+| Safety Gate / Parameter | Code / Formula | Domain Purpose |
+|---|---|---|
+| **`Market-Divergence-Gate`** *(formerly Guard B)* | `\|logit(p_C0) - logit(q_shin)\| ≤ 0.85` | Dynamic logit bound; rejects severe bookmaker divergences where model overconfidence occurs |
+| **`Model-Consensus-Veto`** *(formerly Thesis Veto)* | `\|p_C0 - p_039\| ≤ 0.10` | Cross-architecture consensus veto; suppresses false edges when neural attention disagrees with linear form baseline |
+| **`Wasserstein-Robust-Gate`** *(formerly Guard W)* | `ε = 0.025` | Distributionally robust optimization; ensures non-negative EV under distribution shifts: `(p_hybrid - 0.025) · (1 - τ) · O - 1 > 0` |
+| **`Optimal Synergy Staking`** | **1/4 Kelly (Adopted)** | 1/4 Kelly under 12% Polish tax, bounded by `EV_net ∈ [5%, 25%]`, `Odds ≤ 4.00`, and a strict 150 PLN cap per bet |
 ---
 
 ## 3. Data Setup: DVC & Google Drive Remote Storage
@@ -145,24 +156,24 @@ dvc metrics show
 
 Evaluated unclipped against realized match winners ($Y \in \{0, 1\}$):
 
-| Model | LogLoss | Brier Score | Accuracy | AUC | Extreme Tails ($\text{LL} \ge 2.5$) | Status |
+| Model (Architecture-First Name & Code) | LogLoss | Brier Score | Accuracy | AUC | Extreme Tails ($\text{LL} \ge 2.5$) | Status |
 |---|---:|---:|---:|---:|---:|---|
-| **Causal-C0 (W32/E12)** | **0.535449** | **0.181034** | **72.03%** | **0.7993** | **12** | **Leading Pure Sports Baseline** |
-| **Annual Causal A0** | 0.536757 | 0.181573 | 71.83% | 0.7981 | 10 | Canonical Annual Benchmark |
-| **EXP-039 Research Derivative** | 0.559245 | 0.189822 | 70.06% | 0.7806 | 8 | Thesis Baseline ($N=2,699$ supported) |
-| **Calibrated Glicko-2** | 0.570519 | 0.193954 | 69.06% | 0.7691 | 20 | Rating Baseline |
-| **Calibrated Elo** | 0.580481 | 0.198066 | 68.87% | 0.7595 | 16 | Rating Baseline |
+| **PlayerHistory-Attention-Ensemble (`C0`)** | **0.535449** | **0.181034** | **72.03%** | **0.7993** | **12** | **Leading Pure Sports Baseline** |
+| **WalkForward-Reference-Ensemble (`A0`)** | 0.536757 | 0.181573 | 71.83% | 0.7981 | 10 | Canonical Annual Benchmark |
+| **ElasticNet-TeamForm-Baseline (`EXP-039`)** | 0.559245 | 0.189822 | 70.06% | 0.7806 | 8 | Thesis Baseline ($N=2,699$ supported) |
+| **Player-Glicko2-Rating-Baseline (`Glicko-2`)** | 0.570519 | 0.193954 | 69.06% | 0.7691 | 20 | Rating Baseline |
+| **Player-Elo-Rating-Baseline (`Elo`)** | 0.580481 | 0.198066 | 68.87% | 0.7595 | 16 | Rating Baseline |
 
 *Paired monthly-block bootstrap:* $\Delta\text{LL}(\text{C0} - \text{A0}) = -0.001308$ ($95\%\text{ CI: } [-0.003209, +0.000106]$).
 
 #### B. Full 2024–2026 Walk-Forward Cohort ($N=11,550$ series & $N=9,907$ common support)
 
-| Model | 11,550 Full LogLoss | 11,550 Full Brier | 9,907 Common LogLoss | 9,907 Common Brier | 9,907 Tails ($\text{LL} \ge 2.5$) |
+| Model (Architecture-First Name & Code) | 11,550 Full LogLoss | 11,550 Full Brier | 9,907 Common LogLoss | 9,907 Common Brier | 9,907 Tails ($\text{LL} \ge 2.5$) |
 |---|---:|---:|---:|---:|---:|
-| **Annual Causal A0** | **0.551246** | **0.187103** | **0.559920** | **0.190439** | 30 |
-| **EXP-039 Research Derivative** | *Missing 1,643* | *Missing 1,643* | 0.567337 | 0.193112 | **16** |
-| **Calibrated Glicko-2** | 0.575888 | 0.196548 | 0.577998 | 0.197460 | 36 |
-| **Calibrated Elo** | 0.588946 | 0.201930 | 0.591198 | 0.202851 | 29 |
+| **WalkForward-Reference-Ensemble (`A0`)** | **0.551246** | **0.187103** | **0.559920** | **0.190439** | 30 |
+| **ElasticNet-TeamForm-Baseline (`EXP-039`)** | *Missing 1,643* | *Missing 1,643* | 0.567337 | 0.193112 | **16** |
+| **Player-Glicko2-Rating-Baseline (`Glicko-2`)** | 0.575888 | 0.196548 | 0.577998 | 0.197460 | 36 |
+| **Player-Elo-Rating-Baseline (`Elo`)** | 0.588946 | 0.201930 | 0.591198 | 0.202851 | 29 |
 
 ---
 

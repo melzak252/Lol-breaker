@@ -3314,6 +3314,8 @@ def get_active_model_info():
         "active_hybrid_model": hybrid.identifier(),
         "operational_model": {
             "name": active.name,
+            "display_name": active.effective_display_name,
+            "short_code": active.effective_short_code,
             "version": active.version,
             "family": active.family.value if hasattr(active.family, "value") else str(active.family),
             "feature_version": active.feature_version,
@@ -3323,6 +3325,8 @@ def get_active_model_info():
         },
         "hybrid_model": {
             "name": hybrid.hybrid_model_name,
+            "display_name": hybrid.display_name,
+            "short_code": hybrid.short_code,
             "version": hybrid.hybrid_model_version,
             "alpha": hybrid.alpha,
             "temperature": hybrid.temperature,

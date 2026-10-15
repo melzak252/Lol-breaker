@@ -33,6 +33,68 @@ from src.analysis.research_benchmark import run_suite
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
+# ---------------------------------------------------------------------------
+# Canonical Architecture-First Model & Risk-Guard Nomenclature
+# ---------------------------------------------------------------------------
+
+CANONICAL_MODEL_NOMENCLATURE: dict[str, dict[str, str]] = {
+    "Causal-C0 (W32/E12)": {
+        "display_name": "PlayerHistory-Attention-Ensemble",
+        "short_code": "C0",
+        "architecture": "3-seed W32/E12 player history-attention neural net (16 maps) + Glicko-2/Elo + MLP experts",
+    },
+    "Annual Causal A0": {
+        "display_name": "WalkForward-Reference-Ensemble",
+        "short_code": "A0",
+        "architecture": "Annual walk-forward causal ensemble (7 checkpoints across 3 experts; quarterly calibration)",
+    },
+    "EXP-039 Research Derivative": {
+        "display_name": "ElasticNet-TeamForm-Baseline",
+        "short_code": "EXP-039",
+        "architecture": "Map-level symmetric calibrated ElasticNet with 20-match team form (W20) and binomial projection",
+    },
+    "Calibrated Glicko-2": {
+        "display_name": "Player-Glicko2-Rating-Baseline",
+        "short_code": "Glicko-2",
+        "architecture": "Match-level player Glicko-2 rating engine with rating deviation (RD) and logistic calibration",
+    },
+    "Calibrated Elo": {
+        "display_name": "Player-Elo-Rating-Baseline",
+        "short_code": "Elo",
+        "architecture": "Match-level calibrated player Elo rating control",
+    },
+}
+
+CANONICAL_GUARD_NOMENCLATURE: dict[str, dict[str, Any]] = {
+    "model_shrinkage_weight": {
+        "legacy_key": "alpha",
+        "display_name": "Model Shrinkage Weight (alpha)",
+        "default": 0.50,
+        "description": "50/50 logit-space weight between PlayerHistory-Attention-Ensemble and Shin market consensus",
+    },
+    "market_divergence_logit_max": {
+        "legacy_key": "guard_b_logit_threshold",
+        "display_name": "Market-Divergence-Gate",
+        "legacy_code": "Guard B",
+        "default": 0.85,
+        "description": "Maximum allowed logit divergence |logit(p_model) - logit(q_market)| <= 0.85",
+    },
+    "model_consensus_veto_max": {
+        "legacy_key": "thesis_veto_threshold",
+        "display_name": "Model-Consensus-Veto",
+        "legacy_code": "Thesis Veto",
+        "default": 0.10,
+        "description": "Maximum allowed probability disagreement |p_attention - p_elasticnet| <= 0.10",
+    },
+    "wasserstein_robust_ambiguity_radius": {
+        "legacy_key": "guard_w_epsilon",
+        "display_name": "Wasserstein-Robust-Gate",
+        "legacy_code": "Guard W",
+        "default": 0.025,
+        "description": "1-Wasserstein ambiguity ball radius epsilon = 0.025 requiring (p_hybrid - epsilon)(1 - tax)O - 1 > 0",
+    },
+}
+
 
 def compute_sha256(path: Path) -> str:
     """Compute hex SHA-256 digest of a file in binary chunks."""
@@ -316,6 +378,9 @@ def run_stage2_model_benchmark(
         summary = compute_benchmark_summary(y_2026, probs, probability_epsilon=None)
         tails = int(np.sum(-np.where(y_2026, np.log(probs), np.log1p(-probs)) >= b_params.get("tail_loss_threshold", 2.5)))
         s_dict = asdict(summary)
+        meta = CANONICAL_MODEL_NOMENCLATURE.get(name, {})
+        s_dict["display_name"] = meta.get("display_name", name)
+        s_dict["short_code"] = meta.get("short_code", name)
         s_dict["tails_over_threshold"] = tails
         cohort_a_results[name] = s_dict
 
@@ -326,6 +391,9 @@ def run_stage2_model_benchmark(
     summary_039 = compute_benchmark_summary(y_039, p_039, probability_epsilon=None)
     tails_039 = int(np.sum(-np.where(y_039, np.log(p_039), np.log1p(-p_039)) >= b_params.get("tail_loss_threshold", 2.5)))
     s_039_dict = asdict(summary_039)
+    meta_039 = CANONICAL_MODEL_NOMENCLATURE["EXP-039 Research Derivative"]
+    s_039_dict["display_name"] = meta_039["display_name"]
+    s_039_dict["short_code"] = meta_039["short_code"]
     s_039_dict["tails_over_threshold"] = tails_039
     cohort_a_results["EXP-039 Research Derivative"] = s_039_dict
 
@@ -361,6 +429,9 @@ def run_stage2_model_benchmark(
         summary = compute_benchmark_summary(y_full, probs, probability_epsilon=None)
         tails = int(np.sum(-np.where(y_full, np.log(probs), np.log1p(-probs)) >= b_params.get("tail_loss_threshold", 2.5)))
         s_dict = asdict(summary)
+        meta = CANONICAL_MODEL_NOMENCLATURE.get(name, {})
+        s_dict["display_name"] = meta.get("display_name", name)
+        s_dict["short_code"] = meta.get("short_code", name)
         s_dict["tails_over_threshold"] = tails
         cohort_b_full[name] = s_dict
 
@@ -378,6 +449,9 @@ def run_stage2_model_benchmark(
         summary = compute_benchmark_summary(y_common, probs, probability_epsilon=None)
         tails = int(np.sum(-np.where(y_common, np.log(probs), np.log1p(-probs)) >= b_params.get("tail_loss_threshold", 2.5)))
         s_dict = asdict(summary)
+        meta = CANONICAL_MODEL_NOMENCLATURE.get(name, {})
+        s_dict["display_name"] = meta.get("display_name", name)
+        s_dict["short_code"] = meta.get("short_code", name)
         s_dict["tails_over_threshold"] = tails
         cohort_b_common[name] = s_dict
 
@@ -457,7 +531,13 @@ def run_stage2_model_benchmark(
     grid_csv_path = out_dir / "stage2_shrinkage_grid.csv"
     grid_df.to_csv(grid_csv_path, index=False)
 
+    models_by_semantic_name = {
+        v["display_name"]: v for v in cohort_a_results.values()
+    }
+
     results = {
+        "nomenclature": CANONICAL_MODEL_NOMENCLATURE,
+        "models_by_semantic_name": models_by_semantic_name,
         "cohort_a_2026": cohort_a_results,
         "cohort_a_comparisons": {
             "c0_vs_a0": asdict(comp_c0_vs_a0),
@@ -467,7 +547,6 @@ def run_stage2_model_benchmark(
         "cohort_b_common_9907": cohort_b_common,
         "shrinkage_grid_summary": grid_rows,
     }
-
     out_file = out_dir / "stage2_model_benchmark.json"
     out_file.write_text(json.dumps(results, indent=2), encoding="utf-8")
     return results
@@ -516,8 +595,8 @@ def run_stage3_betting_simulation(
     sim_hybrid = HistoricalProductionSimulator(
         initial_bankroll=b_params.get("initial_bankroll", 10000.0),
         policy_kind="shrunk_hybrid",
-        alpha=b_params.get("alpha", 0.50),
-        guard_b_logit=b_params.get("guard_b_logit_threshold", 0.85),
+        alpha=b_params.get("model_shrinkage_weight", b_params.get("alpha", 0.50)),
+        guard_b_logit=b_params.get("market_divergence_logit_max", b_params.get("guard_b_logit_threshold", 0.85)),
         min_ev=b_params.get("min_ev", 0.05),
         max_ev=b_params.get("max_ev", 0.25),
         tier1_only=False,
@@ -928,25 +1007,24 @@ def run_stage5_generate_report(
 
 ### A. 2026 Canonical Assessment Cohort ($N=3,103$ series, Jan–Sep 2026)
 
-| Model | LogLoss | Brier Score | Accuracy | AUC | Tails ($\\ge 2.5$) | Status |
+| Model (Architecture-First Name & Code) | LogLoss | Brier Score | Accuracy | AUC | Tails ($\\ge 2.5$) | Status |
 |---|---:|---:|---:|---:|---:|---|
-| **Causal-C0 (W32/E12)** | **{s2['cohort_a_2026']['Causal-C0 (W32/E12)']['log_loss']:.6f}** | **{s2['cohort_a_2026']['Causal-C0 (W32/E12)']['brier_score']:.6f}** | **{s2['cohort_a_2026']['Causal-C0 (W32/E12)']['accuracy']*100:.2f}%** | **{s2['cohort_a_2026']['Causal-C0 (W32/E12)']['auc']:.4f}** | {s2['cohort_a_2026']['Causal-C0 (W32/E12)']['tails_over_threshold']} | **Leading Pure Sports Baseline** |
-| **Annual Causal A0** | {s2['cohort_a_2026']['Annual Causal A0']['log_loss']:.6f} | {s2['cohort_a_2026']['Annual Causal A0']['brier_score']:.6f} | {s2['cohort_a_2026']['Annual Causal A0']['accuracy']*100:.2f}% | {s2['cohort_a_2026']['Annual Causal A0']['auc']:.4f} | {s2['cohort_a_2026']['Annual Causal A0']['tails_over_threshold']} | Canonical Annual Benchmark |
-| **EXP-039 Derivative** | {s2['cohort_a_2026']['EXP-039 Research Derivative']['log_loss']:.6f} | {s2['cohort_a_2026']['EXP-039 Research Derivative']['brier_score']:.6f} | {s2['cohort_a_2026']['EXP-039 Research Derivative']['accuracy']*100:.2f}% | {s2['cohort_a_2026']['EXP-039 Research Derivative']['auc']:.4f} | {s2['cohort_a_2026']['EXP-039 Research Derivative']['tails_over_threshold']} | Thesis Reference ($N=2,699$) |
-| **Calibrated Glicko-2** | {s2['cohort_a_2026']['Calibrated Glicko-2']['log_loss']:.6f} | {s2['cohort_a_2026']['Calibrated Glicko-2']['brier_score']:.6f} | {s2['cohort_a_2026']['Calibrated Glicko-2']['accuracy']*100:.2f}% | {s2['cohort_a_2026']['Calibrated Glicko-2']['auc']:.4f} | {s2['cohort_a_2026']['Calibrated Glicko-2']['tails_over_threshold']} | Rating Baseline |
-| **Calibrated Elo** | {s2['cohort_a_2026']['Calibrated Elo']['log_loss']:.6f} | {s2['cohort_a_2026']['Calibrated Elo']['brier_score']:.6f} | {s2['cohort_a_2026']['Calibrated Elo']['accuracy']*100:.2f}% | {s2['cohort_a_2026']['Calibrated Elo']['auc']:.4f} | {s2['cohort_a_2026']['Calibrated Elo']['tails_over_threshold']} | Rating Baseline |
+| **PlayerHistory-Attention-Ensemble (`C0`)** | **{s2['cohort_a_2026']['Causal-C0 (W32/E12)']['log_loss']:.6f}** | **{s2['cohort_a_2026']['Causal-C0 (W32/E12)']['brier_score']:.6f}** | **{s2['cohort_a_2026']['Causal-C0 (W32/E12)']['accuracy']*100:.2f}%** | **{s2['cohort_a_2026']['Causal-C0 (W32/E12)']['auc']:.4f}** | {s2['cohort_a_2026']['Causal-C0 (W32/E12)']['tails_over_threshold']} | **Leading Pure Sports Baseline** |
+| **WalkForward-Reference-Ensemble (`A0`)** | {s2['cohort_a_2026']['Annual Causal A0']['log_loss']:.6f} | {s2['cohort_a_2026']['Annual Causal A0']['brier_score']:.6f} | {s2['cohort_a_2026']['Annual Causal A0']['accuracy']*100:.2f}% | {s2['cohort_a_2026']['Annual Causal A0']['auc']:.4f} | {s2['cohort_a_2026']['Annual Causal A0']['tails_over_threshold']} | Canonical Annual Benchmark |
+| **ElasticNet-TeamForm-Baseline (`EXP-039`)** | {s2['cohort_a_2026']['EXP-039 Research Derivative']['log_loss']:.6f} | {s2['cohort_a_2026']['EXP-039 Research Derivative']['brier_score']:.6f} | {s2['cohort_a_2026']['EXP-039 Research Derivative']['accuracy']*100:.2f}% | {s2['cohort_a_2026']['EXP-039 Research Derivative']['auc']:.4f} | {s2['cohort_a_2026']['EXP-039 Research Derivative']['tails_over_threshold']} | Thesis Reference ($N=2,699$) |
+| **Player-Glicko2-Rating-Baseline (`Glicko-2`)** | {s2['cohort_a_2026']['Calibrated Glicko-2']['log_loss']:.6f} | {s2['cohort_a_2026']['Calibrated Glicko-2']['brier_score']:.6f} | {s2['cohort_a_2026']['Calibrated Glicko-2']['accuracy']*100:.2f}% | {s2['cohort_a_2026']['Calibrated Glicko-2']['auc']:.4f} | {s2['cohort_a_2026']['Calibrated Glicko-2']['tails_over_threshold']} | Rating Baseline |
+| **Player-Elo-Rating-Baseline (`Elo`)** | {s2['cohort_a_2026']['Calibrated Elo']['log_loss']:.6f} | {s2['cohort_a_2026']['Calibrated Elo']['brier_score']:.6f} | {s2['cohort_a_2026']['Calibrated Elo']['accuracy']*100:.2f}% | {s2['cohort_a_2026']['Calibrated Elo']['auc']:.4f} | {s2['cohort_a_2026']['Calibrated Elo']['tails_over_threshold']} | Rating Baseline |
 
 *Bootstrap Comparison:* $\\Delta\\text{{LL}}(\\text{{C0}} - \\text{{A0}}) = {s2['cohort_a_comparisons']['c0_vs_a0']['delta_log_loss']:.6f}$ ($95\\%\\text{{ CI: }}[{s2['cohort_a_comparisons']['c0_vs_a0']['ci_lower_log_loss']:.6f}, {s2['cohort_a_comparisons']['c0_vs_a0']['ci_upper_log_loss']:.6f}]$).
 
 ### B. Full 2024–2026 Walk-Forward Benchmark ($N=11,550$ series & $N=9,907$ common support)
 
-| Model | 11,550 Full LogLoss | 11,550 Full Brier | 9,907 Common LogLoss | 9,907 Common Brier | 9,907 Tails ($\\ge 2.5$) |
+| Model (Architecture-First Name & Code) | 11,550 Full LogLoss | 11,550 Full Brier | 9,907 Common LogLoss | 9,907 Common Brier | 9,907 Tails ($\\ge 2.5$) |
 |---|---:|---:|---:|---:|---:|
-| **Annual Causal A0** | **{s2['cohort_b_full_11550']['Annual Causal A0']['log_loss']:.6f}** | **{s2['cohort_b_full_11550']['Annual Causal A0']['brier_score']:.6f}** | **{s2['cohort_b_common_9907']['Annual Causal A0']['log_loss']:.6f}** | **{s2['cohort_b_common_9907']['Annual Causal A0']['brier_score']:.6f}** | {s2['cohort_b_common_9907']['Annual Causal A0']['tails_over_threshold']} |
-| **EXP-039 Derivative** | *Missing 1,643* | *Missing 1,643* | {s2['cohort_b_common_9907']['EXP-039 Research Derivative']['log_loss']:.6f} | {s2['cohort_b_common_9907']['EXP-039 Research Derivative']['brier_score']:.6f} | **{s2['cohort_b_common_9907']['EXP-039 Research Derivative']['tails_over_threshold']}** |
-| **Calibrated Glicko-2** | {s2['cohort_b_full_11550']['Calibrated Glicko-2']['log_loss']:.6f} | {s2['cohort_b_full_11550']['Calibrated Glicko-2']['brier_score']:.6f} | {s2['cohort_b_common_9907']['Calibrated Glicko-2']['log_loss']:.6f} | {s2['cohort_b_common_9907']['Calibrated Glicko-2']['brier_score']:.6f} | {s2['cohort_b_common_9907']['Calibrated Glicko-2']['tails_over_threshold']} |
-| **Calibrated Elo** | {s2['cohort_b_full_11550']['Calibrated Elo']['log_loss']:.6f} | {s2['cohort_b_full_11550']['Calibrated Elo']['brier_score']:.6f} | {s2['cohort_b_common_9907']['Calibrated Elo']['log_loss']:.6f} | {s2['cohort_b_common_9907']['Calibrated Elo']['brier_score']:.6f} | {s2['cohort_b_common_9907']['Calibrated Elo']['tails_over_threshold']} |
-
+| **WalkForward-Reference-Ensemble (`A0`)** | **{s2['cohort_b_full_11550']['Annual Causal A0']['log_loss']:.6f}** | **{s2['cohort_b_full_11550']['Annual Causal A0']['brier_score']:.6f}** | **{s2['cohort_b_common_9907']['Annual Causal A0']['log_loss']:.6f}** | **{s2['cohort_b_common_9907']['Annual Causal A0']['brier_score']:.6f}** | {s2['cohort_b_common_9907']['Annual Causal A0']['tails_over_threshold']} |
+| **ElasticNet-TeamForm-Baseline (`EXP-039`)** | *Missing 1,643* | *Missing 1,643* | {s2['cohort_b_common_9907']['EXP-039 Research Derivative']['log_loss']:.6f} | {s2['cohort_b_common_9907']['EXP-039 Research Derivative']['brier_score']:.6f} | **{s2['cohort_b_common_9907']['EXP-039 Research Derivative']['tails_over_threshold']}** |
+| **Player-Glicko2-Rating-Baseline (`Glicko-2`)** | {s2['cohort_b_full_11550']['Calibrated Glicko-2']['log_loss']:.6f} | {s2['cohort_b_full_11550']['Calibrated Glicko-2']['brier_score']:.6f} | {s2['cohort_b_common_9907']['Calibrated Glicko-2']['log_loss']:.6f} | {s2['cohort_b_common_9907']['Calibrated Glicko-2']['brier_score']:.6f} | {s2['cohort_b_common_9907']['Calibrated Glicko-2']['tails_over_threshold']} |
+| **Player-Elo-Rating-Baseline (`Elo`)** | {s2['cohort_b_full_11550']['Calibrated Elo']['log_loss']:.6f} | {s2['cohort_b_full_11550']['Calibrated Elo']['brier_score']:.6f} | {s2['cohort_b_common_9907']['Calibrated Elo']['log_loss']:.6f} | {s2['cohort_b_common_9907']['Calibrated Elo']['brier_score']:.6f} | {s2['cohort_b_common_9907']['Calibrated Elo']['tails_over_threshold']} |
 ---
 
 ## 2. Bayesian Market Shrinkage Proper-Score Grid
@@ -974,9 +1052,9 @@ Evaluating $\\operatorname{{logit}}(p_{{\\text{{hybrid}}}}) = \\alpha \\operator
 
 | Regime | Strategy | Bets | Win Rate | Expected EV | Realized Yield | EV Gap | Max Drawdown | Verdict |
 |---|---|---:|---:|---:|---:|---:|---:|---|
-| **Polish Books (12% Tax)** | Unconstrained Pure C0 | 454 | 43.8% | +31.93% | -4.54% | +36.47 pp | 67.0% | **UNTRUSTED (Optimizer's Curse)** |
-| **Polish Books (12% Tax)** | Shrunk Hybrid C0 (α=0.50, Guard B) | 147 | 51.0% | +13.41% | +11.50% | +1.91 pp | 15.0% | **Effective Risk Reduction** |
-| **Polish Books (12% Tax)** | **Optimal Synergy Strategy (Adopted)** | **{s3['optimal_synergy_summary']['n_bets']}** | **{s3['optimal_synergy_summary']['win_rate_pct']}%** | **+{s3['optimal_synergy_summary']['mean_model_ev_pct']}%** | **+{s3['optimal_synergy_summary']['realized_yield_pct']}%** | **-10.50 pp** | **{s3['optimal_synergy_summary']['max_drawdown_pct']}%** | **ADOPTED PRODUCTION STRATEGY** |
+| **Polish Books (12% Tax)** | Unconstrained `PlayerHistory-Attention-Ensemble` (`C0`) | 454 | 43.8% | +31.93% | -4.54% | +36.47 pp | 67.0% | **UNTRUSTED (Optimizer's Curse)** |
+| **Polish Books (12% Tax)** | `MarketShrunk-Hybrid-50` + `Market-Divergence-Gate` | 147 | 51.0% | +13.41% | +11.50% | +1.91 pp | 15.0% | **Effective Risk Reduction** |
+| **Polish Books (12% Tax)** | **Optimal Synergy (`Hybrid-50` + `Market-Divergence-Gate` + `Model-Consensus-Veto`)** | **{s3['optimal_synergy_summary']['n_bets']}** | **{s3['optimal_synergy_summary']['win_rate_pct']}%** | **+{s3['optimal_synergy_summary']['mean_model_ev_pct']}%** | **+{s3['optimal_synergy_summary']['realized_yield_pct']}%** | **-10.50 pp** | **{s3['optimal_synergy_summary']['max_drawdown_pct']}%** | **ADOPTED PRODUCTION STRATEGY** |
 | **Multi-Year (0% Tax)** | Multi-Year Shrunk Hybrid (2021–26) | 3,002 | 57.6% | +4.68% | +7.60% | -2.92 pp | 9.4% | **Validated Historical Edge** |
 
 ### Monthly Breakdown for Optimal Synergy Strategy ($N=50$)

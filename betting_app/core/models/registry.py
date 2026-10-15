@@ -17,10 +17,12 @@ PROJECT_ROOT = Path(__file__).resolve().parents[3]
 
 C0_NATIVE = ModelSpec(
     name="Causal-C0",
+    display_name="PlayerHistory-Attention-Ensemble",
+    short_code="C0",
     version="c0-native-2026-w32-e12-v1",
     feature_version="native-c0-history16-v1",
     artifact_path=PROJECT_ROOT / "data" / "06_models" / "a0_data_focus" / "a0_data_focus_20260929_192443",
-    description="Frozen native C0 series predictor using native pre-match history features.",
+    description="3-seed Width-32/Epoch-12 player history-attention neural ensemble + Glicko-2/Elo ratings + MLP experts (Causal-C0).",
     metadata={
         "operational": True,
         "symmetric": True,
@@ -31,6 +33,8 @@ C0_NATIVE = ModelSpec(
 
 EXP078_LINEAR = ModelSpec(
     name="Operational-PlayerTeamRatings-W20",
+    display_name="Linear-Ratings-TeamForm-Baseline",
+    short_code="EXP-078",
     version="exp078-symmetric-series-v1",
     feature_version="ratings-w20-symmetric-series-v1",
     ratings_version="latest-full",
@@ -39,12 +43,14 @@ EXP078_LINEAR = ModelSpec(
     has_uncertainty=False,
     family="linear_symmetric",
     artifact_path=PROJECT_ROOT / "betting_app" / "models" / "exp078_symmetric_series_v1.json",
-    description="Symmetric series-level linear regression on ratings-w20-symmetric-series-v1 features.",
+    description="Symmetric series-level linear model on player/team ratings and W20 form.",
     metadata={"symmetric": True},
 )
 
 EXP039_THESIS = ModelSpec(
     name="Sym-Cal LR-ElasticNet-W20-Binomial",
+    display_name="ElasticNet-TeamForm-Baseline",
+    short_code="EXP-039",
     version="exp-039",
     feature_version="thesis-exp039",
     ratings_version="latest-full",
@@ -53,12 +59,14 @@ EXP039_THESIS = ModelSpec(
     has_uncertainty=False,
     family="elastic_net",
     artifact_path=PROJECT_ROOT / "betting_app" / "models" / "sym_cal_lr_elasticnet_w20_binomial_pipeline.joblib",
-    description="Frozen thesis reference model: symmetric calibrated ElasticNet with binomial series simulation.",
+    description="Map-level symmetric calibrated ElasticNet with 20-match team form (W20) and binomial series projection.",
     metadata={"frozen": True, "academic_baseline": True},
 )
 
 A1_CONSOLIDATED = ModelSpec(
     name="Consolidated-A1",
+    display_name="Residual-Tier-Calibration-Challenger",
+    short_code="A1",
     version="a1-consolidated-v1",
     feature_version="causal-a0-research-bank-residual-v1",
     ratings_version="latest-full",
@@ -66,7 +74,7 @@ A1_CONSOLIDATED = ModelSpec(
     prediction_target="series",
     has_uncertainty=False,
     family="a1_engine",
-    description="Research-only residual over Causal A0; no validated live A0 feature adapter or macro artifact is configured.",
+    description="Research-only residual over WalkForward-Reference-Ensemble (Causal A0); no validated live A0 feature adapter or macro artifact is configured.",
     metadata={
         "operational": False,
         "unavailable_reason": "Consolidated A1 requires a validated Causal A0 adapter and out-of-sample macro artifact; rating consensus is not Causal A0.",
@@ -81,6 +89,8 @@ ACTIVE_MODEL_FAMILY = C0_NATIVE.family
 
 BAYESIAN_SHRUNK_HYBRID = ModelSpec(
     name="Hybrid-Operational-Market",
+    display_name="MarketShrunk-Hybrid-50",
+    short_code="Hybrid-50",
     version="c0-native-2026-w32-e12-v1-a0.50-t1.00",
     feature_version=C0_NATIVE.feature_version,
     ratings_version=C0_NATIVE.ratings_version,
@@ -88,7 +98,7 @@ BAYESIAN_SHRUNK_HYBRID = ModelSpec(
     prediction_target="series",
     has_uncertainty=False,
     family="bayesian_market_hybrid",
-    description="Native C0 series predictions blended with no-vig series market odds.",
+    description="50/50 logit-space shrinkage blending PlayerHistory-Attention-Ensemble with 2-way Shin de-vigged market consensus.",
     metadata={
         "base_model_name": C0_NATIVE.name,
         "alpha": 0.50,
@@ -100,14 +110,20 @@ BAYESIAN_SHRUNK_HYBRID = ModelSpec(
 
 REGISTERED_MODELS: dict[str, ModelSpec] = {
     C0_NATIVE.name: C0_NATIVE,
+    C0_NATIVE.display_name: C0_NATIVE,
     BAYESIAN_SHRUNK_HYBRID.name: BAYESIAN_SHRUNK_HYBRID,
+    BAYESIAN_SHRUNK_HYBRID.display_name: BAYESIAN_SHRUNK_HYBRID,
     A1_CONSOLIDATED.name: A1_CONSOLIDATED,
+    A1_CONSOLIDATED.display_name: A1_CONSOLIDATED,
     EXP078_LINEAR.name: EXP078_LINEAR,
+    EXP078_LINEAR.display_name: EXP078_LINEAR,
     EXP039_THESIS.name: EXP039_THESIS,
+    EXP039_THESIS.display_name: EXP039_THESIS,
     "c0": C0_NATIVE,
     "native_c0": C0_NATIVE,
     "shrunk_hybrid": BAYESIAN_SHRUNK_HYBRID,
     "bayesian_hybrid": BAYESIAN_SHRUNK_HYBRID,
+    "hybrid_50": BAYESIAN_SHRUNK_HYBRID,
     "a1": A1_CONSOLIDATED,
     "a1_consolidated": A1_CONSOLIDATED,
     "exp078": EXP078_LINEAR,
@@ -257,16 +273,19 @@ def get_thesis_hybrid() -> HybridSpec:
 
 
 def get_model(name_or_alias: str) -> ModelSpec | None:
-    """Retrieve a model by key, alias, name, or version (case/dash insensitive)."""
+    """Retrieve a model by key, alias, display_name, short_code, name, or version (case/dash insensitive)."""
     if name_or_alias in REGISTERED_MODELS:
         return REGISTERED_MODELS[name_or_alias]
-    # Normalize model names, versions, and supported aliases.
     normalized = name_or_alias.lower().replace("-", "").replace("_", "").strip()
     for key, spec in REGISTERED_MODELS.items():
-        key_norm = key.lower().replace("-", "").replace("_", "")
-        name_norm = spec.name.lower().replace("-", "").replace("_", "")
-        ver_norm = spec.version.lower().replace("-", "").replace("_", "")
-        if normalized in (key_norm, name_norm, ver_norm):
+        candidates = (
+            key.lower().replace("-", "").replace("_", ""),
+            spec.name.lower().replace("-", "").replace("_", ""),
+            spec.effective_display_name.lower().replace("-", "").replace("_", ""),
+            spec.effective_short_code.lower().replace("-", "").replace("_", ""),
+            spec.version.lower().replace("-", "").replace("_", ""),
+        )
+        if normalized in candidates:
             return spec
     return None
 
@@ -282,6 +301,8 @@ def list_registered_models() -> list[dict[str, Any]]:
         seen.add(model.name)
         result.append({
             "name": model.name,
+            "display_name": model.effective_display_name,
+            "short_code": model.effective_short_code,
             "version": model.version,
             "feature_version": model.feature_version,
             "ratings_version": model.ratings_version,
