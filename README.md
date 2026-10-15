@@ -67,10 +67,17 @@ lol-breaker/
 | **`MarketShrunk-Hybrid-50`** | **`Hybrid-50`** | `Hybrid-Operational-Market` | 50/50 logit-space shrinkage combining `PlayerHistory-Attention-Ensemble` with 2-way closed-form Shin de-vigged market consensus: `logit(p_hybrid) = 0.50 · logit(p_C0) + 0.50 · logit(q_shin)` |
 | **`WalkForward-Reference-Ensemble`** | **`A0`** | `Annual Causal A0` (`p_full`) | Annual walk-forward causal ensemble (7 base checkpoints across 3 experts; quarterly cross-fitted calibration) |
 | **`ElasticNet-TeamForm-Baseline`** | **`EXP-039`** | `Sym-Cal LR-ElasticNet-W20-Binomial` (`exp-039`) | Map-level symmetric calibrated ElasticNet with 20-match organization form (`W20`) and binomial series projection |
+
+<details>
+<summary><b>🔍 View Secondary Rating Baselines (EXP-078, Glicko-2, Elo)</b></summary>
+
+| Canonical Architecture-First Name | Short Code | Legacy / Wire Identifier | Model Architecture & Domain Role |
+|---|---|---|---|
 | **`Linear-Ratings-TeamForm-Baseline`** | **`EXP-078`** | `Operational-PlayerTeamRatings-W20` (`exp078`) | Symmetric series-level linear regression on player/team ratings and `W20` organization form |
 | **`Player-Glicko2-Rating-Baseline`** | **`Glicko-2`** | `Calibrated Glicko-2` (`p_glicko`) | Match-level player Glicko-2 rating engine with rating deviation (RD), volatility tracking, and logistic calibration |
 | **`Player-Elo-Rating-Baseline`** | **`Elo`** | `Calibrated Elo` (`p_elo`) | Match-level calibrated player Elo rating control |
 
+</details>
 ### 2.2 Decision-Time Safety Gates & Risk Parameters
 
 | Safety Gate / Parameter | Code / Formula | Domain Purpose |
@@ -150,18 +157,14 @@ dvc metrics show
 
 ## 5. Empirical Results & Mathematical Audit
 
-### 5.1 Cohort & Decision Window Guide
+### 5.1 Streamlined Evaluation Datasets (4 Core Cohorts)
 
-Before evaluating model scores, every pre-match decision window and scoring cohort is defined below:
-
-| Cohort / Window Name | Sample Size & Period | Timing Cutoff | What It Measures & Why It Matters |
+| Evaluation Cohort | Sample Size & Period | Timing Cutoff | What It Measures & Domain Importance |
 |---|---|---|---|
-| **2026 Canonical Assessment** | $N=3,103$ series (Jan–Sep 2026) | Match start (odds-free) | Pure sports model accuracy across all global pro series without market odds inputs. |
-| **2024–2026 Walk-Forward** | $N=11,550$ full / $9,907$ common | Match start (odds-free) | 3-season chronological out-of-time benchmark measuring multi-year stability and tail risk. |
-| **Pinnacle Early Windows (`T-24h`, `T-12h`, `T-6h`)** | $N=213$, $753$, $1,027$ series | 24h, 12h, 6h before start | Sharpest bookmaker in esports; tests whether our model knows more than early market lines. |
-| **Pinnacle Late Cutoff (`T-1h`)** | $N=1,668$ series (2026) | 1 hour before match start | Tests model value after global market liquidity and sharp bettors have shaped closing odds. |
-| **Production Polish Bookmakers** | $N=2,752$ panel / $N=645$ live | Pre-match (1h–2h out) | Licensed Polish books (`STS`, `Betfan`, `LV BET`, `Superbet`) subject to 12% turnover tax. |
-| **Multi-Year OddsPortal Open vs. Close** | $N=11,609$ series / $3,002$ bets | Open vs. Close (2021–2026) | 6-season macroeconomic validation testing strategy survival across 0% and 12% tax regimes. |
+| **2026 Canonical Assessment** | $N=3,103$ series (Jan–Sep 2026) | Match start (odds-free) | Primary odds-free benchmark evaluating pure sports model accuracy across all global pro series. |
+| **Sharp Pinnacle Horizons** | $N=2,023$ early / $N=1,668$ late | `T-48h` to `<2h (T-1h)` | Multi-horizon pre-match benchmark against the sharpest international esports bookmaker. |
+| **Production Polish Bookmakers** | $N=645$ matches, 234k quotes (May–Sep 2026) | `T-48h` to `<2h` (closing) | Multi-horizon pre-match benchmark and live 12%-tax betting simulation across 7 licensed Polish bookmakers (`STS`, `Betfan`, `Superbet`, `Betclic`, `eFortuna`, `Totalbet`, `LeBull`). |
+| **Multi-Year OddsPortal** | $N=11,609$ matches / $N=3,002$ bets (2021–2026) | Open vs. Close | 6-season out-of-time macroeconomic validation testing strategy survival across 0% and 12% tax regimes. |
 
 ---
 
@@ -171,7 +174,7 @@ Before evaluating model scores, every pre-match decision window and scoring coho
 
 Evaluated unclipped against realized match winners ($Y \in \{0, 1\}$):
 
-| Model | Short Code | LogLoss | Brier Score | Accuracy (AUC) |
+| Model | Code | LogLoss | Brier Score | Accuracy (AUC) |
 |---|---|---:|---:|---:|
 | **PlayerHistory-Attention-Ensemble** | **`C0`** | **0.535449** | **0.181034** | **72.03% (0.7993)** |
 | **WalkForward-Reference-Ensemble** | `A0` | 0.536757 | 0.181573 | 71.83% (0.7981) |
@@ -181,41 +184,62 @@ Evaluated unclipped against realized match winners ($Y \in \{0, 1\}$):
 
 *Paired monthly-block bootstrap:* $\Delta\text{LL}(\text{C0} - \text{A0}) = -0.001308$ (95% CI: $[-0.003209, +0.000106]$).
 
-#### Table 5.2B: 2024–2026 Walk-Forward Benchmark ($N=11,550$ Full & $N=9,907$ Common)
+<details>
+<summary><b>📊 View 3-Season Walk-Forward Benchmark (2024–2026, N=11,550 Series) & EXP-039 Eligibility Note</b></summary>
 
-| Model | 11,550 Full LL | 11,550 Full Brier | 9,907 Common LL | Extreme Tails ($\text{LL} \ge 2.5$) |
-|---|---:|---:|---:|---:|
-| **WalkForward-Reference-Ensemble (`A0`)** | **0.551246** | **0.187103** | **0.559920** | 30 |
-| **ElasticNet-TeamForm-Baseline (`EXP-039`)** | *Missing 1,643* | *Missing 1,643* | 0.567337 | **16** |
-| **Player-Glicko2-Rating-Baseline (`Glicko-2`)** | 0.575888 | 0.196548 | 0.577998 | 36 |
-| **Player-Elo-Rating-Baseline (`Elo`)** | 0.588946 | 0.201930 | 0.591198 | 29 |
+| Model | Code | LogLoss | Brier Score | Extreme Tails ($\text{LL} \ge 2.5$) |
+|---|---|---:|---:|---:|
+| **WalkForward-Reference-Ensemble** | `A0` | **0.551246** | **0.187103** | 30 |
+| **ElasticNet-TeamForm-Baseline** | `EXP-039` | *0.567337\** | *0.192305\** | **16\*** |
+| **Player-Glicko2-Rating-Baseline** | `Glicko-2` | 0.575888 | 0.196548 | 36 |
+| **Player-Elo-Rating-Baseline** | `Elo` | 0.588946 | 0.201930 | 29 |
+
+\* *EXP-039 Eligibility Note:* EXP-039 requires $\ge 20$ prior organizational matches (`W20`), so 1,643 newly formed or academy series without 20-match org history are excluded; on the 9,907 common subset, Annual A0 scores 0.559920 LogLoss (30 tails) vs. EXP-039 0.567337 LogLoss (16 tails).
+
+</details>
 
 ---
 
-### 5.3 Head-to-Head vs. Bookmakers: Pinnacle Horizons & Polish Production
+### 5.3 Head-to-Head vs. Bookmakers Across Pre-Match Horizons (`T-48h` to `<2h`)
 
-#### Table 5.3A: Model vs. Sharp Pinnacle Across Pre-Match Horizons
+#### Table 5.3A: Model vs. Sharp Pinnacle Across Pre-Match Horizons (`T-48h` to `<2h`)
 
-| Pre-Match Window | Matches ($N$) | Pinnacle Market LL | Pure Model (`C0`) LL | Hybrid-50 LL | Winner & Edge vs. Pinnacle |
+| Pre-Match Window | Matches ($N$) | Pinnacle Market LL | Pure Model (`C0`) LL | `Hybrid-50` LL | Statistical Comparison vs. Pinnacle |
 |---|---:|---:|---:|---:|---|
-| **`T-24h` (24h Before Match)** | 213 | 0.601401 | **0.581278** | **0.585425** | 🏆 **Pure Model & Hybrid crush Pinnacle 24h out (`-0.02012` LL)** |
-| **`T-12h` (12h Before Match)** | 753 | 0.587228 | **0.580471** | **0.578548** | 🏆 **Both Pure C0 & Hybrid beat Pinnacle 12h out (`-0.00676` LL)** |
-| **`T-6h` (6h Before Match)** | 1,027 | 0.573997 | 0.580708 | **0.571684** | ✅ **Pinnacle sharpens; Hybrid-50 still beats Pinnacle (`-0.00231` LL)** |
-| **`T-1h` (1h Before Match)** | 1,668 | 0.568604 | 0.575423 | **0.563571** | ✅ **Hybrid-50 beats late T-1h market consensus (`-0.00503` LL)** |
+| **`T-48h` (48h Out)** | 30 | 0.497346 | **0.492582** | **0.490235** | Pure `C0` (`-0.00476` LL) & `Hybrid-50` (`-0.00711` LL) lead early line |
+| **`T-24h` (24h Out)** | 213 | 0.601401 | **0.581278** | **0.585425** | Pure `C0` (`-0.02012` LL) & `Hybrid-50` (`-0.01598` LL) outperform 24h line |
+| **`T-12h` (12h Out)** | 753 | 0.587228 | **0.580471** | **0.578548** | Pure `C0` (`-0.00676` LL) & `Hybrid-50` (`-0.00868` LL) outperform 12h line |
+| **`T-6h` (6h Out)** | 1,027 | 0.573997 | 0.580708 | **0.571684** | Pinnacle sharpens; `Hybrid-50` retains `-0.00231` LL edge |
+| **`<2h` (`T-1h` Cutoff)** | 1,668 | 0.568604 | 0.575423 | **0.563571** | `Hybrid-50` outperforms late market consensus (`-0.00503` LL) |
 
-#### Table 5.3B: Model vs. Production Polish Bookmakers (`STS`, `Betfan`, `LV BET`, `Superbet`)
+#### Table 5.3B: Model vs. Production Polish Bookmakers Across Pre-Match Horizons (`T-48h` to `<2h`)
 
-| Production Cohort | Matches ($N$) | Polish Books LL | Pure Model (`C0`) LL | Hybrid-50 LL | Hybrid Gain vs. Books |
+| Pre-Match Window | Matches ($N$) | Polish Books LL | Pure Model (`C0`) LL | `Hybrid-50` LL | Statistical Comparison vs. Polish Books |
 |---|---:|---:|---:|---:|---|
-| **Live Production Monthly-Refit (May–Sep 2026)** | 645 | 0.570054 | 0.573307 | **0.557877** | **-0.01218 LL (-1.22 pp)** |
-| **Polish 2+ Books Panel (2026)** | 1,467 | 0.559605 | 0.565905 | **0.556142** | **-0.00346 LL** |
-| **Polish Core-4 Fixed Panel (`STS`/`Betfan`/`LV`/`Superbet`)** | 1,285 | 0.562088 | 0.570741 | **0.560367** | **-0.00172 LL** |
+| **`T-48h` (48h Out)** | 442 | 0.563429 | **0.553525** | **0.548091** | Pure `C0` (`-0.00990` LL) & `Hybrid-50` (`-0.01534` LL) lead 48h line |
+| **`T-24h` (24h Out)** | 512 | 0.558981 | **0.556513** | **0.548155** | Pure `C0` (`-0.00247` LL) & `Hybrid-50` (`-0.01083` LL) lead 24h line |
+| **`T-12h` (12h Out)** | 585 | 0.565736 | 0.567620 | **0.556896** | Books narrow gap; `Hybrid-50` leads by `-0.00884` LL |
+| **`T-6h` (6h Out)** | 612 | 0.560060 | 0.564871 | **0.553264** | `Hybrid-50` outperforms 6h market consensus (`-0.00680` LL) |
+| **`<2h` (Closing Line)** | 645 | 0.555258 | 0.566484 | **0.551709** | `Hybrid-50` beats closing line (`-0.00355` LL; `-0.01218` LL with monthly refit) |
 
-*Takeaway:* 24 to 12 hours before match start, our pure attention model outperforms Pinnacle outright because early lines have wider price-discovery noise. As start approaches and liquidity sharpens Pinnacle's line, Bayesian logit shrinkage (`Hybrid-50`) combines the independent sports signal with market prices to strictly beat the market across all horizons and licensed bookmakers.
+<details>
+<summary><b>🇵🇱 View Additional Polish Bookmaker Panels (Polish 2+ Books N=1,467 & Core-4 Fixed N=1,285)</b></summary>
 
+| Panel Cohort | Matches ($N$) | Polish Books LL | Pure Model (`C0`) LL | `Hybrid-50` LL | Statistical Comparison vs. Panel |
+|---|---:|---:|---:|---:|---|
+| **Live Production Monthly-Refit (May–Sep 2026)** | 645 | 0.570054 | 0.573307 | **0.557877** | `Hybrid-50` beats closing line by `-0.01218` LL (-1.22 pp) |
+| **Polish 2+ Books Panel (2026)** | 1,467 | 0.559605 | 0.565905 | **0.556142** | `Hybrid-50` outperforms Polish 2+ consensus (`-0.00346` LL) |
+| **Polish Core-4 Fixed Panel (`STS`/`Betfan`/`LV`/`Superbet`)** | 1,285 | 0.562088 | 0.570741 | **0.560367** | `Hybrid-50` outperforms Polish Core-4 (`-0.00172` LL) |
+
+</details>
+
+*Takeaway:* 24 to 48 hours before match start, our pure attention model outperforms bookmaker prices outright because early lines have wider price-discovery noise. As start approaches and liquidity sharpens bookmaker lines, Bayesian logit shrinkage (`Hybrid-50`) combines the independent sports signal with market prices to strictly outperform market consensus across all pre-match horizons and licensed bookmakers.
 ---
 
 ### 5.4 Betting Strategy & Optimizer's Curse Decomposition
+
+<details>
+<summary><b>📖 View Strategy Stack Definitions & Econometric Metric Formulas</b></summary>
 
 #### Strategy Stacks & Metric Nomenclature Guide
 
@@ -235,6 +259,8 @@ To evaluate where true profit comes from, five strategy configurations and econo
 - **Optimizer's Curse Bias ($B = \text{Claimed EV} - \text{Net CLV}$):** Positive selection bias from cherry-picking estimation errors.
 - **Match Luck Noise ($\eta = \text{Realized Yield} - \text{Net CLV}$):** Binary coinflip outcome variance that decays as $\sigma / \sqrt{N}$.
 - **Realized Yield:** Actual observed return on capital: $(Y \cdot 0.88 \cdot O) - 1$.
+
+</details>
 
 #### Table 5.4A: Portfolio Performance & Risk Control Across Operating Regimes
 
@@ -265,6 +291,9 @@ $$
 - **Optimizer's Curse Bias ($B = \text{Claimed EV} - \text{Net CLV}$):** Systematic positive selection bias from picking bets where estimation error happened to be high. **Never vanishes with sample size $N$**. On unconstrained C0, it produced **+45.62 pp** of fake edge. Bounded shrinkage ($\alpha=0.50$), `Market-Divergence-Gate`, and `Model-Consensus-Veto` successfully compressed this bias down to **+8.57 pp**.
 - **Match Luck Noise ($\eta = \text{Realized Yield} - \text{Net CLV}$):** Zero-mean binomial outcome variance ($\sigma_{\text{bet}} \approx 109.8\%$) that **decays to zero as $\sigma / \sqrt{N}$**. On the 50-bet production ledger, **+19.42 pp** of temporary lucky variance boosted wallet yield to **+23.91%**, while the true long-term compounding edge is **Net CLV = +4.83%**.
 
+<details>
+<summary><b>📅 View Monthly Progression Breakdown (May–Sep 2026, N=50 Bets)</b></summary>
+
 #### Monthly Breakdown for Adopted Production Strategy ($N=50$, 10,000 PLN Capital)
 
 | Month | Bets (Wins) | Win Rate | Net Profit | Realized Yield | Mean Net CLV |
@@ -276,9 +305,14 @@ $$
 | **2026-09** | 4 (3) | 75.0% | +405.84 PLN | +67.64% | +11.54% |
 | **Total** | **50 (29)** | **58.0%** | **+1,715.41 PLN** | **+23.91%** | **+4.83%** |
 
+</details>
+
 ---
 
 ### 5.5 Econometric Audit: True Profit ($\text{Net CLV}$) vs. Noise
+
+<details>
+<summary><b>📐 View Deep-Dive Econometric Audit: Hypothesis Tests, Variance Ratio (104.5x) & Time-to-Profit (N_min) Schedule</b></summary>
 
 #### A. The Exact Three-Part Bet Decomposition
 
@@ -334,9 +368,14 @@ $$
 - **Under 12% Polish Tax ($\mu = +4.83\%$):** $N_{\min} = \mathbf{1,396\text{ bets}}$ ($\sim 3.8$ years at 30 bets/mo).
 - **Under 0% Tax ($\mu = +7.60\%$):** $N_{\min} = \mathbf{478\text{ bets}}$ ($\sim 8\text{--}10$ months at 50 bets/mo).
 
+</details>
+
 ---
 
 ### 5.6 Preserved Standalone Prop Models
+
+<details>
+<summary><b>🎯 View Standalone Map 1 Kills, Duration & Series Length Prop Models</b></summary>
 
 Preserved package: `data/06_models/model_preservation/prop_distribution_20261007_01.zip`  
 SHA-256 Digest: `a115b26576b90b32997536aa9e1ee7eb1228dd6864bfa53e16e671b72982a232`
@@ -345,6 +384,7 @@ SHA-256 Digest: `a115b26576b90b32997536aa9e1ee7eb1228dd6864bfa53e16e671b72982a23
 - **Map 1 In-Game Duration:** 15-leaf LightGBM / LogNormal — **NLL `3.076194`**, MAE `4.24` minutes
 - **Series Length (BO3/5):** Width-128 / Epoch-12 3-seed mixture — **NLL `0.714580`**, RPS `0.261305`
 
+</details>
 ## 6. License & Disclaimers
 
 ### License

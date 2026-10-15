@@ -64,13 +64,13 @@ stages:
       size: 5773751
     - path: scripts/run_simulation_pipeline.py
       hash: md5
-      md5: 53e7cc2c025d23d4288859796aa17e6b
-      size: 9940
+      md5: a063896f21e4a7a409c12f6ad779335f
+      size: 10911
       isexec: true
     - path: src/analysis/simulation_pipeline.py
       hash: md5
-      md5: 73683fbe393345509d14f53ccc9e8606
-      size: 77942
+      md5: 2b9d599ad4b6be6376cbe27c37b3f3b0
+      size: 94025
     outs:
     - path: data/08_reporting/simulation_pipeline/stage1_input_manifest.json
       hash: md5
@@ -119,13 +119,13 @@ stages:
       size: 5933
     - path: scripts/run_simulation_pipeline.py
       hash: md5
-      md5: 53e7cc2c025d23d4288859796aa17e6b
-      size: 9940
+      md5: a063896f21e4a7a409c12f6ad779335f
+      size: 10911
       isexec: true
     - path: src/analysis/simulation_pipeline.py
       hash: md5
-      md5: 73683fbe393345509d14f53ccc9e8606
-      size: 77942
+      md5: 2b9d599ad4b6be6376cbe27c37b3f3b0
+      size: 94025
     params:
       conf/base/parameters.yml:
         simulation.benchmark:
@@ -146,12 +146,12 @@ stages:
     - path: 
         data/08_reporting/simulation_pipeline/stage2_bookmaker_horizon_comparison.csv
       hash: md5
-      md5: c233ebda34902564d31ce43f79ce838d
-      size: 1337
+      md5: 3285008e2c1f5910303c24bc63612e14
+      size: 2272
     - path: data/08_reporting/simulation_pipeline/stage2_model_benchmark.json
       hash: md5
-      md5: fdadefc848cde182c532da57f79e583e
-      size: 24124
+      md5: b344d97f2cf183b780446d6e43dd377f
+      size: 26620
     - path: data/08_reporting/simulation_pipeline/stage2_shrinkage_grid.csv
       hash: md5
       md5: bed6d21fcc34713ec29c3860f005a88a
@@ -178,17 +178,17 @@ stages:
       size: 11736
     - path: data/08_reporting/simulation_pipeline/stage2_model_benchmark.json
       hash: md5
-      md5: fdadefc848cde182c532da57f79e583e
-      size: 24124
+      md5: b344d97f2cf183b780446d6e43dd377f
+      size: 26620
     - path: scripts/run_simulation_pipeline.py
       hash: md5
-      md5: 53e7cc2c025d23d4288859796aa17e6b
-      size: 9940
+      md5: a063896f21e4a7a409c12f6ad779335f
+      size: 10911
       isexec: true
     - path: src/analysis/simulation_pipeline.py
       hash: md5
-      md5: 73683fbe393345509d14f53ccc9e8606
-      size: 77942
+      md5: 2b9d599ad4b6be6376cbe27c37b3f3b0
+      size: 94025
     params:
       conf/base/parameters.yml:
         simulation.betting:
@@ -250,13 +250,13 @@ stages:
       size: 5647
     - path: scripts/run_simulation_pipeline.py
       hash: md5
-      md5: 53e7cc2c025d23d4288859796aa17e6b
-      size: 9940
+      md5: a063896f21e4a7a409c12f6ad779335f
+      size: 10911
       isexec: true
     - path: src/analysis/simulation_pipeline.py
       hash: md5
-      md5: 73683fbe393345509d14f53ccc9e8606
-      size: 77942
+      md5: 2b9d599ad4b6be6376cbe27c37b3f3b0
+      size: 94025
     params:
       conf/base/parameters.yml:
         simulation.econometrics:
@@ -298,12 +298,12 @@ stages:
     - path: 
         data/08_reporting/simulation_pipeline/stage2_bookmaker_horizon_comparison.csv
       hash: md5
-      md5: c233ebda34902564d31ce43f79ce838d
-      size: 1337
+      md5: 3285008e2c1f5910303c24bc63612e14
+      size: 2272
     - path: data/08_reporting/simulation_pipeline/stage2_model_benchmark.json
       hash: md5
-      md5: fdadefc848cde182c532da57f79e583e
-      size: 24124
+      md5: b344d97f2cf183b780446d6e43dd377f
+      size: 26620
     - path: data/08_reporting/simulation_pipeline/stage2_shrinkage_grid.csv
       hash: md5
       md5: bed6d21fcc34713ec29c3860f005a88a
@@ -326,19 +326,19 @@ stages:
       size: 332
     - path: scripts/run_simulation_pipeline.py
       hash: md5
-      md5: 53e7cc2c025d23d4288859796aa17e6b
-      size: 9940
+      md5: a063896f21e4a7a409c12f6ad779335f
+      size: 10911
       isexec: true
     - path: src/analysis/simulation_pipeline.py
       hash: md5
-      md5: 73683fbe393345509d14f53ccc9e8606
-      size: 77942
+      md5: 2b9d599ad4b6be6376cbe27c37b3f3b0
+      size: 94025
     outs:
     - path: data/08_reporting/simulation_pipeline/SIMULATION_REPORT.md
       hash: md5
-      md5: df310651fa06ea29d1d17eb85471b1af
-      size: 12013
+      md5: 6eaa4b8f75e4f529f667925b56cd9ef5
+      size: 13252
     - path: data/08_reporting/simulation_pipeline/summary_metrics.json
       hash: md5
-      md5: 0329e484f7840073fab569e87672770b
-      size: 1305
+      md5: 2a0c215157902eb9e9e5742d60504bd1
+      size: 1633

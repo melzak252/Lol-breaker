@@ -139,7 +139,33 @@ def test_stage2_model_benchmark_invariants() -> None:
     assert pin_comp[12]["pinnacle_log_loss"] == pytest.approx(0.587228, abs=1e-5)
     assert pin_comp[12]["delta_ll_c0_vs_pinnacle"] == pytest.approx(-0.006757, abs=1e-5)
 
-    # 6. Production Polish Bookmaker Comparison
+    # 6. Production Polish Database 5-Horizon Comparison
+    assert "production_horizon_comparison" in res
+    prod_horizons = res["production_horizon_comparison"]
+    for h_label in ["T-48h", "T-24h", "T-12h", "T-6h", "<2h"]:
+        assert h_label in prod_horizons
+        # Hybrid-50 beats Polish bookmakers across all 5 horizons
+        assert prod_horizons[h_label]["hybrid_log_loss"] < prod_horizons[h_label]["market_log_loss"]
+        assert prod_horizons[h_label]["delta_ll_hybrid_vs_market"] < 0.0
+
+    # Pure C0 beats Polish bookmakers outright at T-48h and T-24h
+    assert prod_horizons["T-48h"]["c0_log_loss"] < prod_horizons["T-48h"]["market_log_loss"]
+    assert prod_horizons["T-48h"]["c0_log_loss"] == pytest.approx(0.553525, abs=1e-5)
+    assert prod_horizons["T-48h"]["market_log_loss"] == pytest.approx(0.563429, abs=1e-5)
+    assert prod_horizons["T-48h"]["delta_ll_c0_vs_market"] == pytest.approx(-0.009904, abs=1e-5)
+    assert prod_horizons["T-48h"]["hybrid_log_loss"] == pytest.approx(0.548091, abs=1e-5)
+
+    assert prod_horizons["T-24h"]["c0_log_loss"] < prod_horizons["T-24h"]["market_log_loss"]
+    assert prod_horizons["T-24h"]["c0_log_loss"] == pytest.approx(0.556513, abs=1e-5)
+    assert prod_horizons["T-24h"]["market_log_loss"] == pytest.approx(0.558981, abs=1e-5)
+    assert prod_horizons["T-24h"]["delta_ll_c0_vs_market"] == pytest.approx(-0.002468, abs=1e-5)
+    assert prod_horizons["T-24h"]["hybrid_log_loss"] == pytest.approx(0.548155, abs=1e-5)
+
+    assert prod_horizons["<2h"]["market_log_loss"] == pytest.approx(0.555258, abs=1e-5)
+    assert prod_horizons["<2h"]["hybrid_log_loss"] == pytest.approx(0.551709, abs=1e-5)
+    assert prod_horizons["<2h"]["delta_ll_hybrid_vs_market"] == pytest.approx(-0.003549, abs=1e-5)
+
+    # 7. Production Polish Bookmaker Panels
     assert "polish_production_comparison" in res
     pol_comp = res["polish_production_comparison"]
     assert pol_comp["Polish2plus"]["hybrid_log_loss"] < pol_comp["Polish2plus"]["market_log_loss"]
@@ -154,7 +180,7 @@ def test_stage2_model_benchmark_invariants() -> None:
     assert pol_comp["monthly_refit_production"]["hybrid_log_loss"] == pytest.approx(0.557877, abs=1e-5)
     assert pol_comp["monthly_refit_production"]["market_log_loss"] == pytest.approx(0.570054, abs=1e-5)
 
-    # 7. Dedicated CSV Artifact
+    # 8. Dedicated CSV Artifact
     horizon_csv = PROJECT_ROOT / "data/08_reporting/simulation_pipeline/stage2_bookmaker_horizon_comparison.csv"
     assert horizon_csv.is_file()
 
@@ -258,6 +284,14 @@ def test_stage5_generate_report_and_cli() -> None:
     assert metrics["stage2_pinnacle_t12h_hybrid_ll"] == pytest.approx(0.578548, abs=1e-5)
     assert metrics["stage2_polish_2plus_market_ll"] == pytest.approx(0.559605, abs=1e-5)
     assert metrics["stage2_polish_2plus_hybrid_ll"] == pytest.approx(0.556142, abs=1e-5)
+    assert metrics["stage2_prod_t48h_c0_ll"] == pytest.approx(0.553525, abs=1e-5)
+    assert metrics["stage2_prod_t48h_market_ll"] == pytest.approx(0.563429, abs=1e-5)
+    assert metrics["stage2_prod_t48h_hybrid_ll"] == pytest.approx(0.548091, abs=1e-5)
+    assert metrics["stage2_prod_t24h_c0_ll"] == pytest.approx(0.556513, abs=1e-5)
+    assert metrics["stage2_prod_t24h_market_ll"] == pytest.approx(0.558981, abs=1e-5)
+    assert metrics["stage2_prod_t24h_hybrid_ll"] == pytest.approx(0.548155, abs=1e-5)
+    assert metrics["stage2_prod_lt2h_market_ll"] == pytest.approx(0.555258, abs=1e-5)
+    assert metrics["stage2_prod_lt2h_hybrid_ll"] == pytest.approx(0.551709, abs=1e-5)
     assert metrics["stage3_production_bets_count"] == 50
     assert metrics["stage3_production_net_clv_pct"] == pytest.approx(4.83, abs=0.05)
     assert metrics["stage4_net_clv_t_stat"] == pytest.approx(3.00, abs=0.05)

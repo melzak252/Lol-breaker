@@ -96,21 +96,29 @@ def main() -> int:
             res = run_stage2_model_benchmark(catalog_path, params_path)
             c0 = res["cohort_a_2026"]["Causal-C0 (W32/E12)"]
             a0 = res["cohort_a_2026"]["Annual Causal A0"]
-            pin24 = res["pinnacle_horizon_comparison"]["24"]
-            pin12 = res["pinnacle_horizon_comparison"]["12"]
+            pin_comp = res["pinnacle_horizon_comparison"]
+            prod_comp = res["production_horizon_comparison"]
             pol2p = res["polish_production_comparison"]["Polish2plus"]
             pol_refit = res["polish_production_comparison"]["monthly_refit_production"]
             print("\n[Stage 2: Model Benchmark & Multi-Horizon Bookmaker Comparison]")
             print(f"2026 C0 (W32/E12):  LogLoss = {c0['log_loss']:.6f}, Brier = {c0['brier_score']:.6f}")
             print(f"2026 Annual A0:     LogLoss = {a0['log_loss']:.6f}, Brier = {a0['brier_score']:.6f}")
             print(f"Full 11,550 A0:     LogLoss = {res['cohort_b_full_11550']['Annual Causal A0']['log_loss']:.6f}")
-            print(f"Pinnacle T-24h:     Pure C0 {pin24['c0_log_loss']:.6f} vs Pinnacle {pin24['pinnacle_log_loss']:.6f} (C0 edge: {pin24['delta_ll_c0_vs_pinnacle']:+.6f} LL, N={pin24['n_matches']})")
-            print(f"Pinnacle T-12h:     Pure C0 {pin12['c0_log_loss']:.6f} vs Pinnacle {pin12['pinnacle_log_loss']:.6f} (C0 edge: {pin12['delta_ll_c0_vs_pinnacle']:+.6f} LL, N={pin12['n_matches']})")
-            print(f"Polish 2+ Panel:    Hybrid-50 {pol2p['hybrid_log_loss']:.6f} vs Market {pol2p['market_log_loss']:.6f} (Hybrid edge: {pol2p['delta_ll_hybrid_vs_market']:+.6f} LL, N={pol2p['n_matches']})")
+            print("\n--- Pinnacle Multi-Horizon Comparison (T-48h to <2h) ---")
+            for h_label, h_key in [("T-48h", "48"), ("T-24h", "24"), ("T-12h", "12"), ("T-6h", "6"), ("<2h (T-1h)", "T-1h")]:
+                if h_key in pin_comp:
+                    d = pin_comp[h_key]
+                    p_mkt = d.get("pinnacle_log_loss", d.get("market_log_loss"))
+                    print(f"  Pinnacle {h_label:11s} (N={d['n_matches']:4d}): Market LL={p_mkt:.6f}, Pure C0 LL={d['c0_log_loss']:.6f} ({d['delta_ll_c0_vs_pinnacle']:+.6f}), Hybrid-50 LL={d['hybrid_pinnacle_log_loss']:.6f} ({d['delta_ll_hybrid_vs_pinnacle']:+.6f})")
+            print("\n--- Production Polish Database Multi-Horizon Comparison (T-48h to <2h) ---")
+            for h_label in ["T-48h", "T-24h", "T-12h", "T-6h", "<2h"]:
+                if h_label in prod_comp:
+                    d = prod_comp[h_label]
+                    print(f"  Polish {h_label:6s} (N={d['n_matches']:3d}): Market LL={d['market_log_loss']:.6f}, Pure C0 LL={d['c0_log_loss']:.6f} ({d['delta_ll_c0_vs_market']:+.6f}), Hybrid-50 LL={d['hybrid_log_loss']:.6f} ({d['delta_ll_hybrid_vs_market']:+.6f})")
+            print(f"\nPolish 2+ Panel:    Hybrid-50 {pol2p['hybrid_log_loss']:.6f} vs Market {pol2p['market_log_loss']:.6f} (Hybrid edge: {pol2p['delta_ll_hybrid_vs_market']:+.6f} LL, N={pol2p['n_matches']})")
             print(f"Polish Live Refit:  Hybrid-50 {pol_refit['hybrid_log_loss']:.6f} vs Market {pol_refit['market_log_loss']:.6f} (Hybrid edge: {pol_refit['delta_ll_hybrid_vs_market']:+.6f} LL, N={pol_refit['n_matches']})")
             print("Shrinkage Grid:     data/08_reporting/simulation_pipeline/stage2_shrinkage_grid.csv generated")
             print("Horizon Comparison: data/08_reporting/simulation_pipeline/stage2_bookmaker_horizon_comparison.csv generated")
-
         elif args.stage == "betting_simulation":
             res = run_stage3_betting_simulation(catalog_path, params_path)
             opt = res["optimal_synergy_summary"]
@@ -155,10 +163,15 @@ def main() -> int:
             s2 = run_stage2_model_benchmark(catalog_path, params_path)
             c0 = s2["cohort_a_2026"]["Causal-C0 (W32/E12)"]
             pin24 = s2["pinnacle_horizon_comparison"]["24"]
-            pin12 = s2["pinnacle_horizon_comparison"]["12"]
+            prod48 = s2["production_horizon_comparison"]["T-48h"]
+            prod24 = s2["production_horizon_comparison"]["T-24h"]
             pol2p = s2["polish_production_comparison"]["Polish2plus"]
-            print(f"[2/5] Stage 2 Benchmarked: 2026 C0 LogLoss = {c0['log_loss']:.6f}, Pinnacle T-24h C0 edge = {pin24['delta_ll_c0_vs_pinnacle']:+.6f} LL, T-12h C0 edge = {pin12['delta_ll_c0_vs_pinnacle']:+.6f} LL, Polish 2+ Hybrid edge = {pol2p['delta_ll_hybrid_vs_market']:+.6f} LL")
-
+            print(
+                f"[2/5] Stage 2 Benchmarked: 2026 C0 LL = {c0['log_loss']:.6f} | "
+                f"Pinnacle T-24h C0 edge = {pin24['delta_ll_c0_vs_pinnacle']:+.6f} LL | "
+                f"Prod T-48h C0 edge = {prod48['delta_ll_c0_vs_market']:+.6f} LL, T-24h C0 edge = {prod24['delta_ll_c0_vs_market']:+.6f} LL | "
+                f"Polish 2+ Hybrid edge = {pol2p['delta_ll_hybrid_vs_market']:+.6f} LL"
+            )
             # 3. Stage 3
             s3 = run_stage3_betting_simulation(catalog_path, params_path)
             opt = s3["optimal_synergy_summary"]
