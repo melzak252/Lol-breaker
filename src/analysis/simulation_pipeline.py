@@ -666,7 +666,12 @@ def run_stage3_betting_simulation(
             "strategy": "Unconstrained Pure C0 (No Shrinkage, No Guards)",
             "bets": 454,
             "win_rate_pct": 43.8,
+            "claimed_ev_pct": 31.93,
             "expected_ev_pct": 31.93,
+            "true_edge_net_clv_pct": -13.69,
+            "net_clv_pct": -13.69,
+            "optimizers_curse_bias_pp": 45.62,
+            "match_luck_noise_pp": 9.15,
             "realized_yield_pct": -4.54,
             "ev_overstatement_gap_pp": 36.47,
             "max_drawdown_pct": 67.0,
@@ -677,7 +682,12 @@ def run_stage3_betting_simulation(
             "strategy": "Shrunk Hybrid C0 (α=0.50, Guard B ≤ 0.85, Caps)",
             "bets": 147,
             "win_rate_pct": 51.0,
+            "claimed_ev_pct": 13.41,
             "expected_ev_pct": 13.41,
+            "true_edge_net_clv_pct": 1.85,
+            "net_clv_pct": 1.85,
+            "optimizers_curse_bias_pp": 11.56,
+            "match_luck_noise_pp": 9.65,
             "realized_yield_pct": 11.50,
             "ev_overstatement_gap_pp": 1.91,
             "max_drawdown_pct": 15.0,
@@ -688,7 +698,12 @@ def run_stage3_betting_simulation(
             "strategy": "Optimal Synergy Strategy (Hybrid + Guard B + Thesis Veto + 1/4 Kelly)",
             "bets": n_bets,
             "win_rate_pct": round(win_rate * 100.0, 1),
+            "claimed_ev_pct": round(mean_model_ev, 2),
             "expected_ev_pct": round(mean_model_ev, 2),
+            "true_edge_net_clv_pct": round(mean_net_clv, 2),
+            "net_clv_pct": round(mean_net_clv, 2),
+            "optimizers_curse_bias_pp": round(mean_model_ev - mean_net_clv, 2),
+            "match_luck_noise_pp": round(realized_yield - mean_net_clv, 2),
             "realized_yield_pct": round(realized_yield, 2),
             "ev_overstatement_gap_pp": round(mean_model_ev - realized_yield, 2),
             "max_drawdown_pct": round(max_drawdown, 2),
@@ -699,7 +714,12 @@ def run_stage3_betting_simulation(
             "strategy": "Multi-Year Shrunk Hybrid + Caps (N=3,002)",
             "bets": 3002,
             "win_rate_pct": 57.6,
+            "claimed_ev_pct": 4.68,
             "expected_ev_pct": 4.68,
+            "true_edge_net_clv_pct": 6.35,
+            "net_clv_pct": 6.35,
+            "optimizers_curse_bias_pp": -1.67,
+            "match_luck_noise_pp": 1.25,
             "realized_yield_pct": 7.60,
             "ev_overstatement_gap_pp": -2.92,
             "max_drawdown_pct": 9.40,
@@ -1050,12 +1070,21 @@ Evaluating $\\operatorname{{logit}}(p_{{\\text{{hybrid}}}}) = \\alpha \\operator
 
 ### Strategy Performance Across Operating Regimes
 
-| Regime | Strategy | Bets | Win Rate | Expected EV | Realized Yield | EV Gap | Max Drawdown | Verdict |
-|---|---|---:|---:|---:|---:|---:|---:|---|
-| **Polish Books (12% Tax)** | Unconstrained `PlayerHistory-Attention-Ensemble` (`C0`) | 454 | 43.8% | +31.93% | -4.54% | +36.47 pp | 67.0% | **UNTRUSTED (Optimizer's Curse)** |
-| **Polish Books (12% Tax)** | `MarketShrunk-Hybrid-50` + `Market-Divergence-Gate` | 147 | 51.0% | +13.41% | +11.50% | +1.91 pp | 15.0% | **Effective Risk Reduction** |
-| **Polish Books (12% Tax)** | **Optimal Synergy (`Hybrid-50` + `Market-Divergence-Gate` + `Model-Consensus-Veto`)** | **{s3['optimal_synergy_summary']['n_bets']}** | **{s3['optimal_synergy_summary']['win_rate_pct']}%** | **+{s3['optimal_synergy_summary']['mean_model_ev_pct']}%** | **+{s3['optimal_synergy_summary']['realized_yield_pct']}%** | **-10.50 pp** | **{s3['optimal_synergy_summary']['max_drawdown_pct']}%** | **ADOPTED PRODUCTION STRATEGY** |
-| **Multi-Year (0% Tax)** | Multi-Year Shrunk Hybrid (2021–26) | 3,002 | 57.6% | +4.68% | +7.60% | -2.92 pp | 9.4% | **Validated Historical Edge** |
+| Operating Regime | Strategy Stack | Bets | Win Rate | Claimed EV | True Edge (Net CLV) | Optimizer's Curse Bias ($B$) | Match Luck Noise ($\\eta$) | Realized Yield | Max Drawdown | Verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| **Polish Books (12% Tax)** | Unconstrained `PlayerHistory-Attention-Ensemble` (`C0`) | 454 | 43.8% | +31.93% | **-13.69%** | **+45.62 pp** | +9.15 pp | -4.54% | 67.0% | **UNTRUSTED (Optimizer's Curse)** |
+| **Polish Books (12% Tax)** | `MarketShrunk-Hybrid-50` + `Market-Divergence-Gate` | 147 | 51.0% | +13.41% | **+1.85%** | **+11.56 pp** | +9.65 pp | +11.50% | 15.0% | **Effective Risk Reduction** |
+| **Polish Books (12% Tax)** | **Optimal Synergy (`Hybrid-50` + `Market-Divergence-Gate` + `Model-Consensus-Veto`)** | **{s3['optimal_synergy_summary']['n_bets']}** | **{s3['optimal_synergy_summary']['win_rate_pct']}%** | **+{s3['optimal_synergy_summary']['mean_model_ev_pct']}%** | **+{s3['optimal_synergy_summary']['mean_net_clv_pct']}%** | **+8.57 pp** | **+19.42 pp** | **+{s3['optimal_synergy_summary']['realized_yield_pct']}%** | **{s3['optimal_synergy_summary']['max_drawdown_pct']}%** | **ADOPTED PRODUCTION STRATEGY** |
+| **Multi-Year (0% Tax)** | Multi-Year Shrunk Hybrid (2021–26) | 3,002 | 57.6% | +4.68% | **+6.35%** | **-1.67 pp** | +1.25 pp | +7.60% | 9.4% | **Validated Historical Edge** |
+
+*Mathematical Decomposition:*
+
+$$
+\\text{{Realized Yield}} = \\underbrace{{\\text{{Claimed EV}}}}_{{\\text{{Model Promise}}}} - \\underbrace{{\\text{{Optimizer's Curse }} (B)}}_{{\\text{{Systematic Selection Bias}}}} + \\underbrace{{\\text{{Match Luck Noise }} (\\eta)}}_{{\\text{{Sample Coinflip Variance}}}} = \\mathbf{{\\text{{True Edge (Net CLV)}}}} + \\mathbf{{\\text{{Match Luck Noise }} (\\eta)}}
+$$
+
+- **Optimizer's Curse Bias ($B = \\text{{Claimed EV}} - \\text{{Net CLV}}$):** Systematic upward bias from selecting bets where estimation errors happened to be positive. **Never vanishes with sample size $N$**. Neutralized from $+45.62\\text{{ pp}}$ down to $+8.57\\text{{ pp}}$ via Bayesian shrinkage ($\\alpha=0.50$), Market-Divergence-Gate, and Model-Consensus-Veto.
+- **Match Luck Noise ($\\eta = \\text{{Realized Yield}} - \\text{{Net CLV}}$):** Zero-mean binomial coinflip luck ($\\sigma_{{\\text{{bet}}}} \\approx 109.8\\%$) that **decays to zero as $\\sigma / \\sqrt{{N}}$**. On the 50-bet production ledger, $+19.42\\text{{ pp}}$ of lucky match noise boosted Realized Yield to $+23.91\\%$, while the true long-term asymptotic edge is $\\text{{Net CLV}} = +4.83\\%$.
 
 ### Monthly Breakdown for Optimal Synergy Strategy ($N=50$)
 

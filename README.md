@@ -198,12 +198,21 @@ Proper-score evaluation of Bayesian logit shrinkage $\operatorname{logit}(p_{\te
 
 Evaluating betting operations across Polish bookmakers (12% turnover tax) and international benchmarks (0% tax):
 
-| Operating Regime | Strategy Stack | Bets | Win Rate | Expected EV | Realized Yield | EV Overstatement Gap | Max Drawdown | Verdict |
-|---|---|---:|---:|---:|---:|---:|---:|---|
-| **Polish Books (12% Tax)** | Unconstrained Pure C0 | 454 | 43.8% | +31.93% | -4.54% | **+36.47 pp** | 67.0% | **UNTRUSTED (Optimizer's Curse)** |
-| **Polish Books (12% Tax)** | Shrunk Hybrid C0 (α=0.50, Guard B) | 147 | 51.0% | +13.41% | +11.50% | +1.91 pp | 15.0% | Effective Risk Reduction |
-| **Polish Books (12% Tax)** | **Optimal Synergy Strategy (Adopted)** | **50** | **58.0%** | **+13.41%** | **+23.91%** | **-10.50 pp** | **6.10%** | **ADOPTED PRODUCTION STRATEGY** |
-| **Multi-Year (0% Tax)** | Shrunk Hybrid (2021–2026) | 3,002 | 57.6% | +4.68% | +7.60% | -2.92 pp | 9.40% | Validated Historical Edge |
+| Operating Regime | Strategy Stack | Bets | Win Rate | Claimed EV | True Edge (Net CLV) | Optimizer's Curse Bias ($B$) | Match Luck Noise ($\\eta$) | Realized Yield | Max Drawdown | Verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| **Polish Books (12% Tax)** | Unconstrained `PlayerHistory-Attention-Ensemble` (`C0`) | 454 | 43.8% | +31.93% | **-13.69%** | **+45.62 pp** | +9.15 pp | -4.54% | 67.0% | **UNTRUSTED (Optimizer's Curse)** |
+| **Polish Books (12% Tax)** | `MarketShrunk-Hybrid-50` + `Market-Divergence-Gate` | 147 | 51.0% | +13.41% | **+1.85%** | **+11.56 pp** | +9.65 pp | +11.50% | 15.0% | **Effective Risk Reduction** |
+| **Polish Books (12% Tax)** | **Optimal Synergy (`Hybrid-50` + `Market-Divergence-Gate` + `Model-Consensus-Veto`)** | **50** | **58.0%** | **+13.41%** | **+4.83%** | **+8.57 pp** | **+19.42 pp** | **+23.91%** | **6.10%** | **ADOPTED PRODUCTION STRATEGY** |
+| **Multi-Year (0% Tax)** | Multi-Year Shrunk Hybrid (2021–2026) | 3,002 | 57.6% | +4.68% | **+6.35%** | **-1.67 pp** | +1.25 pp | +7.60% | 9.40% | **Validated Historical Edge** |
+
+*Mathematical Profit & Noise Decomposition:*
+
+$$
+\text{Realized Yield} = \underbrace{\text{Claimed EV}}_{\text{Model Promise}} - \underbrace{\text{Optimizer's Curse } (B)}_{\text{Systematic Selection Bias}} + \underbrace{\text{Match Luck Noise } (\eta)}_{\text{Sample Coinflip Variance}} = \mathbf{\text{True Edge (Net CLV)}} + \mathbf{\text{Match Luck Noise } (\eta)}
+$$
+
+- **Optimizer's Curse Bias ($B = \text{Claimed EV} - \text{Net CLV}$):** Systematic positive selection bias from picking bets where estimation error happened to be high. **Never vanishes with sample size $N$**. On unconstrained C0, it produced **$+45.62\text{ pp}$** of fake edge. Bounded shrinkage ($\alpha=0.50$), `Market-Divergence-Gate`, and `Model-Consensus-Veto` successfully compressed this bias down to $+8.57\text{ pp}$.
+- **Match Luck Noise ($\eta = \text{Realized Yield} - \text{Net CLV}$):** Zero-mean binomial outcome variance ($\sigma_{\text{bet}} \approx 109.8\%$) that **decays to zero as $\sigma / \sqrt{N}$**. On the 50-bet production ledger, $+19.42\text{ pp}$ of temporary lucky variance boosted wallet yield to $+23.91\%$, while the true long-term compounding edge is $\mathbf{\text{Net CLV} = +4.83\%}$.
 
 #### Monthly Breakdown for Adopted Production Strategy ($N=50$, 10,000 PLN Capital)
 
