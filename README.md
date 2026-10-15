@@ -221,26 +221,26 @@ Evaluated unclipped against realized match winners ($Y \in \{0, 1\}$):
 
 | Strategy Stack | Regime & Tax | Bets ($N$) | Win Rate | Realized Yield | Max Drawdown & Verdict |
 |---|---|---:|---:|---:|---|
-| **Unconstrained `C0`** | Polish Books (12% Tax) | 454 | 43.8% | -4.54% | 67.0% (UNTRUSTED: Optimizer's Curse) |
-| **`Hybrid-50` + `Market-Divergence-Gate`** | Polish Books (12% Tax) | 147 | 51.0% | +11.50% | 15.0% (Effective Risk Reduction) |
-| **Optimal Synergy (`Hybrid-50` + Gates)** | Polish Books (12% Tax) | 50 | 58.0% | +23.91% | 6.10% (Baseline Strategy) |
-| **Optimal Synergy + `Wasserstein-DRO` ($\varepsilon=0.025$)** | Polish Books (12% Tax) | **45** | **60.0%** | **+24.86%** | **5.41% (ROBUST PRODUCTION GATE: $N_{\min}=641$)** |
-| **Multi-Year Shrunk Hybrid (2021–2026)** | Multi-Year (0% Tax) | 3,002 | 57.6% | +7.60% | 9.40% (Validated Historical Edge) |
+| **Unconstrained `C0`** | Polish Books (12% Tax) | 454 | 43.8% | -4.54% | 67.0% (Untrusted) |
+| **`Hybrid-50` + Divergence-Gate** | Polish Books (12% Tax) | 147 | 51.0% | +11.50% | 15.0% (Reduced Bias) |
+| **Optimal Synergy** | Polish Books (12% Tax) | 50 | 58.0% | +23.91% | 6.10% (Adopted Base) |
+| **Optimal Synergy + DRO** | Polish Books (12% Tax) | **45** | **60.0%** | **+24.86%** | **5.41% (DRO Gate, $N_{\min}=641$)** |
+| **Multi-Year Hybrid (2021–26)** | Multi-Year (0% Tax) | 3,002 | 57.6% | +7.60% | 9.40% (Validated) |
 
 #### Table 5.4B: Econometric Edge vs. Optimizer's Curse & Match Noise
 
 | Strategy Stack | Claimed EV (Promise) | True Edge (Net CLV) | Optimizer's Curse Bias ($B$) | Match Luck Noise ($\eta$) | Realized Yield |
 |---|---:|---:|---:|---:|---:|
 | **Unconstrained `C0`** | +31.93% | **-13.69%** | **+45.62 pp** | +9.15 pp | -4.54% |
-| **`Hybrid-50` + `Market-Divergence-Gate`** | +13.41% | **+1.85%** | **+11.56 pp** | +9.65 pp | +11.50% |
-| **Optimal Synergy (`Hybrid-50` + Gates)** | +13.41% | **+4.83%** | **+8.57 pp** | +19.42 pp | +23.91% |
-| **Optimal Synergy + `Wasserstein-DRO` ($\varepsilon=0.025$)** | **+14.17%** | **+6.98%** | **+7.19 pp** | **+17.88 pp** | **+24.86%** |
-| **Multi-Year Shrunk Hybrid (2021–2026)** | +4.68% | **+6.35%** | **-1.67 pp** | +1.25 pp | +7.60% |
+| **`Hybrid-50` + Divergence-Gate** | +13.41% | **+1.85%** | **+11.56 pp** | +9.65 pp | +11.50% |
+| **Optimal Synergy** | +13.41% | **+4.83%** | **+8.57 pp** | +19.42 pp | +23.91% |
+| **Optimal Synergy + DRO** | **+14.17%** | **+6.98%** | **+7.19 pp** | **+17.88 pp** | **+24.86%** |
+| **Multi-Year Hybrid (2021–26)** | +4.68% | **+6.35%** | **-1.67 pp** | +1.25 pp | +7.60% |
 
 *Mathematical Profit & Noise Decomposition:*
 
 $$
-\text{Realized Yield} = \underbrace{\text{Claimed EV}}_{\text{Model Promise}} - \underbrace{\text{Optimizer's Curse } (B)}_{\text{Systematic Selection Bias}} + \underbrace{\text{Match Luck Noise } (\eta)}_{\text{Sample Coinflip Variance}} = \textbf{True Edge (Net CLV)} + \textbf{Match Luck Noise } (\eta)
+\text{Realized Yield} = \underbrace{\text{Claimed EV}}_{\text{Model Promise}} - \underbrace{B}_{\text{Optimizer's Curse}} + \underbrace{\eta}_{\text{Match Luck Noise}} = \textbf{True Edge (Net CLV)} + \eta
 $$
 
 - **Optimizer's Curse Bias ($B = \text{Claimed EV} - \text{Net CLV}$):** Systematic positive selection bias from picking bets where estimation error happened to be high. **Never vanishes with sample size $N$**. On unconstrained C0, it produced **+45.62 pp** of fake edge. Bounded shrinkage ($\alpha=0.50$), `Market-Divergence-Gate`, and `Model-Consensus-Veto` successfully compressed this bias down to **+8.57 pp**.
@@ -266,10 +266,10 @@ $$
 For any placed bet $i$ with tax multiplier $c = 1 - \tau = 0.88$, decimal odds $O_i$, model probability $\hat{p}_i$, fair closing probability $p_{\text{close}, i}$, and match outcome $Y_i \in \{0, 1\}$:
 
 $$
-\text{Realized Yield}_i = \text{Claimed EV}_i - \underbrace{c \cdot O_i (\hat{p}_i - p_{\text{close}, i})}_{\text{Optimizer's Curse } B_i \; (+8.57\%)} + \underbrace{c \cdot O_i (Y_i - p_{\text{close}, i})}_{\text{Match Outcome Noise } \eta_i \; (+19.42\%)}
+\text{Realized Yield}_i = \text{Claimed EV}_i - \underbrace{c \cdot O_i (\hat{p}_i - p_{\text{close}, i})}_{B_i \text{ (Optimizer's Curse)}} + \underbrace{c \cdot O_i (Y_i - p_{\text{close}, i})}_{\eta_i \text{ (Match Luck Noise)}}
 $$
 
-where $\text{Realized Yield}_i = c \cdot O_i Y_i - 1 \; (+24.26\%)$ and $\text{Claimed EV}_i = c \cdot O_i \hat{p}_i - 1 \; (+13.41\%)$.
+where Realized Yield $c \cdot O_i Y_i - 1 = +24.26\%$ and Claimed EV $c \cdot O_i \hat{p}_i - 1 = +13.41\%$. Mean Optimizer's Curse bias is $B = +8.57\text{ pp}$ and mean Match Luck Noise is $\eta = +19.42\text{ pp}$.
 - **Pure C0 Claimed EV:** `+22.05%`
 - **Shrunk Hybrid Claimed EV:** `+13.41%`
 - **Optimizer's Curse Removed by Shrinkage:** `8.64 pp` (plus 97 toxic bets vetoed by Guard B & Thesis Veto)
@@ -280,12 +280,12 @@ where $\text{Realized Yield}_i = c \cdot O_i Y_i - 1 \; (+24.26\%)$ and $\text{C
 
 | Metric | Point Estimate | Sample Std ($s$) | Std Error (SE) | $t$-Statistic ($p$-Value) | 95% Bootstrap CI |
 |---|---:|---:|---:|---:|---|
-| **Realized Yield** | **+24.26%** | 116.50% | 16.48% | 1.472 ($p=0.1473$) | $[-7.55\%, +54.83\%]$ |
-| **Raw CLV (Price Edge)** | **+19.13%** | 12.95% | 1.83% | 10.446 ($p \lt 10^{-13}$) | $[+15.55\%, +22.71\%]$ |
-| **Net CLV (True Edge)** | **+4.83%** | 11.39% | 1.61% | **3.000 ($p=0.0042$)** | **$[+1.68\%, +7.98\%]$** |
+| **Realized Yield** | **+24.26%** | 116.50% | 16.48% | 1.472 ($p=0.1473$) | [-7.55%, +54.83%] |
+| **Raw CLV (Price Edge)** | **+19.13%** | 12.95% | 1.83% | 10.446 ($p \lt 10^{-13}$) | [+15.55%, +22.71%] |
+| **Net CLV (True Edge)** | **+4.83%** | 11.39% | 1.61% | **3.000 ($p=0.0042$)** | **[+1.68%, +7.98%]** |
 
 $$
-\text{Variance Ratio} = \frac{\operatorname{Var}(\text{Realized Yield})}{\operatorname{Var}(\text{Net CLV})} = \frac{1.1650^2}{0.1139^2} = \mathbf{104.5} \times
+\text{Variance Ratio} = \frac{\text{Var}(\text{Realized Yield})}{\text{Var}(\text{Net CLV})} = \frac{1.1650^2}{0.1139^2} = \mathbf{104.5} \times
 $$
 
 *Finding:* Realized wallet PnL has $104.5\times$ higher variance than Net CLV. Proving edge via Net CLV requires only 15–30 bets, whereas proving edge via wallet PnL requires $>1,000$ bets.
@@ -295,21 +295,21 @@ $$
 At average odds $\bar{O} = 2.53$ under 12% tax, per-bet binomial noise is $\sigma_{\text{bet}} = 109.79\%$. After $N$ bets:
 
 $$
-\text{Realized Yield}(N) = +4.83\% \pm \frac{109.79\%}{\sqrt{N}}
+\text{Realized Yield}(N) = 4.83 \pm \frac{109.79}{\sqrt{N}} \quad \text{[pp]}
 $$
 
 | Bets $N$ | Noise SE ($\pm$) | 95% Realized Yield Range | Probability of Profit $P(\text{Yield} > 0)$ | Wallet Behavior |
 |---:|---:|---|---:|---|
-| **10 bets** | ±34.72% | $[-63.22\%, +72.88\%]$ | 55.5% | Pure coinflip; noise is $7.2\times$ larger than $+4.83\%$ edge |
-| **20 bets** | ±24.55% | $[-43.29\%, +52.95\%]$ | 57.8% | Wide swings (e.g. Aug 2026 had $-0.68\%$ over 18 bets) |
-| **50 bets** | ±15.53% | $[-25.60\%, +35.26\%]$ | 62.2% | Net CLV proven ($p=0.004$), but wallet PnL is still $75\%$ luck |
-| **100 bets** | ±10.98% | $[-16.69\%, +26.35\%]$ | 67.0% | 2-in-3 chance of profit; negative runs still plausible |
-| **250 bets** | ±6.94% | $[-8.78\%, +18.44\%]$ | 75.7% | 3-in-4 chance of profit; edge pulls bankroll visibly |
-| **500 bets** | ±4.91% | $[-4.79\%, +14.45\%]$ | 83.7% | Noise SE drops below true profit ($4.83\%$) |
-| **1,000 bets** | ±3.47% | $[-1.97\%, +11.63\%]$ | 91.8% | $>9$ in 10 chance of profit |
-| **1,396 bets** | **±2.94%** | **$[-0.93\%, +10.59\%]$** | **95.0%** | 🏆 **"Almost Only Profit" Threshold ($z = 1.645$ one-sided 95%)** |
-| **2,000 bets** | ±2.45% | $[+0.02\%, +9.64\%]$ | 97.5% | Two-sided 95% CI is strictly positive ($>0\%$) |
-| **2,792 bets** | ±2.08% | $[+0.76\%, +8.90\%]$ | 99.0% | 99% Guaranteed Profit certainty |
+| **10 bets** | ±34.72% | [-63.22%, +72.88%] | 55.5% | Pure coinflip; noise is 7.2x larger than +4.83% edge |
+| **20 bets** | ±24.55% | [-43.29%, +52.95%] | 57.8% | Wide swings (e.g. Aug 2026 had -0.68% over 18 bets) |
+| **50 bets** | ±15.53% | [-25.60%, +35.26%] | 62.2% | Net CLV proven ($p=0.004$), but wallet PnL is still 75% luck |
+| **100 bets** | ±10.98% | [-16.69%, +26.35%] | 67.0% | 2-in-3 chance of profit; negative runs still plausible |
+| **250 bets** | ±6.94% | [-8.78%, +18.44%] | 75.7% | 3-in-4 chance of profit; edge pulls bankroll visibly |
+| **500 bets** | ±4.91% | [-4.79%, +14.45%] | 83.7% | Noise SE drops below true profit (4.83%) |
+| **1,000 bets** | ±3.47% | [-1.97%, +11.63%] | 91.8% | >9 in 10 chance of profit |
+| **1,396 bets** | **±2.94%** | **[-0.93%, +10.59%]** | **95.0%** | 🏆 **"Almost Only Profit" Threshold ($z = 1.645$ one-sided 95%)** |
+| **2,000 bets** | ±2.45% | [+0.02%, +9.64%] | 97.5% | Two-sided 95% CI is strictly positive (>0%) |
+| **2,792 bets** | ±2.08% | [+0.76%, +8.90%] | 99.0% | 99% Guaranteed Profit certainty |
 
 *Tax Regime Comparison:*
 - **Under 12% Polish Tax ($\mu = +4.83\%$):** $N_{\min} = \mathbf{1,396\text{ bets}}$ ($\sim 3.8$ years at 30 bets/mo).

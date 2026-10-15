@@ -1336,7 +1336,7 @@ def run_stage5_generate_report(
 
 ## 3. Bayesian Market Shrinkage Proper-Score Grid
 
-Evaluating $\\operatorname{{logit}}(p_{{\\text{{hybrid}}}}) = \\alpha \\operatorname{{logit}}(p_{{\\text{{model}}}}) + (1 - \\alpha) \\operatorname{{logit}}(q_{{\\text{{market}}}})$:
+Evaluating $\\text{{logit}}(p_{{\\text{{hybrid}}}}) = \\alpha \\text{{logit}}(p_{{\\text{{model}}}}) + (1 - \\alpha) \\text{{logit}}(q_{{\\text{{market}}}})$:
 
 - **Joint OddsPortal Consensus ($N=2,023$ series):**
   - $\\alpha = 0.00$ (Pure Market): LogLoss `0.581530`, Brier `0.198350`
@@ -1359,26 +1359,26 @@ Evaluating $\\operatorname{{logit}}(p_{{\\text{{hybrid}}}}) = \\alpha \\operator
 
 | Strategy Stack | Regime & Tax | Bets ($N$) | Win Rate | Realized Yield | Max Drawdown & Verdict |
 |---|---|---:|---:|---:|---|
-| **Unconstrained `C0`** | Polish Books (12% Tax) | 454 | 43.8% | -4.54% | 67.0% (UNTRUSTED: Optimizer's Curse) |
-| **`Hybrid-50` + `Market-Divergence-Gate`** | Polish Books (12% Tax) | 147 | 51.0% | +11.50% | 15.0% (Effective Risk Reduction) |
-| **Optimal Synergy (`Hybrid-50` + Gates)** | Polish Books (12% Tax) | {s3['optimal_synergy_summary']['n_bets']} | {s3['optimal_synergy_summary']['win_rate_pct']}% | +{s3['optimal_synergy_summary']['realized_yield_pct']}% | {s3['optimal_synergy_summary']['max_drawdown_pct']}% (Baseline Strategy) |
-| **Optimal Synergy + `Wasserstein-DRO` ($\varepsilon=0.025$)** | Polish Books (12% Tax) | **45** | **60.0%** | **+24.86%** | **5.41% (ROBUST PRODUCTION GATE: $N_{{\\min}}=641$)** |
-| **Multi-Year Shrunk Hybrid (2021–26)** | Multi-Year (0% Tax) | 3,002 | 57.6% | +7.60% | 9.40% (Validated Historical Edge) |
+| **Unconstrained `C0`** | Polish Books (12% Tax) | 454 | 43.8% | -4.54% | 67.0% (Untrusted) |
+| **`Hybrid-50` + Divergence-Gate** | Polish Books (12% Tax) | 147 | 51.0% | +11.50% | 15.0% (Reduced Bias) |
+| **Optimal Synergy** | Polish Books (12% Tax) | {s3['optimal_synergy_summary']['n_bets']} | {s3['optimal_synergy_summary']['win_rate_pct']}% | +{s3['optimal_synergy_summary']['realized_yield_pct']}% | {s3['optimal_synergy_summary']['max_drawdown_pct']}% (Adopted Base) |
+| **Optimal Synergy + DRO** | Polish Books (12% Tax) | **45** | **60.0%** | **+24.86%** | **5.41% (DRO Gate, $N_{{\\min}}=641$)** |
+| **Multi-Year Hybrid (2021–26)** | Multi-Year (0% Tax) | 3,002 | 57.6% | +7.60% | 9.40% (Validated) |
 
 ### Table 4B: Econometric Edge vs. Optimizer's Curse & Match Noise
 
 | Strategy Stack | Claimed EV (Promise) | True Edge (Net CLV) | Optimizer's Curse Bias ($B$) | Match Luck Noise ($\\eta$) | Realized Yield |
 |---|---:|---:|---:|---:|---:|
 | **Unconstrained `C0`** | +31.93% | **-13.69%** | **+45.62 pp** | +9.15 pp | -4.54% |
-| **`Hybrid-50` + `Market-Divergence-Gate`** | +13.41% | **+1.85%** | **+11.56 pp** | +9.65 pp | +11.50% |
-| **Optimal Synergy (`Hybrid-50` + Gates)** | +{s3['optimal_synergy_summary']['mean_model_ev_pct']}% | +{s3['optimal_synergy_summary']['mean_net_clv_pct']}% | +8.57 pp | +19.42 pp | +{s3['optimal_synergy_summary']['realized_yield_pct']}% |
-| **Optimal Synergy + `Wasserstein-DRO` ($\varepsilon=0.025$)** | **+14.17%** | **+6.98%** | **+7.19 pp** | **+17.88 pp** | **+24.86%** |
-| **Multi-Year Shrunk Hybrid (2021–26)** | +4.68% | **+6.35%** | **-1.67 pp** | +1.25 pp | +7.60% |
+| **`Hybrid-50` + Divergence-Gate** | +13.41% | **+1.85%** | **+11.56 pp** | +9.65 pp | +11.50% |
+| **Optimal Synergy** | +{s3['optimal_synergy_summary']['mean_model_ev_pct']}% | +{s3['optimal_synergy_summary']['mean_net_clv_pct']}% | +8.57 pp | +19.42 pp | +{s3['optimal_synergy_summary']['realized_yield_pct']}% |
+| **Optimal Synergy + DRO** | **+14.17%** | **+6.98%** | **+7.19 pp** | **+17.88 pp** | **+24.86%** |
+| **Multi-Year Hybrid (2021–26)** | +4.68% | **+6.35%** | **-1.67 pp** | +1.25 pp | +7.60% |
 
 *Mathematical Decomposition:*
 
 $$
-\\text{{Realized Yield}} = \\underbrace{{\\text{{Claimed EV}}}}_{{\\text{{Model Promise}}}} - \\underbrace{{\\text{{Optimizer's Curse }} (B)}}_{{\\text{{Systematic Selection Bias}}}} + \\underbrace{{\\text{{Match Luck Noise }} (\\eta)}}_{{\\text{{Sample Coinflip Variance}}}} = \\textbf{{True Edge (Net CLV)}} + \\textbf{{Match Luck Noise }} (\\eta)
+\\text{{Realized Yield}} = \\underbrace{{\\text{{Claimed EV}}}}_{{\\text{{Model Promise}}}} - \\underbrace{{B}}_{{\\text{{Optimizer's Curse}}}} + \\underbrace{{\\eta}}_{{\\text{{Match Luck Noise}}}} = \\textbf{{True Edge (Net CLV)}} + \\eta
 $$
 
 - **Optimizer's Curse Bias ($B = \\text{{Claimed EV}} - \\text{{Net CLV}}$):** Systematic upward bias from selecting bets where estimation errors happened to be positive. **Never vanishes with sample size $N$**. On unconstrained C0, it produced **+45.62 pp** of fake edge. Bounded shrinkage ($\\alpha=0.50$), `Market-Divergence-Gate`, and `Model-Consensus-Veto` successfully compressed this bias down to **+8.57 pp**.
@@ -1397,10 +1397,10 @@ $$
 ### A. The Exact Three-Part Bet Identity
 
 $$
-\\text{{Realized Yield}}_i = \\text{{Claimed EV}}_i - \\underbrace{{c \\cdot O_i (\\hat{{p}}_i - p_{{\\text{{close}}, i}})}}_{{\\text{{Optimizer's Curse }} B_i \\; (+8.57\\%)}} + \\underbrace{{c \\cdot O_i (Y_i - p_{{\\text{{close}}, i}})}}_{{\\text{{Match Outcome Noise }} \\eta_i \\; (+19.42\\%)}}
+\\text{{Realized Yield}}_i = \\text{{Claimed EV}}_i - \\underbrace{{c \\cdot O_i (\\hat{{p}}_i - p_{{\\text{{close}}, i}})}}_{{B_i \\text{{ (Optimizer's Curse)}}}} + \\underbrace{{c \\cdot O_i (Y_i - p_{{\\text{{close}}, i}})}}_{{\\eta_i \\text{{ (Match Luck Noise)}}}}
 $$
 
-where $\\text{{Realized Yield}}_i = c \\cdot O_i Y_i - 1 \\; (+24.26\\%)$ and $\\text{{Claimed EV}}_i = c \\cdot O_i \\hat{{p}}_i - 1 \\; (+13.41\\%)$.
+where Realized Yield $c \\cdot O_i Y_i - 1 = +24.26\\%$ and Claimed EV $c \\cdot O_i \\hat{{p}}_i - 1 = +13.41\\%$. Mean Optimizer's Curse bias is $B = +8.57\\text{{ pp}}$ and mean Match Luck Noise is $\\eta = +19.42\\text{{ pp}}$.
 - **Pure C0 Claimed EV:** `+{s4['decomposition']['pure_c0_claimed_ev_pct']}%`
 - **Shrunk Hybrid Claimed EV:** `+{s4['decomposition']['shrunk_hybrid_claimed_ev_pct']}%`
 - **Optimizer's Curse Stripped by Shrinkage:** `{s4['decomposition']['curse_removed_by_shrinkage_pp']} pp`
@@ -1415,7 +1415,7 @@ where $\\text{{Realized Yield}}_i = c \\cdot O_i Y_i - 1 \\; (+24.26\\%)$ and $\
 | **Net CLV (12% Tax)** | **+{s4['hypothesis_testing']['net_clv']['point_estimate_pct']}%** | {s4['hypothesis_testing']['net_clv']['sample_std_pct']}% | {s4['hypothesis_testing']['net_clv']['standard_error_pct']}% | **{s4['hypothesis_testing']['net_clv']['t_statistic']} ($p={s4['hypothesis_testing']['net_clv']['p_value']})** | **[+{s4['hypothesis_testing']['net_clv']['ci_95_bootstrap'][0]}%, +{s4['hypothesis_testing']['net_clv']['ci_95_bootstrap'][1]}%]** |
 
 $$
-\\text{{Variance Ratio}} = \\frac{{\\operatorname{{Var}}(\\text{{Realized Yield}})}}{{\\operatorname{{Var}}(\\text{{Net CLV}})}} = \\mathbf{{{s4['hypothesis_testing']['variance_ratio']}}} \\times
+\\text{{Variance Ratio}} = \\frac{{\\text{{Var}}(\\text{{Realized Yield}})}}{{\\text{{Var}}(\\text{{Net CLV}})}} = \\mathbf{{{s4['hypothesis_testing']['variance_ratio']}}} \\times
 $$
 
 ### C. Time-to-Profit ($N_{{\\min}}$) & Noise Decay

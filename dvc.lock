@@ -69,8 +69,8 @@ stages:
       isexec: true
     - path: src/analysis/simulation_pipeline.py
       hash: md5
-      md5: f8a6e00d924ab66778ddd92b7314d0d3
-      size: 76451
+      md5: 8ed6f669d3c51973c15c852e38b08258
+      size: 76138
     outs:
     - path: data/08_reporting/simulation_pipeline/stage1_input_manifest.json
       hash: md5
@@ -124,8 +124,8 @@ stages:
       isexec: true
     - path: src/analysis/simulation_pipeline.py
       hash: md5
-      md5: f8a6e00d924ab66778ddd92b7314d0d3
-      size: 76451
+      md5: 8ed6f669d3c51973c15c852e38b08258
+      size: 76138
     params:
       conf/base/parameters.yml:
         simulation.benchmark:
@@ -187,8 +187,8 @@ stages:
       isexec: true
     - path: src/analysis/simulation_pipeline.py
       hash: md5
-      md5: f8a6e00d924ab66778ddd92b7314d0d3
-      size: 76451
+      md5: 8ed6f669d3c51973c15c852e38b08258
+      size: 76138
     params:
       conf/base/parameters.yml:
         simulation.betting:
@@ -255,8 +255,8 @@ stages:
       isexec: true
     - path: src/analysis/simulation_pipeline.py
       hash: md5
-      md5: f8a6e00d924ab66778ddd92b7314d0d3
-      size: 76451
+      md5: 8ed6f669d3c51973c15c852e38b08258
+      size: 76138
     params:
       conf/base/parameters.yml:
         simulation.econometrics:
@@ -331,13 +331,13 @@ stages:
       isexec: true
     - path: src/analysis/simulation_pipeline.py
       hash: md5
-      md5: f8a6e00d924ab66778ddd92b7314d0d3
-      size: 76451
+      md5: 8ed6f669d3c51973c15c852e38b08258
+      size: 76138
     outs:
     - path: data/08_reporting/simulation_pipeline/SIMULATION_REPORT.md
       hash: md5
-      md5: d593f771706d1275157236a9c311b674
-      size: 10548
+      md5: 1c09aa22f2beffd39f83b3a85f690d94
+      size: 10251
     - path: data/08_reporting/simulation_pipeline/summary_metrics.json
       hash: md5
       md5: 0329e484f7840073fab569e87672770b
