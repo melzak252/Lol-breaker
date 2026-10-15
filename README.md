@@ -217,6 +217,25 @@ Evaluated unclipped against realized match winners ($Y \in \{0, 1\}$):
 
 ### 5.4 Betting Strategy & Optimizer's Curse Decomposition
 
+#### Strategy Stacks & Metric Nomenclature Guide
+
+To evaluate where true profit comes from, five strategy configurations and econometric metrics are benchmarked:
+
+| Strategy Stack Label | Exact Active Pipeline & Rules | Purpose in Ablation |
+|---|---|---|
+| **Unconstrained `C0`** | Pure `C0` without shrinkage or safety gates; flat $\text{EV} \ge 5\%$ | Baseline: tests whether a raw sports model can beat bookmakers alone. |
+| **`Hybrid-50` + Divergence-Gate** | 50/50 Bayesian logit shrinkage + `Market-Divergence-Gate` ($\le 0.85$) | Tests shrinkage and rejection of severe bookmaker probability disagreements. |
+| **Optimal Synergy** | `Hybrid-50` + Divergence-Gate + `Model-Consensus-Veto` ($\le 0.10$) + Odds $\le 4.00$ | Production baseline: requires neural attention and linear form agreement. |
+| **Optimal Synergy + DRO** | Optimal Synergy + `Wasserstein-Robust-Gate` ($\varepsilon = 0.025$) | Robust production gate: prunes bets vulnerable to probability shifts. |
+| **Multi-Year Hybrid (2021–26)** | Optimal Synergy on 6-season OddsPortal dataset ($N=11,609$) | Macro validation: tests long-term strategy survival across 0% and 12% tax. |
+
+*Metric Definitions:*
+- **Claimed EV (Promise):** Expected return promised by the model: $(p_{\text{model}} \cdot 0.88 \cdot O) - 1$.
+- **True Edge (Net CLV):** Edge against sharp closing market: $(p_{\text{close}} \cdot 0.88 \cdot O) - 1$.
+- **Optimizer's Curse Bias ($B = \text{Claimed EV} - \text{Net CLV}$):** Positive selection bias from cherry-picking estimation errors.
+- **Match Luck Noise ($\eta = \text{Realized Yield} - \text{Net CLV}$):** Binary coinflip outcome variance that decays as $\sigma / \sqrt{N}$.
+- **Realized Yield:** Actual observed return on capital: $(Y \cdot 0.88 \cdot O) - 1$.
+
 #### Table 5.4A: Portfolio Performance & Risk Control Across Operating Regimes
 
 | Strategy Stack | Regime & Tax | Bets ($N$) | Win Rate | Realized Yield | Max Drawdown & Verdict |
