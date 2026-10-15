@@ -36,6 +36,7 @@ stages:
       - data/08_reporting/a0_data_focus/a0_data_focus_20260929_192443/all_2026_joined.parquet
       - data/08_reporting/a0_data_focus/a0_data_focus_20260929_192443/market_T1_joined.parquet
       - data/07_model_output/oddsportal/c0_thesis_books_joint_20261009_115922Z/joint_scoring_cohorts.parquet
+      - data/07_model_output/model_bookmaker_competitiveness/plan12_model_bookmaker_20261009_175136Z/paired_probability_panel.parquet
     params:
       - conf/base/parameters.yml:
           - simulation.benchmark
@@ -43,6 +44,7 @@ stages:
     outs:
       - data/08_reporting/simulation_pipeline/stage2_model_benchmark.json
       - data/08_reporting/simulation_pipeline/stage2_shrinkage_grid.csv
+      - data/08_reporting/simulation_pipeline/stage2_bookmaker_horizon_comparison.csv
 
   betting_simulation:
     cmd: .venv/bin/python scripts/run_simulation_pipeline.py --stage betting_simulation
@@ -88,6 +90,7 @@ stages:
       - data/08_reporting/simulation_pipeline/stage1_input_manifest.json
       - data/08_reporting/simulation_pipeline/stage2_model_benchmark.json
       - data/08_reporting/simulation_pipeline/stage2_shrinkage_grid.csv
+      - data/08_reporting/simulation_pipeline/stage2_bookmaker_horizon_comparison.csv
       - data/08_reporting/simulation_pipeline/stage3_betting_simulation.json
       - data/08_reporting/simulation_pipeline/stage3_strategy_comparison.csv
       - data/08_reporting/simulation_pipeline/stage4_econometric_audit.json

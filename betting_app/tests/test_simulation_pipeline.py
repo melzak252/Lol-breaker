@@ -118,6 +118,46 @@ def test_stage2_model_benchmark_invariants() -> None:
     grid_csv = PROJECT_ROOT / "data/08_reporting/simulation_pipeline/stage2_shrinkage_grid.csv"
     assert grid_csv.is_file()
 
+    # 5. Multi-Horizon Head-to-Head vs. Pinnacle
+    assert "pinnacle_horizon_comparison" in res
+    pin_comp = res["pinnacle_horizon_comparison"]
+    for h in [48, 24, 12, 6]:
+        assert h in pin_comp
+        assert str(h) in pin_comp
+        # Hybrid-50 beats Pinnacle across all horizons
+        assert pin_comp[h]["hybrid_pinnacle_log_loss"] < pin_comp[h]["pinnacle_log_loss"]
+        assert pin_comp[h]["delta_ll_hybrid_vs_pinnacle"] < 0.0
+
+    # Pure C0 beats Pinnacle outright at T-24h and T-12h
+    assert pin_comp[24]["c0_log_loss"] < pin_comp[24]["pinnacle_log_loss"]
+    assert pin_comp[24]["c0_log_loss"] == pytest.approx(0.581278, abs=1e-5)
+    assert pin_comp[24]["pinnacle_log_loss"] == pytest.approx(0.601401, abs=1e-5)
+    assert pin_comp[24]["delta_ll_c0_vs_pinnacle"] == pytest.approx(-0.020123, abs=1e-5)
+
+    assert pin_comp[12]["c0_log_loss"] < pin_comp[12]["pinnacle_log_loss"]
+    assert pin_comp[12]["c0_log_loss"] == pytest.approx(0.580471, abs=1e-5)
+    assert pin_comp[12]["pinnacle_log_loss"] == pytest.approx(0.587228, abs=1e-5)
+    assert pin_comp[12]["delta_ll_c0_vs_pinnacle"] == pytest.approx(-0.006757, abs=1e-5)
+
+    # 6. Production Polish Bookmaker Comparison
+    assert "polish_production_comparison" in res
+    pol_comp = res["polish_production_comparison"]
+    assert pol_comp["Polish2plus"]["hybrid_log_loss"] < pol_comp["Polish2plus"]["market_log_loss"]
+    assert pol_comp["Polish2plus"]["hybrid_log_loss"] == pytest.approx(0.556142, abs=1e-5)
+    assert pol_comp["Polish2plus"]["market_log_loss"] == pytest.approx(0.559605, abs=1e-5)
+
+    assert pol_comp["PolishFixed4"]["hybrid_log_loss"] < pol_comp["PolishFixed4"]["market_log_loss"]
+    assert pol_comp["PolishFixed4"]["hybrid_log_loss"] == pytest.approx(0.560367, abs=1e-5)
+    assert pol_comp["PolishFixed4"]["market_log_loss"] == pytest.approx(0.562088, abs=1e-5)
+
+    assert pol_comp["monthly_refit_production"]["hybrid_log_loss"] < pol_comp["monthly_refit_production"]["market_log_loss"]
+    assert pol_comp["monthly_refit_production"]["hybrid_log_loss"] == pytest.approx(0.557877, abs=1e-5)
+    assert pol_comp["monthly_refit_production"]["market_log_loss"] == pytest.approx(0.570054, abs=1e-5)
+
+    # 7. Dedicated CSV Artifact
+    horizon_csv = PROJECT_ROOT / "data/08_reporting/simulation_pipeline/stage2_bookmaker_horizon_comparison.csv"
+    assert horizon_csv.is_file()
+
 
 def test_stage3_betting_simulation_invariants() -> None:
     """Stage 3: Verify production Polish betting simulation and Optimal Synergy strategy ledger."""
@@ -210,6 +250,14 @@ def test_stage5_generate_report_and_cli() -> None:
     metrics = json.loads(metrics_path.read_text(encoding="utf-8"))
     assert metrics["stage1_doctor_status"] == "READY"
     assert metrics["stage2_c0_2026_log_loss"] == pytest.approx(0.535449, abs=1e-5)
+    assert metrics["stage2_pinnacle_t24h_c0_ll"] == pytest.approx(0.581278, abs=1e-5)
+    assert metrics["stage2_pinnacle_t24h_market_ll"] == pytest.approx(0.601401, abs=1e-5)
+    assert metrics["stage2_pinnacle_t24h_hybrid_ll"] == pytest.approx(0.585425, abs=1e-5)
+    assert metrics["stage2_pinnacle_t12h_c0_ll"] == pytest.approx(0.580471, abs=1e-5)
+    assert metrics["stage2_pinnacle_t12h_market_ll"] == pytest.approx(0.587228, abs=1e-5)
+    assert metrics["stage2_pinnacle_t12h_hybrid_ll"] == pytest.approx(0.578548, abs=1e-5)
+    assert metrics["stage2_polish_2plus_market_ll"] == pytest.approx(0.559605, abs=1e-5)
+    assert metrics["stage2_polish_2plus_hybrid_ll"] == pytest.approx(0.556142, abs=1e-5)
     assert metrics["stage3_production_bets_count"] == 50
     assert metrics["stage3_production_net_clv_pct"] == pytest.approx(4.83, abs=0.05)
     assert metrics["stage4_net_clv_t_stat"] == pytest.approx(3.00, abs=0.05)

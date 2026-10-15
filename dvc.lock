@@ -64,13 +64,13 @@ stages:
       size: 5773751
     - path: scripts/run_simulation_pipeline.py
       hash: md5
-      md5: cb73eb07ddfebd2418f643a8bcf7b0e0
-      size: 8317
+      md5: 53e7cc2c025d23d4288859796aa17e6b
+      size: 9940
       isexec: true
     - path: src/analysis/simulation_pipeline.py
       hash: md5
-      md5: af9d133a934eecdf7cb0dd60fcef198f
-      size: 56836
+      md5: f8a6e00d924ab66778ddd92b7314d0d3
+      size: 76451
     outs:
     - path: data/08_reporting/simulation_pipeline/stage1_input_manifest.json
       hash: md5
@@ -94,6 +94,11 @@ stages:
       md5: c2e05685a1a878a2cd345bbd8d39b0b8
       size: 1870440
     - path: 
+        data/07_model_output/model_bookmaker_competitiveness/plan12_model_bookmaker_20261009_175136Z/paired_probability_panel.parquet
+      hash: md5
+      md5: 234d5d91caeadc7d486cc0d1fef7b855
+      size: 219184
+    - path: 
         data/07_model_output/oddsportal/c0_thesis_books_joint_20261009_115922Z/joint_scoring_cohorts.parquet
       hash: md5
       md5: dbb4b91dc81a38d8877d7136f56a0ad0
@@ -114,13 +119,13 @@ stages:
       size: 5933
     - path: scripts/run_simulation_pipeline.py
       hash: md5
-      md5: cb73eb07ddfebd2418f643a8bcf7b0e0
-      size: 8317
+      md5: 53e7cc2c025d23d4288859796aa17e6b
+      size: 9940
       isexec: true
     - path: src/analysis/simulation_pipeline.py
       hash: md5
-      md5: af9d133a934eecdf7cb0dd60fcef198f
-      size: 56836
+      md5: f8a6e00d924ab66778ddd92b7314d0d3
+      size: 76451
     params:
       conf/base/parameters.yml:
         simulation.benchmark:
@@ -138,10 +143,15 @@ stages:
           - 1.0
           devig_method: shin
     outs:
+    - path: 
+        data/08_reporting/simulation_pipeline/stage2_bookmaker_horizon_comparison.csv
+      hash: md5
+      md5: c233ebda34902564d31ce43f79ce838d
+      size: 1337
     - path: data/08_reporting/simulation_pipeline/stage2_model_benchmark.json
       hash: md5
-      md5: 2c7522e79376f7ae6f3c360948db9c22
-      size: 18889
+      md5: fdadefc848cde182c532da57f79e583e
+      size: 24124
     - path: data/08_reporting/simulation_pipeline/stage2_shrinkage_grid.csv
       hash: md5
       md5: bed6d21fcc34713ec29c3860f005a88a
@@ -168,17 +178,17 @@ stages:
       size: 11736
     - path: data/08_reporting/simulation_pipeline/stage2_model_benchmark.json
       hash: md5
-      md5: 2c7522e79376f7ae6f3c360948db9c22
-      size: 18889
+      md5: fdadefc848cde182c532da57f79e583e
+      size: 24124
     - path: scripts/run_simulation_pipeline.py
       hash: md5
-      md5: cb73eb07ddfebd2418f643a8bcf7b0e0
-      size: 8317
+      md5: 53e7cc2c025d23d4288859796aa17e6b
+      size: 9940
       isexec: true
     - path: src/analysis/simulation_pipeline.py
       hash: md5
-      md5: af9d133a934eecdf7cb0dd60fcef198f
-      size: 56836
+      md5: f8a6e00d924ab66778ddd92b7314d0d3
+      size: 76451
     params:
       conf/base/parameters.yml:
         simulation.betting:
@@ -203,12 +213,12 @@ stages:
     outs:
     - path: data/08_reporting/simulation_pipeline/stage3_betting_simulation.json
       hash: md5
-      md5: 746e5d638f574c3f88e1ecc804d9e9fc
-      size: 4960
+      md5: 8043e8b087bc92efc311a844cef5ee8d
+      size: 5647
     - path: data/08_reporting/simulation_pipeline/stage3_strategy_comparison.csv
       hash: md5
-      md5: 0a78502d9a17e8322aaafeb0f056a79c
-      size: 725
+      md5: ac91b33a79ce39c5979d0550f3fa593b
+      size: 930
   econometric_audit:
     cmd: .venv/bin/python scripts/run_simulation_pipeline.py --stage 
       econometric_audit
@@ -236,17 +246,17 @@ stages:
       size: 8955
     - path: data/08_reporting/simulation_pipeline/stage3_betting_simulation.json
       hash: md5
-      md5: 746e5d638f574c3f88e1ecc804d9e9fc
-      size: 4960
+      md5: 8043e8b087bc92efc311a844cef5ee8d
+      size: 5647
     - path: scripts/run_simulation_pipeline.py
       hash: md5
-      md5: cb73eb07ddfebd2418f643a8bcf7b0e0
-      size: 8317
+      md5: 53e7cc2c025d23d4288859796aa17e6b
+      size: 9940
       isexec: true
     - path: src/analysis/simulation_pipeline.py
       hash: md5
-      md5: af9d133a934eecdf7cb0dd60fcef198f
-      size: 56836
+      md5: f8a6e00d924ab66778ddd92b7314d0d3
+      size: 76451
     params:
       conf/base/parameters.yml:
         simulation.econometrics:
@@ -285,22 +295,27 @@ stages:
       hash: md5
       md5: 6453fafff6f079c7acc6f0a776e20a74
       size: 5933
+    - path: 
+        data/08_reporting/simulation_pipeline/stage2_bookmaker_horizon_comparison.csv
+      hash: md5
+      md5: c233ebda34902564d31ce43f79ce838d
+      size: 1337
     - path: data/08_reporting/simulation_pipeline/stage2_model_benchmark.json
       hash: md5
-      md5: 2c7522e79376f7ae6f3c360948db9c22
-      size: 18889
+      md5: fdadefc848cde182c532da57f79e583e
+      size: 24124
     - path: data/08_reporting/simulation_pipeline/stage2_shrinkage_grid.csv
       hash: md5
       md5: bed6d21fcc34713ec29c3860f005a88a
       size: 2784
     - path: data/08_reporting/simulation_pipeline/stage3_betting_simulation.json
       hash: md5
-      md5: 746e5d638f574c3f88e1ecc804d9e9fc
-      size: 4960
+      md5: 8043e8b087bc92efc311a844cef5ee8d
+      size: 5647
     - path: data/08_reporting/simulation_pipeline/stage3_strategy_comparison.csv
       hash: md5
-      md5: 0a78502d9a17e8322aaafeb0f056a79c
-      size: 725
+      md5: ac91b33a79ce39c5979d0550f3fa593b
+      size: 930
     - path: data/08_reporting/simulation_pipeline/stage4_econometric_audit.json
       hash: md5
       md5: f7d0c57790f9e2bf8b9009da99347da2
@@ -311,19 +326,19 @@ stages:
       size: 332
     - path: scripts/run_simulation_pipeline.py
       hash: md5
-      md5: cb73eb07ddfebd2418f643a8bcf7b0e0
-      size: 8317
+      md5: 53e7cc2c025d23d4288859796aa17e6b
+      size: 9940
       isexec: true
     - path: src/analysis/simulation_pipeline.py
       hash: md5
-      md5: af9d133a934eecdf7cb0dd60fcef198f
-      size: 56836
+      md5: f8a6e00d924ab66778ddd92b7314d0d3
+      size: 76451
     outs:
     - path: data/08_reporting/simulation_pipeline/SIMULATION_REPORT.md
       hash: md5
-      md5: 4bcab9683ce63b32f5163e9b637ff910
-      size: 7498
+      md5: d593f771706d1275157236a9c311b674
+      size: 10548
     - path: data/08_reporting/simulation_pipeline/summary_metrics.json
       hash: md5
-      md5: 8577ef7ec1a34ed1be8053570ce9675e
-      size: 947
+      md5: 0329e484f7840073fab569e87672770b
+      size: 1305

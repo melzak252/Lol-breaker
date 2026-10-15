@@ -150,84 +150,116 @@ dvc metrics show
 
 ## 5. Empirical Results & Mathematical Audit
 
-### 5.1 Sports Model Predictive Quality
+### 5.1 Cohort & Decision Window Guide
 
-#### A. 2026 Canonical Assessment Cohort ($N=3,103$ series: Jan–Sep 2026)
+Before evaluating model scores, every pre-match decision window and scoring cohort is defined below:
+
+| Cohort / Window Name | Sample Size & Period | Timing Cutoff | What It Measures & Why It Matters |
+|---|---|---|---|
+| **2026 Canonical Assessment** | $N=3,103$ series (Jan–Sep 2026) | Match start (odds-free) | Pure sports model accuracy across all global pro series without market odds inputs. |
+| **2024–2026 Walk-Forward** | $N=11,550$ full / $9,907$ common | Match start (odds-free) | 3-season chronological out-of-time benchmark measuring multi-year stability and tail risk. |
+| **Pinnacle Early Windows (`T-24h`, `T-12h`, `T-6h`)** | $N=213$, $753$, $1,027$ series | 24h, 12h, 6h before start | Sharpest bookmaker in esports; tests whether our model knows more than early market lines. |
+| **Pinnacle Late Cutoff (`T-1h`)** | $N=1,668$ series (2026) | 1 hour before match start | Tests model value after global market liquidity and sharp bettors have shaped closing odds. |
+| **Production Polish Bookmakers** | $N=2,752$ panel / $N=645$ live | Pre-match (1h–2h out) | Licensed Polish books (`STS`, `Betfan`, `LV BET`, `Superbet`) subject to 12% turnover tax. |
+| **Multi-Year OddsPortal Open vs. Close** | $N=11,609$ series / $3,002$ bets | Open vs. Close (2021–2026) | 6-season macroeconomic validation testing strategy survival across 0% and 12% tax regimes. |
+
+---
+
+### 5.2 Pure Sports Model Benchmark
+
+#### Table 5.2A: 2026 Canonical Assessment ($N=3,103$ Series, Jan–Sep 2026)
 
 Evaluated unclipped against realized match winners ($Y \in \{0, 1\}$):
 
-| Model (Architecture-First Name & Code) | LogLoss | Brier Score | Accuracy | AUC | Extreme Tails ($\text{LL} \ge 2.5$) | Status |
-|---|---:|---:|---:|---:|---:|---|
-| **PlayerHistory-Attention-Ensemble (`C0`)** | **0.535449** | **0.181034** | **72.03%** | **0.7993** | **12** | **Leading Pure Sports Baseline** |
-| **WalkForward-Reference-Ensemble (`A0`)** | 0.536757 | 0.181573 | 71.83% | 0.7981 | 10 | Canonical Annual Benchmark |
-| **ElasticNet-TeamForm-Baseline (`EXP-039`)** | 0.559245 | 0.189822 | 70.06% | 0.7806 | 8 | Thesis Baseline ($N=2,699$ supported) |
-| **Player-Glicko2-Rating-Baseline (`Glicko-2`)** | 0.570519 | 0.193954 | 69.06% | 0.7691 | 20 | Rating Baseline |
-| **Player-Elo-Rating-Baseline (`Elo`)** | 0.580481 | 0.198066 | 68.87% | 0.7595 | 16 | Rating Baseline |
+| Model | Short Code | LogLoss | Brier Score | Accuracy (AUC) |
+|---|---|---:|---:|---:|
+| **PlayerHistory-Attention-Ensemble** | **`C0`** | **0.535449** | **0.181034** | **72.03% (0.7993)** |
+| **WalkForward-Reference-Ensemble** | `A0` | 0.536757 | 0.181573 | 71.83% (0.7981) |
+| **ElasticNet-TeamForm-Baseline** | `EXP-039` | 0.559245 | 0.189822 | 70.06% (0.7806) |
+| **Player-Glicko2-Rating-Baseline** | `Glicko-2` | 0.570519 | 0.193954 | 69.06% (0.7691) |
+| **Player-Elo-Rating-Baseline** | `Elo` | 0.580481 | 0.198066 | 68.87% (0.7595) |
 
-*Paired monthly-block bootstrap:* $\Delta\text{LL}(\text{C0} - \text{A0}) = -0.001308$ ($95\%\text{ CI: } [-0.003209, +0.000106]$).
+*Paired monthly-block bootstrap:* $\Delta\text{LL}(\text{C0} - \text{A0}) = -0.001308$ (95% CI: $[-0.003209, +0.000106]$).
 
-#### B. Full 2024–2026 Walk-Forward Cohort ($N=11,550$ series & $N=9,907$ common support)
+#### Table 5.2B: 2024–2026 Walk-Forward Benchmark ($N=11,550$ Full & $N=9,907$ Common)
 
-| Model (Architecture-First Name & Code) | 11,550 Full LogLoss | 11,550 Full Brier | 9,907 Common LogLoss | 9,907 Common Brier | 9,907 Tails ($\text{LL} \ge 2.5$) |
+| Model | 11,550 Full LL | 11,550 Full Brier | 9,907 Common LL | Extreme Tails ($\text{LL} \ge 2.5$) |
+|---|---:|---:|---:|---:|
+| **WalkForward-Reference-Ensemble (`A0`)** | **0.551246** | **0.187103** | **0.559920** | 30 |
+| **ElasticNet-TeamForm-Baseline (`EXP-039`)** | *Missing 1,643* | *Missing 1,643* | 0.567337 | **16** |
+| **Player-Glicko2-Rating-Baseline (`Glicko-2`)** | 0.575888 | 0.196548 | 0.577998 | 36 |
+| **Player-Elo-Rating-Baseline (`Elo`)** | 0.588946 | 0.201930 | 0.591198 | 29 |
+
+---
+
+### 5.3 Head-to-Head vs. Bookmakers: Pinnacle Horizons & Polish Production
+
+#### Table 5.3A: Model vs. Sharp Pinnacle Across Pre-Match Horizons
+
+| Pre-Match Window | Matches ($N$) | Pinnacle Market LL | Pure Model (`C0`) LL | Hybrid-50 LL | Winner & Edge vs. Pinnacle |
+|---|---:|---:|---:|---:|---|
+| **`T-24h` (24h Before Match)** | 213 | 0.601401 | **0.581278** | **0.585425** | 🏆 **Pure Model & Hybrid crush Pinnacle 24h out (`-0.02012` LL)** |
+| **`T-12h` (12h Before Match)** | 753 | 0.587228 | **0.580471** | **0.578548** | 🏆 **Both Pure C0 & Hybrid beat Pinnacle 12h out (`-0.00676` LL)** |
+| **`T-6h` (6h Before Match)** | 1,027 | 0.573997 | 0.580708 | **0.571684** | ✅ **Pinnacle sharpens; Hybrid-50 still beats Pinnacle (`-0.00231` LL)** |
+| **`T-1h` (1h Before Match)** | 1,668 | 0.568604 | 0.575423 | **0.563571** | ✅ **Hybrid-50 beats late T-1h market consensus (`-0.00503` LL)** |
+
+#### Table 5.3B: Model vs. Production Polish Bookmakers (`STS`, `Betfan`, `LV BET`, `Superbet`)
+
+| Production Cohort | Matches ($N$) | Polish Books LL | Pure Model (`C0`) LL | Hybrid-50 LL | Hybrid Gain vs. Books |
+|---|---:|---:|---:|---:|---|
+| **Live Production Monthly-Refit (May–Sep 2026)** | 645 | 0.570054 | 0.573307 | **0.557877** | **-0.01218 LL (-1.22 pp)** |
+| **Polish 2+ Books Panel (2026)** | 1,467 | 0.559605 | 0.565905 | **0.556142** | **-0.00346 LL** |
+| **Polish Core-4 Fixed Panel (`STS`/`Betfan`/`LV`/`Superbet`)** | 1,285 | 0.562088 | 0.570741 | **0.560367** | **-0.00172 LL** |
+
+*Takeaway:* 24 to 12 hours before match start, our pure attention model outperforms Pinnacle outright because early lines have wider price-discovery noise. As start approaches and liquidity sharpens Pinnacle's line, Bayesian logit shrinkage (`Hybrid-50`) combines the independent sports signal with market prices to strictly beat the market across all horizons and licensed bookmakers.
+
+---
+
+### 5.4 Betting Strategy & Optimizer's Curse Decomposition
+
+#### Table 5.4A: Portfolio Performance & Risk Control Across Operating Regimes
+
+| Strategy Stack | Regime & Tax | Bets ($N$) | Win Rate | Realized Yield | Max Drawdown & Verdict |
+|---|---|---:|---:|---:|---|
+| **Unconstrained `C0`** | Polish Books (12% Tax) | 454 | 43.8% | -4.54% | 67.0% (UNTRUSTED: Optimizer's Curse) |
+| **`Hybrid-50` + `Market-Divergence-Gate`** | Polish Books (12% Tax) | 147 | 51.0% | +11.50% | 15.0% (Effective Risk Reduction) |
+| **Optimal Synergy (`Hybrid-50` + Gates)** | Polish Books (12% Tax) | 50 | 58.0% | +23.91% | 6.10% (Baseline Strategy) |
+| **Optimal Synergy + `Wasserstein-DRO` ($\varepsilon=0.025$)** | Polish Books (12% Tax) | **45** | **60.0%** | **+24.86%** | **5.41% (ROBUST PRODUCTION GATE: $N_{\min}=641$)** |
+| **Multi-Year Shrunk Hybrid (2021–2026)** | Multi-Year (0% Tax) | 3,002 | 57.6% | +7.60% | 9.40% (Validated Historical Edge) |
+
+#### Table 5.4B: Econometric Edge vs. Optimizer's Curse & Match Noise
+
+| Strategy Stack | Claimed EV (Promise) | True Edge (Net CLV) | Optimizer's Curse Bias ($B$) | Match Luck Noise ($\eta$) | Realized Yield |
 |---|---:|---:|---:|---:|---:|
-| **WalkForward-Reference-Ensemble (`A0`)** | **0.551246** | **0.187103** | **0.559920** | **0.190439** | 30 |
-| **ElasticNet-TeamForm-Baseline (`EXP-039`)** | *Missing 1,643* | *Missing 1,643* | 0.567337 | 0.193112 | **16** |
-| **Player-Glicko2-Rating-Baseline (`Glicko-2`)** | 0.575888 | 0.196548 | 0.577998 | 0.197460 | 36 |
-| **Player-Elo-Rating-Baseline (`Elo`)** | 0.588946 | 0.201930 | 0.591198 | 0.202851 | 29 |
-
----
-
-### 5.2 Bayesian Market Shrinkage Proper-Score Grid
-
-Proper-score evaluation of Bayesian logit shrinkage $\operatorname{logit}(p_{\text{hybrid}}) = \alpha \operatorname{logit}(p_{\text{model}}) + (1 - \alpha) \operatorname{logit}(q_{\text{market}})$ across decision windows:
-
-| Cohort & Window | Metric | $\alpha = 0.00$ (Market) | $\alpha = 0.25$ | $\alpha = 0.35$ | $\alpha = 0.50$ (Adopted) | $\alpha = 0.75$ | $\alpha = 1.00$ (Model) |
-|---|---|---:|---:|---:|---:|---:|---:|
-| **Joint Consensus ($N=2,023$)** | **LogLoss** | 0.581530 | 0.576587 | 0.575473 | **0.574693** | 0.575680 | 0.579373 |
-| | **Brier Score** | 0.198350 | 0.196305 | 0.195868 | **0.195593** | 0.196073 | 0.197590 |
-| **Pinnacle T-1h ($N=1,668$)** | **LogLoss** | 0.568604 | 0.563798 | **0.563176** | 0.563571 | 0.567576 | 0.575423 |
-| | **Brier Score** | 0.192872 | 0.191250 | **0.191119** | 0.191449 | 0.193303 | 0.196552 |
-| **Canonical Open ($N=2,275$)** | **LogLoss** | 0.593258 | 0.587843 | 0.586628 | **0.585823** | 0.587179 | 0.591839 |
-| | **Brier Score** | 0.203727 | 0.201456 | 0.200941 | **0.200605** | 0.201218 | 0.203266 |
-
-*Verdict:* $\alpha \in [0.35, 0.50]$ shrinkage strictly dominates both pure sports models and raw market prices across every historical cohort.
-
----
-
-### 5.3 Real-World Betting Simulations & Risk-Guard Ablation
-
-Evaluating betting operations across Polish bookmakers (12% turnover tax) and international benchmarks (0% tax):
-
-| Operating Regime | Strategy Stack | Bets | Win Rate | Claimed EV | True Edge (Net CLV) | Optimizer's Curse Bias ($B$) | Match Luck Noise ($\\eta$) | Realized Yield | Max Drawdown | Verdict |
-|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|
-| **Polish Books (12% Tax)** | Unconstrained `PlayerHistory-Attention-Ensemble` (`C0`) | 454 | 43.8% | +31.93% | **-13.69%** | **+45.62 pp** | +9.15 pp | -4.54% | 67.0% | **UNTRUSTED (Optimizer's Curse)** |
-| **Polish Books (12% Tax)** | `MarketShrunk-Hybrid-50` + `Market-Divergence-Gate` | 147 | 51.0% | +13.41% | **+1.85%** | **+11.56 pp** | +9.65 pp | +11.50% | 15.0% | **Effective Risk Reduction** |
-| **Polish Books (12% Tax)** | **Optimal Synergy (`Hybrid-50` + `Market-Divergence-Gate` + `Model-Consensus-Veto`)** | **50** | **58.0%** | **+13.41%** | **+4.83%** | **+8.57 pp** | **+19.42 pp** | **+23.91%** | **6.10%** | **ADOPTED PRODUCTION STRATEGY** |
-| **Multi-Year (0% Tax)** | Multi-Year Shrunk Hybrid (2021–2026) | 3,002 | 57.6% | +4.68% | **+6.35%** | **-1.67 pp** | +1.25 pp | +7.60% | 9.40% | **Validated Historical Edge** |
+| **Unconstrained `C0`** | +31.93% | **-13.69%** | **+45.62 pp** | +9.15 pp | -4.54% |
+| **`Hybrid-50` + `Market-Divergence-Gate`** | +13.41% | **+1.85%** | **+11.56 pp** | +9.65 pp | +11.50% |
+| **Optimal Synergy (`Hybrid-50` + Gates)** | +13.41% | **+4.83%** | **+8.57 pp** | +19.42 pp | +23.91% |
+| **Optimal Synergy + `Wasserstein-DRO` ($\varepsilon=0.025$)** | **+14.17%** | **+6.98%** | **+7.19 pp** | **+17.88 pp** | **+24.86%** |
+| **Multi-Year Shrunk Hybrid (2021–2026)** | +4.68% | **+6.35%** | **-1.67 pp** | +1.25 pp | +7.60% |
 
 *Mathematical Profit & Noise Decomposition:*
 
 $$
-\text{Realized Yield} = \underbrace{\text{Claimed EV}}_{\text{Model Promise}} - \underbrace{\text{Optimizer's Curse } (B)}_{\text{Systematic Selection Bias}} + \underbrace{\text{Match Luck Noise } (\eta)}_{\text{Sample Coinflip Variance}} = \mathbf{\text{True Edge (Net CLV)}} + \mathbf{\text{Match Luck Noise } (\eta)}
+\text{Realized Yield} = \underbrace{\text{Claimed EV}}_{\text{Model Promise}} - \underbrace{\text{Optimizer's Curse } (B)}_{\text{Systematic Selection Bias}} + \underbrace{\text{Match Luck Noise } (\eta)}_{\text{Sample Coinflip Variance}} = \textbf{True Edge (Net CLV)} + \textbf{Match Luck Noise } (\eta)
 $$
 
-- **Optimizer's Curse Bias ($B = \text{Claimed EV} - \text{Net CLV}$):** Systematic positive selection bias from picking bets where estimation error happened to be high. **Never vanishes with sample size $N$**. On unconstrained C0, it produced **$+45.62\text{ pp}$** of fake edge. Bounded shrinkage ($\alpha=0.50$), `Market-Divergence-Gate`, and `Model-Consensus-Veto` successfully compressed this bias down to $+8.57\text{ pp}$.
-- **Match Luck Noise ($\eta = \text{Realized Yield} - \text{Net CLV}$):** Zero-mean binomial outcome variance ($\sigma_{\text{bet}} \approx 109.8\%$) that **decays to zero as $\sigma / \sqrt{N}$**. On the 50-bet production ledger, $+19.42\text{ pp}$ of temporary lucky variance boosted wallet yield to $+23.91\%$, while the true long-term compounding edge is $\mathbf{\text{Net CLV} = +4.83\%}$.
+- **Optimizer's Curse Bias ($B = \text{Claimed EV} - \text{Net CLV}$):** Systematic positive selection bias from picking bets where estimation error happened to be high. **Never vanishes with sample size $N$**. On unconstrained C0, it produced **+45.62 pp** of fake edge. Bounded shrinkage ($\alpha=0.50$), `Market-Divergence-Gate`, and `Model-Consensus-Veto` successfully compressed this bias down to **+8.57 pp**.
+- **Match Luck Noise ($\eta = \text{Realized Yield} - \text{Net CLV}$):** Zero-mean binomial outcome variance ($\sigma_{\text{bet}} \approx 109.8\%$) that **decays to zero as $\sigma / \sqrt{N}$**. On the 50-bet production ledger, **+19.42 pp** of temporary lucky variance boosted wallet yield to **+23.91%**, while the true long-term compounding edge is **Net CLV = +4.83%**.
 
 #### Monthly Breakdown for Adopted Production Strategy ($N=50$, 10,000 PLN Capital)
 
-| Month | Bets | Wins | Win Rate | Turnover | Net Profit | Realized Yield | Mean Net CLV |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| **2026-05** | 2 | 2 | 100.0% | 300.00 PLN | +525.00 PLN | +175.00% | +7.08% |
-| **2026-06** | 6 | 4 | 66.7% | 884.81 PLN | +260.95 PLN | +29.49% | +9.62% |
-| **2026-07** | 20 | 12 | 60.0% | 2,818.94 PLN | +541.00 PLN | +19.19% | +3.88% |
-| **2026-08** | 18 | 8 | 44.4% | 2,569.40 PLN | -17.38 PLN | -0.68% | +2.56% |
-| **2026-09** | 4 | 3 | 75.0% | 600.00 PLN | +405.84 PLN | +67.64% | +11.54% |
-| **Total** | **50** | **29** | **58.0%** | **7,173.15 PLN** | **+1,715.41 PLN** | **+23.91%** | **+4.83%** |
+| Month | Bets (Wins) | Win Rate | Net Profit | Realized Yield | Mean Net CLV |
+|---|---:|---:|---:|---:|---:|
+| **2026-05** | 2 (2) | 100.0% | +525.00 PLN | +175.00% | +7.08% |
+| **2026-06** | 6 (4) | 66.7% | +260.95 PLN | +29.49% | +9.62% |
+| **2026-07** | 20 (12) | 60.0% | +541.00 PLN | +19.19% | +3.88% |
+| **2026-08** | 18 (8) | 44.4% | -17.38 PLN | -0.68% | +2.56% |
+| **2026-09** | 4 (3) | 75.0% | +405.84 PLN | +67.64% | +11.54% |
+| **Total** | **50 (29)** | **58.0%** | **+1,715.41 PLN** | **+23.91%** | **+4.83%** |
 
 ---
 
-### 5.4 Econometric Audit: True Profit ($\text{Net CLV}$) vs. Noise
+### 5.5 Econometric Audit: True Profit ($\text{Net CLV}$) vs. Noise
 
 #### A. The Exact Three-Part Bet Decomposition
 
@@ -242,18 +274,18 @@ where $\text{Realized Yield}_i = c \cdot O_i Y_i - 1 \; (+24.26\%)$ and $\text{C
 - **Shrunk Hybrid Claimed EV:** `+13.41%`
 - **Optimizer's Curse Removed by Shrinkage:** `8.64 pp` (plus 97 toxic bets vetoed by Guard B & Thesis Veto)
 - **True Long-Term Mathematical Profit ($\text{Net CLV}$):** `+4.83%` per bet ($p_{\text{close}}$ expected wins: $25.67 / 50$)
-- **Identity Mathematical Residual:** $< 10^{-15}$ (Exact equality across all 50 bets)
+- **Identity Mathematical Residual:** $\lt 10^{-15}$ (Exact equality across all 50 bets)
 
 #### B. Hypothesis Testing & Variance Ratio ($N=50$ Production Bets)
 
-| Metric | Point Estimate | Sample Std ($s$) | Std Error (SE) | $t$-Statistic | Two-Sided $p$-Value | 95% Bootstrap CI |
-|---|---:|---:|---:|---:|---:|---|
-| **Realized Yield** | **+24.26%** | 116.50% | 16.48% | 1.472 | 0.1473 (Not sig.) | $[-7.55\%, +54.83\%]$ |
-| **Raw CLV (Price Edge)** | **+19.13%** | 12.95% | 1.83% | 10.446 | $< 10^{-13}$ | $[+15.55\%, +22.71\%]$ |
-| **Net CLV (True Edge)** | **+4.83%** | 11.39% | 1.61% | **3.000** | **0.0042 (Significant)** | **$[+1.68\%, +7.98\%]$** |
+| Metric | Point Estimate | Sample Std ($s$) | Std Error (SE) | $t$-Statistic ($p$-Value) | 95% Bootstrap CI |
+|---|---:|---:|---:|---:|---|
+| **Realized Yield** | **+24.26%** | 116.50% | 16.48% | 1.472 ($p=0.1473$) | $[-7.55\%, +54.83\%]$ |
+| **Raw CLV (Price Edge)** | **+19.13%** | 12.95% | 1.83% | 10.446 ($p \lt 10^{-13}$) | $[+15.55\%, +22.71\%]$ |
+| **Net CLV (True Edge)** | **+4.83%** | 11.39% | 1.61% | **3.000 ($p=0.0042$)** | **$[+1.68\%, +7.98\%]$** |
 
 $$
-\text{Variance Ratio} = \frac{\operatorname{Var}(\text{Realized Yield})}{\operatorname{Var}(\text{Net CLV})} = \frac{1.1650^2}{0.1139^2} = \mathbf{104.5\times}
+\text{Variance Ratio} = \frac{\operatorname{Var}(\text{Realized Yield})}{\operatorname{Var}(\text{Net CLV})} = \frac{1.1650^2}{0.1139^2} = \mathbf{104.5} \times
 $$
 
 *Finding:* Realized wallet PnL has $104.5\times$ higher variance than Net CLV. Proving edge via Net CLV requires only 15–30 bets, whereas proving edge via wallet PnL requires $>1,000$ bets.
@@ -285,7 +317,7 @@ $$
 
 ---
 
-### 5.5 Preserved Standalone Prop Models
+### 5.6 Preserved Standalone Prop Models
 
 Preserved package: `data/06_models/model_preservation/prop_distribution_20261007_01.zip`  
 SHA-256 Digest: `a115b26576b90b32997536aa9e1ee7eb1228dd6864bfa53e16e671b72982a232`
@@ -293,8 +325,6 @@ SHA-256 Digest: `a115b26576b90b32997536aa9e1ee7eb1228dd6864bfa53e16e671b72982a23
 - **Map 1 Total Kills:** Ridge-1 Poisson-Mean / Negative Binomial — **NLL `3.590488`**, MAE `7.05` kills
 - **Map 1 In-Game Duration:** 15-leaf LightGBM / LogNormal — **NLL `3.076194`**, MAE `4.24` minutes
 - **Series Length (BO3/5):** Width-128 / Epoch-12 3-seed mixture — **NLL `0.714580`**, RPS `0.261305`
-
----
 
 ## 6. License & Disclaimers
 
