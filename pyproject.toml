@@ -7,6 +7,8 @@ name = "lol-breaker"
 version = "0.1.0"
 description = "League of Legends match outcome prediction and tournament simulation system"
 readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Jakub Melzacki", email = "melzacki.jakubl@gmail.com" }]
 requires-python = ">=3.11"
 
 [tool.setuptools]

@@ -284,3 +284,16 @@ SHA-256 Digest: `a115b26576b90b32997536aa9e1ee7eb1228dd6864bfa53e16e671b72982a23
 - **Map 1 Total Kills:** Ridge-1 Poisson-Mean / Negative Binomial — **NLL `3.590488`**, MAE `7.05` kills
 - **Map 1 In-Game Duration:** 15-leaf LightGBM / LogNormal — **NLL `3.076194`**, MAE `4.24` minutes
 - **Series Length (BO3/5):** Width-128 / Epoch-12 3-seed mixture — **NLL `0.714580`**, RPS `0.261305`
+
+---
+
+## 6. License & Disclaimers
+
+### License
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+
+### Academic & Financial Disclaimer
+**LoL-Breaker** is an academic and quantitative research system developed for the scientific evaluation of machine learning calibration, probability shrinkage, and econometric decision rules in competitive esports markets. The system, its models, and its simulation outputs are provided for educational and research purposes only. Nothing contained within this repository constitutes financial advice, investment recommendations, or an encouragement to participate in sports wagering. The authors accept no liability for any financial losses or damages resulting from the use of the models, code, or data provided herein. Past simulation performance does not guarantee future results.
+
+### Riot Games Disclaimer
+LoL-Breaker isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.
